@@ -31,8 +31,8 @@
   --magenta-deep:#a8125c;
   --cyan:#18e0ff;
   --orange:#ff8a1f;
-  --red:#ff3355;
-  --red-deep:#b0102f;
+  --red:#d4183a;
+  --red-deep:#8a0c25;
   --purple:#a35cff;
   --ink:#160933;
   --ink-soft:#5d4f86;
@@ -173,7 +173,7 @@ body.dock-on .wrap{max-width:1500px}
 .toterow.winner .bar{background:rgba(0,0,0,.14)}
 .toterow.winner .bar i{background:var(--magenta)}
 .toterow.winner + .toterow{border-top-color:transparent}
-.toterow.loser{opacity:.35}
+.toterow.loser{opacity:.6}
 @media (min-width:900px){.rows.two{display:grid;grid-template-columns:1fr 1fr;column-gap:40px}}
 .wtag{display:inline-block;margin-left:10px;font-family:var(--f-body);font-size:11px;font-weight:900;letter-spacing:.14em;padding:3px 8px;border-radius:999px;background:var(--magenta);color:var(--text);vertical-align:middle;animation:pulse .5s ease-in-out infinite}
 .verdict{margin-top:min(18px,2vh);font-size:clamp(16px,min(1.8vw,2.8vh),24px);font-weight:800;max-width:60ch}
@@ -298,7 +298,7 @@ body.dock-on .wrap{max-width:1500px}
 .coin.c50{background:var(--magenta);color:#b31767}
 .coin.c100{background:var(--green);color:#0b9a3a}
 .coin.c500{background:var(--purple);color:#5a22b8}
-.coin.c50 span,.coin.c500 span{color:var(--text)}
+.coin.c50 span,.coin.c500 span{color:var(--ink)}
 .stakebtns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
 .sbtn{border:0;border-radius:14px;padding:13px 10px;font-weight:900;font-size:15.5px;letter-spacing:.02em;transition:transform .08s}
 .sbtn:active{transform:translateY(3px)}
@@ -324,6 +324,7 @@ body.dock-on .wrap{max-width:1500px}
 .mrow .mn{font-weight:900;overflow-wrap:anywhere}
 .mrow .mv{font-weight:900}
 .mrow.me{background:var(--green);border-radius:8px;padding:3px 7px;margin-inline:-7px}
+.mrow.me .mrk{color:var(--ink)}
 .mbar{height:7px;border-radius:4px;background:var(--ticket-line);margin-top:4px;overflow:hidden}
 .mbar i{display:block;height:100%;background:linear-gradient(90deg,var(--green),var(--magenta))}
 .mrk{font-family:var(--f-display);font-size:18px;width:1.6em;color:var(--ink-soft)}
@@ -384,14 +385,15 @@ html[data-look="burst"]{--stage:#17053d;--bar:#10032e;--glow:none;
   --rays:repeating-conic-gradient(rgba(45,255,110,.55) 0deg 7deg,transparent 7deg 14deg,rgba(255,45,149,.55) 14deg 21deg,transparent 21deg 28deg,rgba(255,224,20,.5) 28deg 35deg,transparent 35deg 42deg,rgba(24,224,255,.55) 42deg 49deg,transparent 49deg 56deg)}
 html[data-look="burst"] :is(.statement,.lede,.raceno,.eyebrow,.verdict,.steps-big li,.itwas b,.joined .metric span,.joined .metric b){text-shadow:0 2px 0 #160933,0 0 14px #160933,0 0 28px #160933}
 html[data-look="orange"]{--stage:#d04a02;--bar:#2b1205;--panel:#2b1205;--panel-2:#3d1a07;--green:#ffb600;--green-deep:#a87800;--magenta:#db536a;--magenta-deep:#8f2c3d;--cyan:#ffe9b8;--orange:#eb8c00;--muted:#ffd6bf;--up:#ffb600;
-  --glow:radial-gradient(circle at 12% 15%,rgba(255,182,0,.55),transparent 42%),radial-gradient(circle at 88% 22%,rgba(219,83,106,.55),transparent 40%),radial-gradient(circle at 50% 110%,rgba(235,140,0,.65),transparent 52%);
-  --rays:repeating-conic-gradient(rgba(255,255,255,.14) 0deg 6deg,transparent 6deg 12deg,rgba(255,182,0,.24) 12deg 18deg,transparent 18deg 24deg)}
+  --glow:radial-gradient(circle at 10% 12%,rgba(120,28,0,.45),transparent 40%),radial-gradient(circle at 90% 20%,rgba(110,20,10,.4),transparent 40%),radial-gradient(circle at 50% 110%,rgba(90,18,0,.45),transparent 55%);
+  --rays:repeating-conic-gradient(rgba(80,14,0,.2) 0deg 6deg,transparent 6deg 12deg)}
+html[data-look="orange"] :is(.joined .metric span,.joined .metric b,.raceno small,.setup-actions .muted,.joined .muted,.lede){color:#ffffff}
+html[data-look="orange"] :is(.pill.shut,.pill.mult,.wtag){background:#2b1205;color:#ffb600}
 html[data-look="orange"] .mega{color:#ffffff;text-shadow:3px 3px 0 #db536a,6px 6px 0 #2b1205}
 html[data-look="orange"] .multi:not(.jackpot) b{color:#ffffff;text-shadow:4px 4px 0 #db536a,8px 8px 0 #2b1205}
 html[data-look="orange"] .multi.jackpot b{filter:drop-shadow(4px 4px 0 #2b1205)}
 html[data-look="orange"] :is(.multi span,.eyebrow,.raceno){color:#ffffff}
-html[data-look="orange"] .raceno small{color:#ffe9b8}
-html[data-look="orange"] :is(.lede b,.verdict b,.steps-big b){color:#2b1205}
+html[data-look="orange"] :is(.lede b,.verdict b,.steps-big b){color:#ffb600;background:#2b1205;padding:0 .25em;border-radius:6px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 html[data-look="orange"] .statement{text-shadow:0 3px 0 rgba(43,18,5,.45)}
 html[data-look="orange"] .qrcard{box-shadow:0 0 0 5px #db536a,0 0 0 10px #2b1205,0 18px 50px rgba(0,0,0,.35)}
 html[data-look="orange"] .coin.c100{color:#a87800}
@@ -429,7 +431,7 @@ body.player .slip::before{height:7px}
 .tickhead .who{display:flex;align-items:center;gap:8px;min-width:0;font-family:var(--f-display);font-size:17px}
 .tickhead .who span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .tickhead .rk2{flex:none;font-family:var(--f-body);font-size:11px;font-weight:900;background:var(--ink);color:var(--text);border-radius:999px;padding:2px 8px}
-.tickhead .bal2{font-family:var(--f-display);color:var(--magenta);font-size:20px;white-space:nowrap;line-height:1}
+.tickhead .bal2{font-family:var(--f-display);color:var(--magenta-deep);font-size:20px;white-space:nowrap;line-height:1}
 .tickhead .bal2 small{font-family:var(--f-body);font-size:10px;font-weight:900;letter-spacing:.12em;color:var(--ink-soft);margin-right:6px;text-transform:uppercase}
 .rlabel{font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 3px}
 .q.bet{font-size:clamp(21px,min(6.4vw,3.8vh),30px);margin:0 0 10px;line-height:1.1}
@@ -485,7 +487,7 @@ const DATABASE_URL = "";
 const FIREBASE_SDK = "10.12.2";
 
 /* Contestant colours, numbers 1–12 */
-const SADDLE=[["#2dff6e","#160933"],["#ff2d95","#ffffff"],["#ffe014","#160933"],["#18e0ff","#160933"],["#ff8a1f","#160933"],["#a35cff","#ffffff"],["#ff3355","#ffffff"],["#00f0c0","#160933"],["#ff7ad9","#160933"],["#3d7bff","#ffffff"],["#c6ff1a","#160933"],["#ffffff","#160933"]];
+const SADDLE=[["#2dff6e","#160933"],["#ff2d95","#160933"],["#ffe014","#160933"],["#18e0ff","#160933"],["#ff8a1f","#160933"],["#a35cff","#160933"],["#ff4d6a","#160933"],["#00f0c0","#160933"],["#ff7ad9","#160933"],["#5b8cff","#160933"],["#c6ff1a","#160933"],["#ffffff","#160933"]];
 /* Bonus wheel: 20 segments. 1× ×4, 2× ×6, 3× ×4, 5× ×3, 10× ×2, 20× ×1 */
 const WHEEL=[2,1,3,2,5,1,2,10,3,2,1,5,2,3,20,1,2,5,3,10];
 const WCOL={1:["#18e0ff","#160933"],2:["#ffe014","#160933"],3:["#ff2d95","#ffffff"],5:["#2dff6e","#160933"],10:["#ff8a1f","#160933"],20:["url(#rb)","#160933"]};
@@ -603,12 +605,12 @@ const sfx={
 /* ---------- money and payouts (parimutuel + bonus wheel) ---------- */
 function fmt(n){const c=(S.game&&S.game.cur)||"€";return c+Math.round(Math.abs(n)).toLocaleString("en-US")}
 function signed(n){return (n<0?"−":"+")+fmt(n)}
-/* Pot = house money + every stake. Winners split the pot by stake, times the wheel's multiplier. */
+/* Pot = every stake + house money × the wheel's multiplier. Winners split the pot by stake. */
 function settle(r,seed){
-  const bets=r.bets||{},m=r.mult||1;let pot=seed||0,win=0;
+  const bets=r.bets||{},m=r.mult||1;let pot=(seed||0)*m,win=0;
   for(const b of Object.values(bets)){pot+=b.a;if(b.t===r.answer)win+=b.a}
   const nets={};
-  for(const [k,b] of Object.entries(bets))nets[k]=(win>0&&b.t===r.answer)?Math.floor(b.a*pot/win*m)-b.a:-b.a;
+  for(const [k,b] of Object.entries(bets))nets[k]=(win>0&&b.t===r.answer)?Math.floor(b.a*pot/win)-b.a:-b.a;
   return {pot,win,nets,m};
 }
 function rounds(g){const r=g.rounds;return Array.isArray(r)?r:r?Object.values(r):[]}
@@ -619,8 +621,15 @@ function balances(g){
   return bal;
 }
 function balOf(bal,k){return k in bal?bal[k]:S.game.start}
-function book(bets){
-  const by={};let total=(S.game&&S.game.seed)||0,stakes=0,count=0;
+/* The multiplier currently applied to the house money on screen */
+function houseMult(g){
+  const r=g&&g.round;if(!r)return 1;
+  if(g.phase==="revealed")return r.mult||1;
+  if(g.phase==="locked"&&g.wheel){const si=spinInfo(r);return si&&si.done?si.mult:1}
+  return 1;
+}
+function book(bets,m){
+  const by={};let total=((S.game&&S.game.seed)||0)*(m||1),stakes=0,count=0;
   for(const b of Object.values(bets)){by[b.t]=(by[b.t]||0)+b.a;total+=b.a;stakes+=b.a;count++}
   return {by,total,stakes,count};
 }
@@ -999,7 +1008,7 @@ function boardLobby(g){
     `Each round shows <b>a statement about one trainee</b>.`,
     `<b>Bet play money</b> on who it's about. Everyone starts with <b>${fmt(g.start)}</b>.`,
     `Guessed right? <b>Share the pot</b> with the other winners. The fewer winners, the bigger your share.`,
-    g.wheel?`The <b>bonus wheel</b> can multiply your winnings up to <b>20×</b>. Most money at the end wins!`:`<b>Most money</b> at the end wins!`
+    g.wheel?`The <b>bonus wheel</b> multiplies the house money in the pot, up to <b>20×</b>. Most money at the end wins!`:`<b>Most money</b> at the end wins!`
   ];
   return `<section class="lobby"><div class="min0">
     <p class="eyebrow">Today's lineup</p>
@@ -1007,15 +1016,13 @@ function boardLobby(g){
     <ol class="steps-big">${steps.map((t,i)=>`<li><i>${i+1}</i><span>${t}</span></li>`).join("")}</ol></div>
     ${qrCard()}
   </section>
-  <p class="eyebrow" style="margin-top:min(24px,1.8vh)">The contestants · ${ts.length} trainees · ${g.total} ${g.total===1?"round":"rounds"}</p>
-  <div class="field">${ts.map(t=>`<div class="runner">${cloth(t)}<b>${esc(t.name)}</b></div>`).join("")}</div>
   <div class="joined">
     <div class="metric"><span>Players in</span><b>${roster.length}</b></div>
     <div class="chiprow">${roster.map(r=>`<span class="chip${r.on?"":" off"}">${esc(r.nick)}</span>`).join("")||'<span class="muted">Nobody yet. Players appear here as they join.</span>'}</div>
   </div>`;
 }
 function toteHTML(g,bets,ans){
-  const bk=book(bets),ts=trainees(g),flash=ans&&!S.seen.has("b"+g.round.k);if(ans)S.seen.add("b"+g.round.k);
+  const hm=houseMult(g),bk=book(bets,hm),ts=trainees(g),flash=ans&&!S.seen.has("b"+g.round.k);if(ans)S.seen.add("b"+g.round.k);
   const bump=S.lastPot!==null&&S.lastPot!==bk.total;S.lastPot=bk.total;
   const rows=ts.map(t=>{
     const s=bk.by[t.id]||0,nb=Object.values(bets).filter(b=>b.t===t.id).length;
@@ -1024,11 +1031,11 @@ function toteHTML(g,bets,ans){
     return `<div class="toterow${cls}">${cloth(t)}<div class="min0"><div class="nm">${esc(t.name)}${t.id===ans?'<span class="wtag">WINNER</span>':""}</div><div class="line"><div class="bar"><i style="width:${w}%"></i></div><span class="sub">${fmt(s)} · ${nb} ${nb===1?"bet":"bets"}</span></div></div><div class="odds">${oddsText(bk.total,s)}</div></div>`;
   }).join("");
   return `<div class="tote">
-    <div class="totehead"><div class="metric"><span>Pot</span><b class="${bump?"bump":""}">${fmt(bk.total)}</b></div><div class="metric small"><span>Bets</span><b>${bk.count}</b></div>${g.seed?`<div class="metric small"><span>House money</span><b>${fmt(g.seed)}</b></div>`:""}</div>
+    <div class="totehead"><div class="metric"><span>Pot</span><b class="${bump?"bump":""}">${fmt(bk.total)}</b></div><div class="metric small"><span>Bets</span><b>${bk.count}</b></div>${g.seed?`<div class="metric small"><span>House money${hm>1?` × ${hm}`:""}</span><b class="${bump?"bump":""}">${fmt(g.seed*hm)}</b></div>`:""}</div>
     <div class="rows${ts.length>5&&g.phase==="betting"?" two":""}">${rows}</div>
   </div>`;
 }
-function multLabel(m){return m>=20?"Jackpot! Winners' payout × 20":m>=10?"Mega bonus! Payout × 10":m>1?`Winners' payout × ${m}`:"No bonus this round"}
+function multLabel(m){return m>=20?"Jackpot! House money × 20":m>=10?"Mega bonus! House money × 10":m>1?`House money × ${m}`:"No bonus this round"}
 function boardRace(g){
   const r=g.round,bets=liveBets(),ans=g.phase==="revealed"?r.answer:null,m=r.mult||1;
   const long=String(r.text||"").length>70?" long":"";
@@ -1046,7 +1053,7 @@ function boardRace(g){
     const winners=Object.entries(st.nets).filter(([k])=>r.bets[k].t===ans).sort((a,b)=>b[1]-a[1]);
     if(winners.length&&first&&m>=2)S.fx.add("confetti");
     const verdict=winners.length
-      ?`<p class="verdict">${winners.length} ${winners.length===1?"player":"players"} split the <b>${fmt(st.pot)}</b> pot${m>1?` <b>× ${m}</b>`:""}.</p><div class="payouts${first?" popin":""}">${winners.map(([k,n])=>`<span class="chip">${esc(nickOf(k))} <span class="plus">${signed(n)}</span></span>`).join("")}</div>`
+      ?`<p class="verdict">${winners.length} ${winners.length===1?"player":"players"} split the <b>${fmt(st.pot)}</b> pot${m>1?` (house money <b>× ${m}</b>)`:""}.</p><div class="payouts${first?" popin":""}">${winners.map(([k,n])=>`<span class="chip">${esc(nickOf(k))} <span class="plus">${signed(n)}</span></span>`).join("")}</div>`
       :`<p class="verdict">Nobody picked ${esc(wt.name)}. The house keeps the <b>${fmt(st.pot)}</b> pot.</p>`;
     return `<section>${head}<h2 class="statement sm${long}">${esc(r.text)}</h2>
       <div class="resultgrid"><div class="resultcard"><p class="eyebrow">It was</p><div class="itwas">${cloth(wt)}<b>${esc(wt.name)}</b></div>${verdict}</div><div class="min0">${toteHTML(g,bets,ans)}</div></div></section>`;
@@ -1120,7 +1127,7 @@ async function setLook(v){
 function cycleLook(){const cur=document.documentElement.dataset.look;const i=LOOKS.findIndex(l=>l[0]===cur);setLook(LOOKS[(i+1)%LOOKS.length][0])}
 
 /* ---------- host: setup ---------- */
-function defaultDraft(){return {title:"The Trainee Stakes",cur:"€",start:1000,seed:500,wheel:true,payer:"Jos",theme:LOOKS[0][0],trainees:[0,1,2,3].map(()=>({id:"t"+rid(),name:""})),statements:EXAMPLES.slice(0,4).map(text=>({id:"s"+rid(),text,answer:""}))}}
+function defaultDraft(){return {title:"The Trainee Stakes",cur:"€",start:1000,seed:1000,wheel:true,payer:"Jos",theme:LOOKS[0][0],trainees:[0,1,2,3].map(()=>({id:"t"+rid(),name:""})),statements:EXAMPLES.slice(0,4).map(text=>({id:"s"+rid(),text,answer:""}))}}
 function normalizeSetup(d){
   d.trainees=Array.isArray(d.trainees)?d.trainees:Object.values(d.trainees||{});
   d.statements=Array.isArray(d.statements)?d.statements:Object.values(d.statements||{});
@@ -1152,7 +1159,7 @@ function setupHTML(){
       <label class="f">Starting balance<input class="inp" id="f-start" data-f="start" type="number" min="10" step="10" inputmode="numeric" value="${esc(d.start)}"></label>
       <label class="f">House money per round<input class="inp" id="f-seed" data-f="seed" type="number" min="0" step="10" inputmode="numeric" value="${esc(d.seed)}"></label>
     </div></section>
-    <section class="card"><h2>Bonus wheel and the bill</h2><p class="hint">After betting closes you spin the wheel. It lands on 1×, 2×, 3×, 5×, 10× or the rare 20×, and the winners' payout for that round is multiplied.</p>
+    <section class="card"><h2>Bonus wheel and the bill</h2><p class="hint">After betting closes you spin the wheel. It lands on 1×, 2×, 3×, 5×, 10× or the rare 20×, and multiplies that round's house money, so the pot jumps for everyone who picked right. Needs house money above 0.</p>
       <label class="check"><input type="checkbox" id="f-wheel" data-f="wheel"${d.wheel?" checked":""}> Spin the bonus wheel every round</label>
       <div class="grid4"><label class="f">Who pays the winner<input class="inp" id="f-payer" data-f="payer" value="${esc(d.payer)}" maxlength="24" placeholder="Leave empty to skip the joke"></label></div>
       <p class="hint" style="margin:12px 0 0">At the end the board tells the winner to send a Tikkie for everything they collected to this person.</p></section>
@@ -1224,13 +1231,13 @@ function slipHTML(){
   if(!g)return slipBox(`<div class="sliphead"><div><div class="sliptitle">${esc(S.me.nick)}</div><div class="serial">Room ${esc(S.code)} · waiting</div></div></div><p class="q">The show hasn't started yet.</p><p class="note">This ticket updates by itself when the host starts the game. <button class="linkbtn" data-act="rename">Change nickname</button></p>`);
   const head=slipHead(g),r=g.round,k=myKey();
   switch(g.phase){
-    case "lobby":return slipBox(`${head}<p class="label">You're in</p><p class="q">Wait for round 1.</p><p class="note">Each round shows a statement about one trainee. Bet on who you think it is. Winners split the pot by stake, so the less popular the right answer, the more it pays.${g.wheel?" Then the bonus wheel can multiply your winnings up to 20×.":""}</p><p class="label">The contestants</p>${fieldMini(g)}<p class="note"><button class="linkbtn" data-act="rename">Change nickname</button></p>`);
+    case "lobby":return slipBox(`${head}<p class="label">You're in</p><p class="q">Wait for round 1.</p><p class="note">Each round shows a statement about one trainee. Bet on who you think it is. Winners split the pot by stake, so the less popular the right answer, the more it pays.${g.wheel?" Then the bonus wheel can multiply the house money in the pot, up to 20×.":""}</p><p class="note"><button class="linkbtn" data-act="rename">Change nickname</button></p>`);
     case "betting":return slipBox(head+bettingSlip(g));
     case "locked":{
       const lb=r.bets&&r.bets[k],si=g.wheel?spinInfo(r):null,m=si&&si.done?si.mult:1;let body;
-      if(lb){const t=trainee(lb.t),bk=book(r.bets);body=`<div class="betbox">${cloth(t)}<div class="min0"><b>${fmt(lb.a)} on ${esc(t.name)}</b><span>Pays ${fmt(Math.floor(lb.a*bk.total/bk.by[lb.t]*m))} if right${m>1?` (with ${m}× bonus)`:""}</span></div></div>`}
+      if(lb){const t=trainee(lb.t),bk=book(r.bets,m);body=`<div class="betbox">${cloth(t)}<div class="min0"><b>${fmt(lb.a)} on ${esc(t.name)}</b><span>Pays ${fmt(Math.floor(lb.a*bk.total/bk.by[lb.t]))} if right${m>1?` (house money ×${m})`:""}</span></div></div>`}
       else body=`<p class="note">You sat this round out.</p>`;
-      const wheel=g.wheel?`<p class="label">Bonus wheel</p><div class="wheelslot">${wheelHTML(r,"small")}${!si?`<p class="note" style="margin:0">Waiting for the host to spin.</p>`:!si.done?`<p class="note" style="margin:0"><b>Spinning…</b></p>`:`<p class="paysx${S.seen.has("pm"+r.k)?"":" pop"}">${si.mult>1?`This round pays ${si.mult}×`:"No bonus this round"}</p>`}</div>`:`<p class="label">How the room bet</p>${distMini(g,r.bets||{})}`;
+      const wheel=g.wheel?`<p class="label">Bonus wheel</p><div class="wheelslot">${wheelHTML(r,"small")}${!si?`<p class="note" style="margin:0">Waiting for the host to spin.</p>`:!si.done?`<p class="note" style="margin:0"><b>Spinning…</b></p>`:`<p class="paysx${S.seen.has("pm"+r.k)?"":" pop"}">${si.mult>1?`House money ×${si.mult}!`:"No bonus this round"}</p>`}</div>`:`<p class="label">How the room bet</p>${distMini(g,r.bets||{})}`;
       if(si&&si.done)S.seen.add("pm"+r.k);
       return slipBox(`${head}<p class="label">Round ${r.n+1} · betting closed</p><p class="q">${esc(r.text)}</p>${body}${wheel}`);
     }
@@ -1238,7 +1245,7 @@ function slipHTML(){
       const t=trainee(r.answer),st=settle(r,g.seed),lb=r.bets&&r.bets[k],net=st.nets[k];
       if(lb&&lb.t===r.answer&&!S.seen.has("win-"+r.k)){fxOnce("win-"+r.k);buzz([60,40,60,40,180])}
       const stamp=lb?(lb.t===r.answer?stampOnce("s"+r.k,"win",`Winner ${signed(net)}`):stampOnce("s"+r.k,"lose",`Lost ${fmt(lb.a)}`)):stampOnce("s"+r.k,"neutral","Sat out");
-      return slipBox(`${head}<p class="label">Round ${r.n+1} · result</p><p class="q">${esc(r.text)}</p><div class="betbox">${cloth(t)}<div class="min0"><b>It was ${esc(t.name)}</b><span>${st.win?`Pot of ${fmt(st.pot)}${st.m>1?` × ${st.m}`:""} split among the winners`:`Nobody picked ${esc(t.name)}. The house keeps the pot.`}</span></div></div>${stamp}`);
+      return slipBox(`${head}<p class="label">Round ${r.n+1} · result</p><p class="q">${esc(r.text)}</p><div class="betbox">${cloth(t)}<div class="min0"><b>It was ${esc(t.name)}</b><span>${st.win?`Pot of ${fmt(st.pot)}${st.m>1?` (house money ×${st.m})`:""} split among the winners`:`Nobody picked ${esc(t.name)}. The house keeps the pot.`}</span></div></div>${stamp}`);
     }
     case "standings":return slipBox(`${head}<p class="label">Standings after round ${rounds(g).length}</p>${topMini(5)}<p class="note">Next round coming up.</p>`);
     case "final":{
