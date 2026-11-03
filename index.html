@@ -126,7 +126,8 @@ body.dock-on .wrap{max-width:1500px}
 .runner{padding:min(10px,1.1vh) 12px}
 .chiprow{display:flex;flex-wrap:wrap;gap:8px;min-width:0;flex:1}
 .chip{display:inline-flex;gap:8px;align-items:baseline;background:var(--panel);border:2px solid var(--line);border-radius:999px;padding:6px 13px;font-weight:800;max-width:100%;overflow-wrap:anywhere}
-.payouts .chip{font-size:clamp(14px,min(1.5vw,2.4vh),20px)}
+.payouts .chip{font-size:clamp(13px,min(1.4vw,2.2vh),19px);padding:min(6px,.7vh) 11px}
+.payouts{gap:6px}
 .chip.off{opacity:.5}
 .chip .plus{font-family:var(--f-display);color:var(--green)}
 .qrcard{background:var(--ticket);color:var(--ink);border-radius:22px;padding:18px;width:min(340px,100%);text-align:center;border:6px solid var(--green);box-shadow:0 0 0 5px var(--magenta),0 0 0 10px var(--yellow),0 18px 50px rgba(0,0,0,.45);animation:wiggle 2.4s ease-in-out infinite}
@@ -149,18 +150,18 @@ body.dock-on .wrap{max-width:1500px}
 .pill.res{background:var(--yellow);color:var(--ink)}
 .pill.mult{background:var(--magenta);color:var(--text);animation:pulse .55s ease-in-out infinite}
 @keyframes pulse{50%{transform:scale(1.1)}}
-.statement{font-weight:900;font-size:clamp(30px,min(6.2vw,6.7vh),100px);line-height:1.02;margin:min(12px,1.4vh) 0 min(20px,2.2vh);text-wrap:balance;max-width:26ch;overflow-wrap:anywhere;text-shadow:0 3px 0 rgba(0,0,0,.35)}
+.statement{font-weight:900;font-size:clamp(28px,min(6.2vw,6.1vh),100px);line-height:1.02;margin:min(12px,1.4vh) 0 min(20px,2.2vh);text-wrap:balance;max-width:26ch;overflow-wrap:anywhere;text-shadow:0 3px 0 rgba(0,0,0,.35)}
 .statement.sm{font-size:clamp(26px,min(4.2vw,5.4vh),64px);margin-bottom:min(16px,1.8vh)}
 .statement.long{font-size:clamp(28px,min(5vw,6.2vh),80px)}
 .statement.sm.long{font-size:clamp(22px,min(3.4vw,4.4vh),52px)}
 .tote{background:var(--panel);border:4px solid var(--green);border-radius:20px;padding:2px 20px 8px;box-shadow:0 0 0 4px var(--magenta),0 0 50px rgba(45,255,110,.35)}
-.totehead{display:flex;gap:28px;flex-wrap:wrap;align-items:flex-end;padding:min(12px,1.4vh) 0 min(10px,1.2vh)}
+.totehead{display:flex;gap:28px;flex-wrap:wrap;align-items:flex-end;padding:min(12px,1.2vh) 0 min(8px,.9vh)}
 .metric span{display:block;font-size:11.5px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
 .metric b{display:inline-block;font-family:var(--f-display);font-weight:400;color:var(--yellow);font-size:clamp(24px,min(3.4vw,5vh),46px);line-height:1;font-variant-numeric:tabular-nums}
 .metric.small b{font-size:clamp(18px,min(2.4vw,3.4vh),30px);color:var(--text)}
 .bump{animation:bump .35s cubic-bezier(.2,1.6,.4,1)}
 @keyframes bump{0%{transform:scale(1.35);color:var(--green)}100%{transform:scale(1)}}
-.toterow{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:14px;align-items:center;padding:min(9px,.85vh) 0;border-top:2px dashed var(--line)}
+.toterow{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:14px;align-items:center;padding:min(9px,.7vh) 0;border-top:2px dashed var(--line)}
 .toterow .cloth{width:clamp(30px,5vh,54px);height:clamp(30px,5vh,54px);font-size:clamp(16px,2.8vh,26px)}
 .toterow .line{display:flex;align-items:center;gap:12px;margin-top:4px}
 .toterow .nm{font-family:var(--f-display);font-size:clamp(17px,min(2.2vw,3.5vh),32px);line-height:1.1;overflow-wrap:anywhere}
@@ -173,7 +174,8 @@ body.dock-on .wrap{max-width:1500px}
 .toterow.winner .bar{background:rgba(0,0,0,.14)}
 .toterow.winner .bar i{background:var(--magenta)}
 .toterow.winner + .toterow{border-top-color:transparent}
-.toterow.loser{opacity:.6}
+.toterow.loser>:not(.face),.toterow.loser .face .ph{opacity:.6}
+.toterow .face i{font-size:13px;min-width:23px;height:23px}
 @media (min-width:900px){.rows.two{display:grid;grid-template-columns:1fr 1fr;column-gap:40px}}
 .wtag{display:inline-block;margin-left:10px;font-family:var(--f-body);font-size:11px;font-weight:900;letter-spacing:.14em;padding:3px 8px;border-radius:999px;background:var(--magenta);color:var(--text);vertical-align:middle;animation:pulse .5s ease-in-out infinite}
 .verdict{margin-top:min(18px,2vh);font-size:clamp(16px,min(1.8vw,2.8vh),24px);font-weight:800;max-width:60ch}
@@ -213,7 +215,7 @@ body.dock-on .wrap{max-width:1500px}
 .wheelover .multi{background:var(--panel);border:4px solid var(--green);border-radius:22px;padding:8px 26px 12px;box-shadow:0 0 0 4px var(--magenta),0 14px 30px rgba(0,0,0,.45)}
 .resultgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:min(30px,2.4vw);align-items:start}
 .resultcard{min-width:0}
-.itwas{display:flex;align-items:center;gap:16px;margin:6px 0 4px}
+.itwas{display:flex;align-items:center;gap:18px;margin:12px 0 2px}
 .itwas .cloth{width:clamp(56px,10vh,96px);height:clamp(56px,10vh,96px);font-size:clamp(28px,5vh,46px);border-radius:20px}
 .itwas b{font-family:var(--f-display);font-weight:400;font-size:clamp(34px,min(4.6vw,8vh),84px);line-height:1;overflow-wrap:anywhere}
 @media (max-width:880px){.resultgrid{grid-template-columns:minmax(0,1fr)}}
@@ -233,19 +235,19 @@ body.dock-on .wrap{max-width:1500px}
 .pd{text-align:right;font-size:13px;font-weight:800;white-space:nowrap;color:var(--muted);width:6em}
 .pd.up{color:var(--up)}
 .pd.down{color:var(--down)}
-.ladgrid{display:grid;grid-template-columns:repeat(var(--cols),minmax(0,1fr));grid-template-rows:repeat(var(--rows),auto);grid-auto-flow:column;column-gap:30px;background:var(--panel);border-radius:18px;padding:6px 20px;margin-top:min(14px,1.6vh);font-size:clamp(13px,calc(var(--avail) / var(--rows) * .4),28px)}
+.ladgrid{display:grid;grid-template-columns:repeat(var(--cols),minmax(0,1fr));grid-template-rows:repeat(var(--rows),auto);grid-auto-flow:column;column-gap:30px;background:var(--panel);border-radius:18px;padding:6px 20px;margin-top:min(14px,1.6vh);font-size:clamp(13px,calc(var(--avail) / var(--rows) * .5),32px)}
 .lrow{display:grid;grid-template-columns:2em minmax(0,1fr) auto auto;gap:.6em;align-items:center;padding:.3em 0;border-bottom:2px dashed var(--line);font-variant-numeric:tabular-nums;min-width:0}
-.lrow .rk{font-family:var(--f-display);color:var(--muted)}
+.lrow .rk{font-family:var(--f-display);font-size:1em;width:auto;color:var(--muted)}
 .lrow.podium .rk{color:var(--green)}
 .lrow .pn{font-family:var(--f-display);font-size:.9em;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .lrow .pd{font-size:.55em;font-weight:800;color:var(--muted);white-space:nowrap}
 .lrow .pd.up{color:var(--up)}
 .lrow .pd.down{color:var(--down)}
-.lrow .pb{font-family:var(--f-display);color:var(--yellow);white-space:nowrap}
+.lrow .pb{font-family:var(--f-display);font-size:1em;color:var(--yellow);white-space:nowrap}
 @media (max-width:700px){.ladgrid{grid-template-columns:minmax(0,1fr);grid-template-rows:none;grid-auto-flow:row;font-size:17px}}
 .champ{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin:6px 0 10px}
 .trophy{flex:none;width:clamp(56px,9vh,78px);height:clamp(56px,9vh,78px);border-radius:50%;display:grid;place-items:center;background:var(--green);color:var(--ink);font-family:var(--f-display);font-size:38px;box-shadow:0 0 0 5px var(--magenta),0 0 0 10px var(--yellow);animation:pulse .6s ease-in-out infinite}
-.bill{display:inline-flex;flex-wrap:wrap;gap:6px 16px;align-items:center;margin-top:min(14px,1.6vh);background:var(--yellow);color:var(--ink);border-radius:18px;padding:14px 20px;box-shadow:0 6px 0 var(--yellow-deep);transform:rotate(-1.5deg)}
+.bill{display:inline-flex;flex-wrap:wrap;gap:6px 16px;align-items:center;margin:0 0 0 auto;background:var(--yellow);color:var(--ink);border-radius:18px;padding:14px 20px;box-shadow:0 6px 0 var(--yellow-deep);transform:rotate(-1.5deg)}
 .bill b{font-family:var(--f-display);font-weight:400;font-size:clamp(26px,min(4vw,6vh),50px);line-height:1}
 .bill span{font-weight:900;font-size:clamp(16px,1.8vw,22px)}
 
@@ -378,6 +380,9 @@ textarea.inp{resize:vertical;min-height:46px;line-height:1.35}
 @media (max-width:520px){.tote{padding-inline:12px}.toterow{gap:10px}.totehead{gap:20px}.brand{font-size:17px}.coin{width:58px;height:58px}}
 
 /* ---------- switchable looks (purple party is the default above) ---------- */
+html[data-look="purple"] :is(.eyebrow,.raceno,.raceno small,.joined .metric span,.setup-actions .muted){color:#ffffff;text-shadow:0 1px 3px rgba(22,9,51,.55)}
+html[data-look="purple"] :is(.pill.mult,.wtag){background:#160933;color:#ff7ad9}
+.btn.ghost{background:rgba(0,0,0,.28)}
 html[data-look="neon"]{--stage:#17053d;--bar:#10032e;
   --glow:radial-gradient(circle at 12% 18%,rgba(45,255,110,.2),transparent 34%),radial-gradient(circle at 88% 26%,rgba(255,45,149,.22),transparent 36%),radial-gradient(circle at 50% 105%,rgba(24,224,255,.2),transparent 45%);
   --rays:repeating-conic-gradient(rgba(45,255,110,.13) 0deg 6deg,transparent 6deg 12deg,rgba(255,45,149,.13) 12deg 18deg,transparent 18deg 24deg,rgba(255,224,20,.12) 24deg 30deg,transparent 30deg 36deg,rgba(24,224,255,.13) 36deg 42deg,transparent 42deg 48deg)}
@@ -436,7 +441,7 @@ body.player .slip::before{height:7px}
 .rlabel{font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 3px}
 .q.bet{font-size:clamp(21px,min(6.4vw,3.8vh),30px);margin:0 0 10px;line-height:1.1}
 .picks.grid2{grid-template-columns:1fr 1fr;gap:6px}
-.picks.grid2 .pick{grid-template-columns:auto minmax(0,1fr);gap:8px;padding:5px 8px 5px 5px;min-height:clamp(44px,6.6vh,58px);border-width:2.5px}
+.picks.grid2 .pick{grid-template-columns:auto minmax(0,1fr);gap:8px;padding:5px 8px 5px 5px;min-height:clamp(44px,6.4vh,56px);border-width:2.5px}
 .picks.grid2 .pick:last-child:nth-child(odd){grid-column:1/-1}
 .picks.grid2 .pick .pn2{display:block;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .picks.grid2 .pick .po{display:block;font-size:12px;margin-top:2px}
@@ -450,9 +455,77 @@ body.player .sbtn{padding:clamp(8px,1.4vh,12px) 10px;font-size:15px}
 body.player .place{margin-top:10px;padding:clamp(11px,1.9vh,15px)}
 .betstatus{font-size:13px;font-weight:800;color:var(--ink-soft);margin-top:8px;text-align:center}
 .betstatus b{color:var(--win)}
+
+/* ---------- faces (trainee photos or placeholders) ---------- */
+.face{position:relative;display:inline-block;flex:none;width:var(--fs,44px);height:var(--fs,44px)}
+.face .ph{display:block;width:100%;height:100%;border-radius:50%;overflow:hidden;background:#ffe9b8;box-shadow:0 0 0 3px var(--ring)}
+.face .ph img,.face .ph svg{display:block;width:100%;height:100%;object-fit:cover}
+.face i{position:absolute;right:-6px;bottom:-4px;min-width:22px;height:22px;padding:0 4px;border-radius:7px;display:grid;place-items:center;font-family:var(--f-display);font-size:12px;font-style:normal;line-height:1;box-shadow:0 0 0 2px var(--panel)}
+.face.sm{--fs:36px}
+.face.sm i{min-width:18px;height:18px;font-size:10px;border-radius:6px;right:-5px;bottom:-3px}
+.face.xl{--fs:clamp(64px,11vh,130px)}
+.face.xl .ph{box-shadow:0 0 0 6px var(--ring),0 0 0 11px var(--panel)}
+.face.xl i{min-width:36px;height:36px;font-size:20px;border-radius:10px;right:-2px;bottom:-2px}
+.toterow .face{--fs:clamp(30px,4.9vh,56px)}
+.slip .face i{box-shadow:0 0 0 2px var(--ticket)}
+.payshead{display:flex;justify-content:space-between;gap:12px;font-size:10.5px;line-height:1.2;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding:0 2px 3px}
+.toterow .odds.hid{opacity:.5}
+.rows.grow .bar i{transform-origin:left center;animation:grow .9s cubic-bezier(.2,.8,.2,1) both}
+.rows.grow .odds{animation:pop .45s cubic-bezier(.2,1.6,.4,1) both;animation-delay:.3s}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+/* ---------- countdown ---------- */
+.racehead .timer{margin-left:auto}
+.timer{display:inline-flex;align-items:center;gap:10px}
+.timer>div{display:flex;align-items:baseline;gap:8px}
+.timer svg{width:clamp(34px,5vh,54px);height:clamp(34px,5vh,54px)}
+.timer .tr-bg{fill:none;stroke:rgba(0,0,0,.3);stroke-width:6}
+.timer .tr-fg{fill:none;stroke:var(--green);stroke-width:6;stroke-linecap:round;stroke-dasharray:100.53;transition:stroke-dashoffset .25s linear}
+.timer b{display:block;font-family:var(--f-display);font-weight:400;font-size:clamp(24px,4.2vh,42px);line-height:1;color:var(--text)}
+.timer span{font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--text)}
+.timer.hurry .tr-fg{stroke:var(--red)}
+.timer.hurry b{animation:pulse .5s ease-in-out infinite}
+.cdpill{float:right;font-family:var(--f-display);font-size:13px;letter-spacing:0;background:var(--ink);color:#ffffff;border-radius:999px;padding:2px 10px;margin-top:-2px}
+.cdpill.hurry{background:var(--red);animation:pulse .5s ease-in-out infinite}
+.comeback{background:var(--green);color:var(--ink);border-radius:10px;padding:5px 10px;font-weight:900;font-size:13px;margin:-2px 0 8px;text-align:center}
+/* ---------- drumroll + story ---------- */
+.toterow.out{opacity:.32}
+.toterow.out .nm{text-decoration:line-through;text-decoration-thickness:3px}
+.toterow.final2{animation:final2 .45s ease-in-out infinite alternate;border-radius:12px}
+@keyframes final2{from{background:transparent}to{background:rgba(255,255,255,.14)}}
+.drumcard{display:grid;gap:10px;align-content:start}
+.drumcard .and{font-family:var(--f-display);font-weight:400;font-size:clamp(34px,min(5vw,8vh),84px);line-height:1}
+.dots{display:inline-flex;gap:.25em;margin-left:.1em}
+.dots i{display:block;width:.3em;height:.3em;border-radius:50%;background:var(--green);animation:dot .6s ease-in-out infinite}
+.dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}
+@keyframes dot{50%{transform:translateY(-.35em)}}
+.drumq{font-family:var(--f-display);font-size:60px;line-height:1;text-align:center;color:var(--magenta-deep);animation:pulse .5s ease-in-out infinite;margin:4px 0 8px}
+.mrow.outrow{opacity:.35}
+.mrow.outrow .mn{text-decoration:line-through}
+.mrow.final2{animation:final2p .45s ease-in-out infinite alternate;border-radius:8px}
+@keyframes final2p{from{background:transparent}to{background:var(--ticket-tint)}}
+.story{margin-top:min(12px,1.3vh);background:var(--panel);border:3px solid var(--green);border-radius:16px;padding:min(10px,1.1vh) 14px;max-width:36em}
+.story .k{font-size:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--green);margin:0}
+.story .t{font-size:clamp(15px,min(1.6vw,2.6vh),22px);font-weight:800;color:var(--text);margin:2px 0 0}
+.storyp{background:var(--ticket-tint);border-radius:12px;padding:8px 10px;color:var(--ink)!important}
+/* ---------- setup additions ---------- */
+.trow{display:flex;align-items:center;gap:10px}
+.trow .inp{flex:1;min-width:0}
+.btn.sm{padding:9px 12px;font-size:13px}
+label.btn{cursor:pointer}
+.srow{grid-template-areas:"n t w x" ". s s ."}
+.srow .story-in{grid-area:s;font-size:14px}
+@media (max-width:620px){.srow{grid-template-areas:"n t x" ". w ." ". s ."}}
+/* ---------- calm while reading, hype at the big moments ---------- */
+body.calm::before{animation-duration:80s}
+body.calm .bulbs{animation-duration:1.2s}
+body.calm :is(.runner,.qrcard){animation:none}
+body.calm .pill.open{animation-duration:1.8s}
+body.calm .btn.primary{animation-duration:2.6s}
+body.hype::before{animation-duration:7s}
+body.hype .bulbs{animation-duration:.16s}
 @media (prefers-reduced-motion:reduce){
   body::before,.brand,.bulbs,.runner,.qrcard,.pill,.wtag,.btn,.trophy,.slip::before,.wheel .b0,.wheel .b1,.wheel .b2,.multi.jackpot b{animation:none!important}
-  .anim,.flash,.pop,.bump,.popin .chip,.pick.fresh{animation:none}
+  .anim,.flash,.pop,.bump,.popin .chip,.pick.fresh,.toterow.final2,.mrow.final2,.dots i,.drumq,.timer b,.cdpill,.rows.grow .bar i,.rows.grow .odds{animation:none}
   .bar i{transition:none}
 }
 </style>
@@ -491,7 +564,8 @@ const SADDLE=[["#2dff6e","#160933"],["#ff2d95","#160933"],["#ffe014","#160933"],
 /* Bonus wheel: 20 segments. 1× ×4, 2× ×6, 3× ×4, 5× ×3, 10× ×2, 20× ×1 */
 const WHEEL=[2,1,3,2,5,1,2,10,3,2,1,5,2,3,20,1,2,5,3,10];
 const WCOL={1:["#18e0ff","#160933"],2:["#ffe014","#160933"],3:["#ff2d95","#ffffff"],5:["#2dff6e","#160933"],10:["#ff8a1f","#160933"],20:["url(#rb)","#160933"]};
-const SPIN_MS=9000,TURNS=12;
+const SPIN_MS=9000,TURNS=12,DRUM_MS=4200;
+const SIL=`<svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" fill="#ffe9b8"/><circle cx="20" cy="16" r="7.5" fill="rgba(22,9,51,.42)"/><path d="M5 41c1-10 7-15 15-15s14 5 15 15z" fill="rgba(22,9,51,.42)"/></svg>`;
 /* Looks the host can switch between; the first is the default */
 const LOOKS=[["purple","Purple party","linear-gradient(135deg,#6a12c9,#ff2d95)"],["orange","PwC orange","linear-gradient(135deg,#d04a02,#ffb600)"],["neon","Neon night","linear-gradient(135deg,#17053d,#2dff6e)"],["green","Green stage","linear-gradient(135deg,#1fe060,#ffe014)"],["burst","Colour burst","conic-gradient(#2dff6e,#ff2d95,#ffe014,#18e0ff,#2dff6e)"]];
 const lookOk=v=>LOOKS.some(l=>l[0]===v);
@@ -539,12 +613,13 @@ const HP=new URLSearchParams(location.hash.slice(1));
 const MODE=HP.get("host")?"host":HP.get("join")?"player":"landing";
 let DBURL=normDb(HP.get("db"))||normDb(DATABASE_URL)||normDb(lsGet("stakes.db"));
 const baseURL=()=>location.origin+location.pathname;
-const joinURL=code=>`${baseURL()}#join=${code}&db=${shortDb(DBURL)}`;
+const joinURL=code=>normDb(DATABASE_URL)===DBURL?`${baseURL()}#join=${code}`:`${baseURL()}#join=${code}&db=${shortDb(DBURL)}`;
 const hostURL=key=>`${baseURL()}#host=${key}&db=${shortDb(DBURL)}`;
 window.addEventListener("hashchange",()=>location.reload());
 
 /* ---------- database layer (Firebase Realtime Database) ---------- */
-let FB=null;
+let FB=null,FB_OFF=0;
+const now=()=>Date.now()+FB_OFF;
 async function connect(url){
   if(window.__MOCK_FB){FB=window.__MOCK_FB;return}
   const base=`https://www.gstatic.com/firebasejs/${FIREBASE_SDK}/`;
@@ -560,6 +635,7 @@ async function connect(url){
     remove:p=>D.remove(r(p)),
     onDisconnectUpdate:(p,v)=>D.onDisconnect(r(p)).update(v)
   };
+  D.onValue(r(".info/serverTimeOffset"),s=>{FB_OFF=Number(s.val())||0});
 }
 
 /* ---------- state ---------- */
@@ -569,7 +645,8 @@ const S={
   view:null,lastKey:null,draft:null,stale:false,busy:false,problem:null,
   me:{pid:"",nick:""},pickT:null,stake:0,stakeRound:null,lastStake:null,lastPot:null,
   confirm:null,confirmT:null,toastT:null,showQR:false,primary:null,
-  seen:new Set(),spinStart:{},fx:new Set(),wq:Promise.resolve(),unsub:{},gameSub:null,rereg:0
+  seen:new Set(),spinStart:{},revealStart:{},photos:{},autoClosed:null,cdSec:null,drumStep:null,
+  fx:new Set(),wq:Promise.resolve(),unsub:{},gameSub:null,rereg:0
 };
 
 /* ---------- sound (host screen) ---------- */
@@ -599,7 +676,10 @@ const sfx={
     if(m>=10)for(let i=0;i<10;i++)tone(1568+((i%3)*262),.08,"square",.05,.5+i*.05);
   },
   reveal:()=>{for(let i=0;i<8;i++)tone(180+i*20,.05,"triangle",.07,i*.04);[523,659,784,1047].forEach((f,i)=>tone(f,.22,"sawtooth",.07,.34+i*.06))},
-  fanfare:()=>[523,659,784,1047,784,1047,1319,1568].forEach((f,i)=>tone(f,.22,"triangle",.15,i*.12))
+  fanfare:()=>[523,659,784,1047,784,1047,1319,1568].forEach((f,i)=>tone(f,.22,"triangle",.15,i*.12)),
+  beep:sec=>tone(700+(6-sec)*90,.09,"square",.08),
+  buzzer:()=>{tone(150,.55,"sawtooth",.12);tone(110,.55,"sawtooth",.1,.04)},
+  drum:times=>{for(let i=0;i<36;i++)tone(85+(i%3)*12,.07,"triangle",.1,i*.11);(times||[]).forEach(t=>tone(330,.12,"square",.06,t/1000))}
 };
 
 /* ---------- money and payouts (parimutuel + bonus wheel) ---------- */
@@ -615,9 +695,11 @@ function settle(r,seed){
 }
 function rounds(g){const r=g.rounds;return Array.isArray(r)?r:r?Object.values(r):[]}
 function trainees(g){const t=g&&g.trainees;return Array.isArray(t)?t:t?Object.values(t):[]}
-function balances(g){
-  const bal={};
-  for(const r of rounds(g)){const {nets}=settle(r,g.seed);for(const [k,n] of Object.entries(nets))bal[k]=(k in bal?bal[k]:g.start)+n}
+function balances(g,skipCurrent){
+  const bal={},cb=Math.max(0,Number(g.comeback)||0),rs=rounds(g),known=new Set(Object.keys(S.players||{}));
+  const rescue=()=>{if(!cb)return;for(const k of known){const b=k in bal?bal[k]:g.start;if(b<=0)bal[k]=b+cb}};
+  rs.forEach((r,i)=>{if(i>0)rescue();const {nets}=settle(r,g.seed);for(const [k,n] of Object.entries(nets)){known.add(k);bal[k]=(k in bal?bal[k]:g.start)+n}});
+  const cur=g.round;if(!skipCurrent&&cur&&rs.length&&!rs.some(x=>x.k===cur.k))rescue();
   return bal;
 }
 function balOf(bal,k){return k in bal?bal[k]:S.game.start}
@@ -641,6 +723,9 @@ function nickOf(k){const p=S.players[k];return (p&&cleanNick(p.nick))||"Player"}
 function rosterList(){return Object.entries(S.players||{}).filter(([,p])=>p&&cleanNick(p.nick)).map(([k,p])=>({k,nick:cleanNick(p.nick),on:!!p.online}))}
 const onlineCount=()=>rosterList().filter(p=>p.on).length;
 const trainee=id=>trainees(S.game).find(t=>t.id===id);
+function okPhoto(p){return typeof p==="string"&&p.length<150000&&/^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(p)}
+function faceHTML(t,photo,cls){const c=SADDLE[(t.no-1)%SADDLE.length];return `<span class="face${cls?" "+cls:""}" style="--ring:${c[0]}" aria-hidden="true"><span class="ph">${okPhoto(photo)?`<img src="${photo}" alt="">`:SIL}</span><i style="background:${c[0]};color:${c[1]}">${t.no}</i></span>`}
+function face(t,cls){return faceHTML(t,S.photos[t.id],cls)}
 function cloth(t,sm){const c=SADDLE[(t.no-1)%SADDLE.length];return `<span class="cloth${sm?" sm":""}" style="background:${c[0]};color:${c[1]}" aria-hidden="true">${t.no}</span>`}
 function cleanBets(raw,g){
   const bal=balances(g),ids=new Set(trainees(g).map(t=>t.id)),out={};
@@ -726,6 +811,51 @@ function tickLoop(el,anim){
   })();
 }
 
+/* ---------- countdown ---------- */
+function timeLeft(g){const r=g&&g.round;if(!r||g.phase!=="betting"||!r.endsAt)return null;return Math.max(0,r.endsAt-now())}
+function ringOff(g,tl){return (100.53*(1-Math.min(1,tl/((g.round.dur||30)*1000)))).toFixed(2)}
+function timerHTML(g){
+  const tl=timeLeft(g);if(tl===null)return "";const sec=Math.ceil(tl/1000);
+  return `<div class="timer${sec<=5?" hurry":""}" data-cdwrap><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="16" class="tr-bg"/><circle cx="20" cy="20" r="16" class="tr-fg" data-cdring style="stroke-dashoffset:${ringOff(g,tl)}" transform="rotate(-90 20 20)"/></svg><div><b data-cd>${sec}</b><span>seconds left</span></div></div>`;
+}
+function cdPill(g){const tl=timeLeft(g);if(tl===null)return "";const sec=Math.ceil(tl/1000);return `<span class="cdpill${sec<=5?" hurry":""}" data-cdwrap><b data-cd>${sec}</b>s</span>`}
+/* ---------- reveal drumroll ---------- */
+function dropOrder(g){const r=g.round;return trainees(g).filter(t=>t.id!==r.answer).sort((a,b)=>h32(r.k+a.id)-h32(r.k+b.id))}
+function dropTimes(n){const out=[],mid=DRUM_MS*.55;for(let i=0;i<n-1;i++)out.push(Math.round(400+(mid-400)*(i+1)/Math.max(1,n-1)));out.push(DRUM_MS-250);return out}
+function drumInfo(g){
+  const r=g.round,st=r&&S.revealStart[r.k];if(!st)return {done:true};
+  const el=Date.now()-st;if(el>=DRUM_MS)return {done:true};
+  const order=dropOrder(g),times=dropTimes(order.length),out=new Set();
+  order.forEach((t,i)=>{if(el>=times[i])out.add(t.id)});
+  return {done:false,out,left:trainees(g).length-out.size,step:out.size};
+}
+function noteReveal(prev,next){
+  const r=next&&next.round;if(!r||next.phase!=="revealed"||r.k in S.revealStart)return;
+  const live=!!prev&&prev.phase!=="revealed"&&!REDUCED;
+  S.revealStart[r.k]=live?Date.now():0;
+  if(!live)return;
+  if(S.mode==="host")sfx.drum(dropTimes(dropOrder(next).length));
+  setTimeout(()=>{if(S.mode==="host"){sfx.reveal();S.fx.add("flash")}render()},DRUM_MS+60);
+}
+/* One clock for the countdown and the drumroll */
+setInterval(()=>{
+  const g=S.game;if(!g)return;
+  const tl=timeLeft(g);
+  if(tl!==null){
+    const sec=Math.ceil(tl/1000);
+    document.querySelectorAll("[data-cd]").forEach(el=>{el.textContent=sec});
+    document.querySelectorAll("[data-cdring]").forEach(el=>{el.style.strokeDashoffset=ringOff(g,tl)});
+    document.querySelectorAll("[data-cdwrap]").forEach(el=>el.classList.toggle("hurry",sec<=5));
+    if(sec!==S.cdSec){
+      if(S.mode==="host"&&sec<=5&&sec>0)sfx.beep(sec);
+      if(sec===0&&S.cdSec!==null&&S.cdSec>0){if(S.mode==="host")sfx.buzzer();else buzz(200);render()}
+      S.cdSec=sec;
+    }
+    if(tl<=0&&S.mode==="host"&&S.autoClosed!==g.round.k&&!S.busy){S.autoClosed=g.round.k;run(closeBetting)}
+  }else S.cdSec=null;
+  if(g.phase==="revealed"){const di=drumInfo(g);const st=di.done?"done":di.step;if(st!==S.drumStep){S.drumStep=st;if(!di.done)render()}}
+},250);
+
 /* ---------- confetti + flash ---------- */
 function confetti(){
   if(REDUCED)return;
@@ -743,7 +873,7 @@ function fxOnce(id,kind){if(!S.seen.has(id)){S.seen.add(id);S.fx.add(kind||"conf
 /* ---------- QR ---------- */
 function qrSVG(text){
   try{
-    const q=qrcode(0,"M");q.addData(text);q.make();
+    const q=qrcode(0,"L");q.addData(text);q.make();
     const n=q.getModuleCount(),m=4,s=n+2*m;let d="";
     for(let y=0;y<n;y++)for(let x=0;x<n;x++)if(q.isDark(y,x))d+=`M${x+m} ${y+m}h1v1h-1z`;
     return `<svg class="qr" viewBox="0 0 ${s} ${s}" shape-rendering="crispEdges" role="img" aria-label="QR code to join the game"><rect width="${s}" height="${s}" fill="#ffffff"/><path d="${d}" fill="#000000"/></svg>`;
@@ -785,24 +915,32 @@ async function newCode(){
 async function startGame(){
   const sd=normalizeSetup(clone(S.host.setup)),gid=rid().slice(0,6);
   if(!S.code){S.code=await newCode();await withTimeout(FB.update(hpath(""),{code:S.code}),12000);subscribeGame()}
-  const statements=sd.statements.map(s=>({text:s.text,answer:s.answer}));
+  const statements=sd.statements.map(s=>({text:s.text,answer:s.answer,story:s.story||""}));
   await withTimeout(FB.update(hpath(""),{run:{gid,statements}}),12000);
   S.host=Object.assign({},S.host,{run:{gid,statements}});
   await FB.remove(gpath("bets")).catch(()=>{});
+  await withTimeout(FB.set(gpath("photos"),photosOf(sd)),12000).catch(()=>{});
   await setGame({title:sd.title,cur:sd.cur,start:sd.start,seed:sd.seed,wheel:sd.wheel,payer:sd.payer,theme:sd.theme,
+    timer:sd.timer,comeback:sd.comeback,live:sd.live,
     trainees:sd.trainees.map((t,i)=>({id:t.id,name:t.name,no:i+1})),
     total:sd.statements.length,gid,idx:-1,phase:"lobby"});
   S.view="board";
 }
+function photosOf(sd){const o={};(sd.trainees||[]).forEach(t=>{if(okPhoto(t.photo))o[t.id]=t.photo});return Object.keys(o).length?o:null}
+function withTimer(g){const dur=Math.max(0,Math.floor(Number(g.timer)||0));delete g.round.endsAt;delete g.round.dur;if(dur>0){g.round.dur=dur;g.round.endsAt=now()+dur*1000+800}}
 async function openRace(i){
   if(!runOk())throw {code:"norun"};
-  const g=clone(S.game);g.idx=i;g.phase="betting";g.round={k:g.gid+"-"+i,n:i,text:runStatements()[i].text};
+  const g=clone(S.game);g.idx=i;g.phase="betting";g.round={k:g.gid+"-"+i,n:i,text:runStatements()[i].text};withTimer(g);
   await setGame(g);
 }
+async function addTime(){
+  const g=clone(S.game);if(g.phase!=="betting"||!g.round.endsAt)return;
+  g.round.endsAt=Math.max(g.round.endsAt,now())+15000;g.round.dur=(g.round.dur||30)+15;await setGame(g);
+}
 async function closeBetting(){
-  const g=clone(S.game);
+  const g=clone(S.game);if(g.phase!=="betting")return;
   const raw=await withTimeout(FB.get(gpath("bets/"+g.round.k)),12000);
-  g.round.bets=cleanBets(raw,S.game);g.phase="locked";
+  g.round.bets=cleanBets(raw,S.game);g.phase="locked";delete g.round.endsAt;
   await setGame(g);
 }
 async function spinWheel(){
@@ -810,10 +948,11 @@ async function spinWheel(){
   const seg=randInt(WHEEL.length);g.round.spin={seg,id:rid()};g.round.mult=WHEEL[seg];
   await setGame(g);
 }
-async function reopen(){const g=clone(S.game);delete g.round.bets;delete g.round.spin;delete g.round.mult;g.phase="betting";await setGame(g)}
+async function reopen(){const g=clone(S.game);delete g.round.bets;delete g.round.spin;delete g.round.mult;g.phase="betting";withTimer(g);S.autoClosed=null;await setGame(g)}
 async function reveal(){
   if(!runOk())throw {code:"norun"};
-  const g=clone(S.game);g.round.answer=runStatements()[g.idx].answer;
+  const g=clone(S.game),st=runStatements()[g.idx];g.round.answer=st.answer;
+  const story=clean(st.story||"",140);if(story)g.round.story=story;
   g.rounds=rounds(g).concat([g.round]);g.phase="revealed";await setGame(g);
 }
 async function showStandings(){const g=clone(S.game);g.phase="standings";await setGame(g)}
@@ -833,6 +972,7 @@ function registerMe(){
 }
 async function placeBet(){
   const r=S.game&&S.game.round;if(!r||S.game.phase!=="betting"||!S.pickT||S.stake<=0)return;
+  if(r.endsAt&&now()>r.endsAt+400){toast("Time's up! Betting is closed.");render();return}
   try{await withTimeout(FB.set(gpath(`bets/${r.k}/${S.me.pid}`),{t:S.pickT,a:S.stake,at:Date.now()}),12000);buzz([20,30,40]);toast("Bet placed! You can change it until betting closes.")}
   catch(e){toast(errMsg(e))}
 }
@@ -847,7 +987,6 @@ function hostCues(prev,next){
   if(S.mode!=="host"||!prev||!next||prev.phase===next.phase)return;
   if(next.phase==="betting")sfx.open();
   else if(next.phase==="locked")sfx.close();
-  else if(next.phase==="revealed"){sfx.reveal();S.fx.add("flash")}
   else if(next.phase==="final")sfx.fanfare();
 }
 function subscribeGame(){
@@ -856,7 +995,7 @@ function subscribeGame(){
   const t=setTimeout(()=>{if(S.game===undefined){S.stale=true;render()}},10000);
   FB.on(gpath("state"),v=>{
     clearTimeout(t);S.stale=false;
-    const prev=S.game;S.game=v||null;noteSpin(prev,S.game);hostCues(prev,S.game);
+    const prev=S.game;S.game=v||null;noteSpin(prev,S.game);noteReveal(prev,S.game);hostCues(prev,S.game);
     const rk=S.game&&S.game.phase==="betting"&&S.game.round?S.game.round.k:null;
     if(rk!==S.betsKey){
       if(S.unsub.bets)S.unsub.bets();S.unsub.bets=null;S.bets={};S.betsKey=rk;S.betCount=0;
@@ -869,6 +1008,7 @@ function subscribeGame(){
     if(S.view===null)S.view=S.mode==="host"?(S.game?"board":"setup"):"play";
     render();
   },e=>{clearTimeout(t);onDbError(e)});
+  FB.on(gpath("photos"),v=>{const o={};for(const [k,p] of Object.entries(v||{}))if(okPhoto(p))o[k]=p;S.photos=o;render()},()=>{});
   FB.on(gpath("players"),v=>{
     S.players=v||{};
     if(S.mode==="player"&&S.me.nick&&!S.players[S.me.pid]&&Date.now()-S.rereg>5000){S.rereg=Date.now();registerMe()}
@@ -960,6 +1100,9 @@ function renderChrome(key){
   $("#dock").innerHTML=dock;
   document.body.classList.toggle("dock-on",!!dock);
   document.body.classList.toggle("player",S.mode==="player");
+  const ph=g&&g.phase;let mood="calm";
+  if((key==="board"||key==="slip")&&(ph==="locked"||ph==="revealed"||ph==="final"))mood="hype";
+  document.body.classList.toggle("calm",mood==="calm");document.body.classList.toggle("hype",mood==="hype");
   $("#overlay").innerHTML=S.showQR&&key==="board"&&S.game?`<div class="overlay" data-act="qr" role="dialog" aria-label="Join QR code">${qrCard()}</div>`:"";
 }
 
@@ -1006,7 +1149,7 @@ function boardLobby(g){
   const steps=[
     `<b>Scan the QR code</b> and pick a nickname.`,
     `Each round shows <b>a statement about one trainee</b>.`,
-    `<b>Bet play money</b> on who it's about. Everyone starts with <b>${fmt(g.start)}</b>.`,
+    `<b>Bet play money</b> on who it's about${g.timer>0?", before the timer runs out":""}. Everyone starts with <b>${fmt(g.start)}</b>.`,
     `Guessed right? <b>Share the pot</b> with the other winners. The fewer winners, the bigger your share.`,
     g.wheel?`The <b>bonus wheel</b> multiplies the house money in the pot, up to <b>20×</b>. Most money at the end wins!`:`<b>Most money</b> at the end wins!`
   ];
@@ -1021,32 +1164,42 @@ function boardLobby(g){
     <div class="chiprow">${roster.map(r=>`<span class="chip${r.on?"":" off"}">${esc(r.nick)}</span>`).join("")||'<span class="muted">Nobody yet. Players appear here as they join.</span>'}</div>
   </div>`;
 }
-function toteHTML(g,bets,ans){
-  const hm=houseMult(g),bk=book(bets,hm),ts=trainees(g),flash=ans&&!S.seen.has("b"+g.round.k);if(ans)S.seen.add("b"+g.round.k);
+function toteHTML(g,bets,ans,rowCls){
+  const hm=houseMult(g),bk=book(bets,hm),ts=trainees(g),flash=ans&&!rowCls&&!S.seen.has("b"+g.round.k);if(ans&&!rowCls)S.seen.add("b"+g.round.k);
+  const hide=g.phase==="betting"&&!g.live;
+  const grow=g.phase==="locked"&&!g.live&&!S.seen.has("g"+g.round.k);if(grow)S.seen.add("g"+g.round.k);
   const bump=S.lastPot!==null&&S.lastPot!==bk.total;S.lastPot=bk.total;
   const rows=ts.map(t=>{
     const s=bk.by[t.id]||0,nb=Object.values(bets).filter(b=>b.t===t.id).length;
-    const cls=ans?(t.id===ans?" winner"+(flash?" flash":""):" loser"):"";
+    const cls=rowCls?rowCls(t):ans?(t.id===ans?" winner"+(flash?" flash":""):" loser"):"";
     const w=bk.stakes?Math.round(s/bk.stakes*100):0;
-    return `<div class="toterow${cls}">${cloth(t)}<div class="min0"><div class="nm">${esc(t.name)}${t.id===ans?'<span class="wtag">WINNER</span>':""}</div><div class="line"><div class="bar"><i style="width:${w}%"></i></div><span class="sub">${fmt(s)} · ${nb} ${nb===1?"bet":"bets"}</span></div></div><div class="odds">${oddsText(bk.total,s)}</div></div>`;
+    const line=hide?`<div class="line"><span class="sub">Bets hidden until betting closes</span></div>`:`<div class="line"><div class="bar"><i style="width:${w}%"></i></div><span class="sub">${fmt(s)} · ${nb} ${nb===1?"bet":"bets"}</span></div>`;
+    return `<div class="toterow${cls}">${face(t)}<div class="min0"><div class="nm">${esc(t.name)}${t.id===ans&&!rowCls?'<span class="wtag">WINNER</span>':""}</div>${line}</div><div class="odds${hide?" hid":""}">${hide?"?":oddsText(bk.total,s)}</div></div>`;
   }).join("");
   return `<div class="tote">
     <div class="totehead"><div class="metric"><span>Pot</span><b class="${bump?"bump":""}">${fmt(bk.total)}</b></div><div class="metric small"><span>Bets</span><b>${bk.count}</b></div>${g.seed?`<div class="metric small"><span>House money${hm>1?` × ${hm}`:""}</span><b class="${bump?"bump":""}">${fmt(g.seed*hm)}</b></div>`:""}</div>
-    <div class="rows${ts.length>5&&g.phase==="betting"?" two":""}">${rows}</div>
+    <div class="payshead"><span>Who is it?</span><span>${hide?"Odds shown when betting closes":"Pays"}</span></div>
+    <div class="rows${ts.length>5&&g.phase==="betting"?" two":""}${grow?" grow":""}">${rows}</div>
   </div>`;
 }
 function multLabel(m){return m>=20?"Jackpot! House money × 20":m>=10?"Mega bonus! House money × 10":m>1?`House money × ${m}`:"No bonus this round"}
 function boardRace(g){
   const r=g.round,bets=liveBets(),ans=g.phase==="revealed"?r.answer:null,m=r.mult||1;
   const long=String(r.text||"").length>70?" long":"";
-  const pill=g.phase==="betting"?'<span class="pill open">Betting open</span>':g.phase==="locked"?'<span class="pill shut">Betting closed</span>':'<span class="pill res">Result</span>';
-  const head=`<div class="racehead"><span class="raceno">Round ${r.n+1} <small>of ${g.total}</small></span>${pill}${ans&&m>1?`<span class="pill mult">${m}× round</span>`:""}</div>`;
+  const di=ans?drumInfo(g):{done:true};
+  const pill=g.phase==="betting"?'<span class="pill open">Betting open</span>':g.phase==="locked"?'<span class="pill shut">Betting closed</span>':di.done?'<span class="pill res">Result</span>':'<span class="pill shut">Revealing…</span>';
+  const head=`<div class="racehead"><span class="raceno">Round ${r.n+1} <small>of ${g.total}</small></span>${pill}${ans&&m>1&&di.done?`<span class="pill mult">${m}× round</span>`:""}${g.phase==="betting"?timerHTML(g):""}</div>`;
   if(g.phase==="locked"&&g.wheel){
     const si=spinInfo(r);let over="";
     if(!si)over=`<p class="wheelcap">Spin for this round's multiplier</p>`;
     else if(si.done){over=`<div class="multi${si.mult>=10?" jackpot":""}${S.seen.has("m"+r.k)?"":" pop"}"><b>${si.mult}×</b><span>${multLabel(si.mult)}</span></div>`;S.seen.add("m"+r.k)}
     return `<section>${head}<h2 class="statement sm${long}">${esc(r.text)}</h2>
       <div class="lockgrid"><div class="wheelbox">${wheelHTML(r,"big")}<div class="wheelover">${over}</div></div><div class="min0">${toteHTML(g,bets,null)}</div></div></section>`;
+  }
+  if(ans&&!di.done){
+    const rowCls=t=>di.out.has(t.id)?" out":di.left<=2?" final2":"";
+    return `<section>${head}<h2 class="statement sm${long}">${esc(r.text)}</h2>
+      <div class="resultgrid"><div class="drumcard"><p class="eyebrow">And the answer is</p><p class="and">${di.left<=2?"It's between two":"Who is it?"}<span class="dots"><i></i><i></i><i></i></span></p></div><div class="min0">${toteHTML(g,bets,ans,rowCls)}</div></div></section>`;
   }
   if(ans){
     const st=settle(r,g.seed),wt=trainee(ans),first=!S.seen.has("p"+r.k);S.seen.add("p"+r.k);
@@ -1055,13 +1208,14 @@ function boardRace(g){
     const verdict=winners.length
       ?`<p class="verdict">${winners.length} ${winners.length===1?"player":"players"} split the <b>${fmt(st.pot)}</b> pot${m>1?` (house money <b>× ${m}</b>)`:""}.</p><div class="payouts${first?" popin":""}">${winners.map(([k,n])=>`<span class="chip">${esc(nickOf(k))} <span class="plus">${signed(n)}</span></span>`).join("")}</div>`
       :`<p class="verdict">Nobody picked ${esc(wt.name)}. The house keeps the <b>${fmt(st.pot)}</b> pot.</p>`;
+    const story=`<div class="story"><p class="k">Stand up, ${esc(wt.name)}!</p>${r.story?`<p class="t">${esc(r.story)}</p>`:""}</div>`;
     return `<section>${head}<h2 class="statement sm${long}">${esc(r.text)}</h2>
-      <div class="resultgrid"><div class="resultcard"><p class="eyebrow">It was</p><div class="itwas">${cloth(wt)}<b>${esc(wt.name)}</b></div>${verdict}</div><div class="min0">${toteHTML(g,bets,ans)}</div></div></section>`;
+      <div class="resultgrid"><div class="resultcard"><p class="eyebrow">It was</p><div class="itwas">${face(wt,"xl")}<b>${esc(wt.name)}</b></div>${story}${verdict}</div><div class="min0">${toteHTML(g,bets,ans)}</div></div></section>`;
   }
   return `<section>${head}<h2 class="statement${long}">${esc(r.text)}</h2>${toteHTML(g,bets,null)}</section>`;
 }
-function ladderGrid(st,showD,avail){
-  const n=st.length,cols=n<=7?1:n<=14?2:n<=24?3:4,rows=Math.max(1,Math.ceil(n/cols));
+function ladderGrid(st,showD,avail,maxRows){
+  const n=st.length,cols=Math.min(4,Math.max(1,Math.ceil(n/(maxRows||12)))),rows=Math.max(1,Math.ceil(n/cols));
   return `<div class="ladgrid" style="--cols:${cols};--rows:${rows};--avail:${avail}">${st.map((p,i)=>{const rk=rankAt(st,i),d=p.d;return `<div class="lrow${rk<=3?" podium":""}"><span class="rk">${rk}</span><span class="pn">${esc(p.nick)}</span>${showD?`<span class="pd ${d>0?"up":d<0?"down":""}">${d?signed(d):"±0"}</span>`:"<span></span>"}<span class="pb">${fmt(p.bal)}</span></div>`}).join("")}</div>`;
 }
 function boardStandings(g,final){
@@ -1069,9 +1223,9 @@ function boardStandings(g,final){
   if(final&&st.length){
     const ch=champions(st);fxOnce("final-board-"+g.gid);
     const bill=g.payer?`<div class="bill"><b>${fmt(ch[0].bal)}</b><span>${ch.length>1?"Send your Tikkies":"Send your Tikkie"} to ${esc(g.payer)}</span></div>`:"";
-    return `<section><p class="eyebrow">Final result · ${n} ${n===1?"round":"rounds"}</p><div class="champ"><div class="trophy" aria-hidden="true">1</div><div class="min0"><h1 class="mega" style="margin:0;font-size:clamp(34px,min(6vw,8.5vh),96px)">${namesList(ch)}</h1><p class="lede">${ch.length>1?"share the win":"wins"} with <b>${fmt(ch[0].bal)}</b></p></div></div>${bill}${ladderGrid(st,false,"calc(100vh - 480px)")}</section>`;
+    return `<section><p class="eyebrow">Final result · ${n} ${n===1?"round":"rounds"}</p><div class="champ"><div class="trophy" aria-hidden="true">1</div><div class="min0"><h1 class="mega" style="margin:0;font-size:clamp(32px,min(5.4vw,7.5vh),92px)">${namesList(ch)}</h1><p class="lede">${ch.length>1?"share the win":"wins"} with <b>${fmt(ch[0].bal)}</b></p></div>${bill}</div>${ladderGrid(st,false,"calc(100vh - 390px)",12)}</section>`;
   }
-  return `<section><p class="eyebrow">${final?"Final result":`Standings after round ${n} of ${g.total}`}</p><h1 class="mega sm">${final?"No bets placed":"The leaderboard"}</h1>${st.length?ladderGrid(st,n>0&&!final,"calc(100vh - 300px)"):""}</section>`;
+  return `<section><p class="eyebrow">${final?"Final result":`Standings after round ${n} of ${g.total}`}</p><h1 class="mega sm">${final?"No bets placed":"The leaderboard"}</h1>${st.length?ladderGrid(st,n>0&&!final,"calc(100vh - 320px)",12):""}</section>`;
 }
 function btn(act,label,cls,extra){return `<button class="btn ${cls||""}" data-act="${act}" ${S.busy?"disabled":""} ${extra||""}>${label}</button>`}
 function dockHTML(){
@@ -1084,7 +1238,7 @@ function dockHTML(){
     const qr=`<button class="btn ghost" data-act="qr">Show QR</button>`;
     switch(g.phase){
       case "lobby":status=`Lobby · ${conn}`;btns=btn("open1","Open round 1","primary");S.primary="open1";break;
-      case "betting":{const n=Object.keys(liveBets()).length;status=`Round ${g.idx+1} of ${g.total} · <b>${n}</b> ${n===1?"bet":"bets"} in · ${conn}`;btns=qr+btn("close","Close betting","primary");S.primary="close";break}
+      case "betting":{const n=Object.keys(liveBets()).length;status=`Round ${g.idx+1} of ${g.total} · <b>${n}</b> ${n===1?"bet":"bets"} in · ${conn}`;btns=qr+(g.round&&g.round.endsAt?btn("addtime","+15 sec","ghost"):"")+btn("close","Close betting","primary");S.primary="close";break}
       case "locked":{
         status=`Round ${g.idx+1} of ${g.total} · betting closed`;
         const si=spinInfo(g.round);
@@ -1093,7 +1247,8 @@ function dockHTML(){
         else{btns=(g.wheel?"":btn("reopen","Reopen betting","ghost"))+btn("reveal","Reveal the answer","primary");S.primary="reveal"}
         break;
       }
-      case "revealed":status=`Round ${g.idx+1} of ${g.total} · result`;btns=btn("standings","Show standings","ghost")+btn("next",nextLabel,"primary");S.primary="next";break;
+      case "revealed":{if(!drumInfo(g).done){status=`Round ${g.idx+1} of ${g.total} · revealing`;btns=`<button class="btn primary" disabled>Revealing…</button>`;break}
+        status=`Round ${g.idx+1} of ${g.total} · result`;btns=btn("standings","Show standings","ghost")+btn("next",nextLabel,"primary");S.primary="next";break}
       case "standings":status=`Standings after round ${g.idx+1} · ${conn}`;btns=qr+btn("next",nextLabel,"primary");S.primary="next";break;
       case "final":status=`Game over · ${conn}`;btns=btn("again",S.confirm==="again"?"Tap again to restart":"Play again",S.confirm==="again"?"armed":"primary");break;
     }
@@ -1127,13 +1282,16 @@ async function setLook(v){
 function cycleLook(){const cur=document.documentElement.dataset.look;const i=LOOKS.findIndex(l=>l[0]===cur);setLook(LOOKS[(i+1)%LOOKS.length][0])}
 
 /* ---------- host: setup ---------- */
-function defaultDraft(){return {title:"The Trainee Stakes",cur:"€",start:1000,seed:1000,wheel:true,payer:"Jos",theme:LOOKS[0][0],trainees:[0,1,2,3].map(()=>({id:"t"+rid(),name:""})),statements:EXAMPLES.slice(0,4).map(text=>({id:"s"+rid(),text,answer:""}))}}
+function defaultDraft(){return {title:"The Trainee Stakes",cur:"€",start:1000,seed:1000,wheel:true,payer:"Jos",theme:LOOKS[0][0],timer:30,comeback:100,live:false,trainees:[0,1,2,3].map(()=>({id:"t"+rid(),name:""})),statements:EXAMPLES.slice(0,4).map(text=>({id:"s"+rid(),text,answer:""}))}}
 function normalizeSetup(d){
   d.trainees=Array.isArray(d.trainees)?d.trainees:Object.values(d.trainees||{});
   d.statements=Array.isArray(d.statements)?d.statements:Object.values(d.statements||{});
   if(d.wheel===undefined)d.wheel=true;
   if(d.payer===undefined)d.payer="Jos";
   if(!lookOk(d.theme))d.theme=LOOKS[0][0];
+  if(d.timer===undefined)d.timer=30;
+  if(d.comeback===undefined)d.comeback=100;
+  if(d.live===undefined)d.live=false;
   delete d.prize;
   return d;
 }
@@ -1158,16 +1316,20 @@ function setupHTML(){
       <label class="f">Currency sign<input class="inp" id="f-cur" data-f="cur" value="${esc(d.cur)}" maxlength="3"></label>
       <label class="f">Starting balance<input class="inp" id="f-start" data-f="start" type="number" min="10" step="10" inputmode="numeric" value="${esc(d.start)}"></label>
       <label class="f">House money per round<input class="inp" id="f-seed" data-f="seed" type="number" min="0" step="10" inputmode="numeric" value="${esc(d.seed)}"></label>
-    </div></section>
+      <label class="f">Betting time (seconds)<input class="inp" id="f-timer" data-f="timer" type="number" min="0" max="300" step="5" inputmode="numeric" value="${esc(d.timer)}"></label>
+      <label class="f">Comeback money<input class="inp" id="f-comeback" data-f="comeback" type="number" min="0" step="10" inputmode="numeric" value="${esc(d.comeback)}"></label>
+    </div>
+    <p class="hint" style="margin:12px 0 0">Betting closes by itself when the timer hits 0 (0 = no timer, you close it yourself). Anyone at ${esc(d.cur||"€")}0 gets the comeback money at the start of the next round.</p>
+    <label class="check" style="margin:12px 0 0"><input type="checkbox" id="f-live" data-f="live"${d.live?" checked":""}> Show live bets on the big screen while betting (off = bets stay hidden until betting closes, so people don't copy each other)</label></section>
     <section class="card"><h2>Bonus wheel and the bill</h2><p class="hint">After betting closes you spin the wheel. It lands on 1×, 2×, 3×, 5×, 10× or the rare 20×, and multiplies that round's house money, so the pot jumps for everyone who picked right. Needs house money above 0.</p>
       <label class="check"><input type="checkbox" id="f-wheel" data-f="wheel"${d.wheel?" checked":""}> Spin the bonus wheel every round</label>
       <div class="grid4"><label class="f">Who pays the winner<input class="inp" id="f-payer" data-f="payer" value="${esc(d.payer)}" maxlength="24" placeholder="Leave empty to skip the joke"></label></div>
       <p class="hint" style="margin:12px 0 0">At the end the board tells the winner to send a Tikkie for everything they collected to this person.</p></section>
-    <section class="card"><h2>The contestants</h2><p class="hint">Your trainees, 2 to 12. Each gets a number and a colour.</p>
-      <div class="tlist">${d.trainees.map((t,i)=>`<div class="trow">${cloth({no:i+1})}<input class="inp" id="tr-${t.id}" data-tr="${t.id}" value="${esc(t.name)}" placeholder="Trainee ${i+1}'s name" maxlength="24" aria-label="Trainee ${i+1}"><button class="x" data-act="rm-tr" data-id="${t.id}" aria-label="Remove trainee ${i+1}"${d.trainees.length<=2?" disabled":""}>✕</button></div>`).join("")}</div>
+    <section class="card"><h2>The contestants</h2><p class="hint">Your trainees, 2 to 12. Each gets a number, a colour and a photo. Without a photo a placeholder is shown; square photos work best.</p>
+      <div class="tlist">${d.trainees.map((t,i)=>`<div class="trow">${faceHTML({no:i+1},t.photo,"sm")}<input class="inp" id="tr-${t.id}" data-tr="${t.id}" value="${esc(t.name)}" placeholder="Trainee ${i+1}'s name" maxlength="24" aria-label="Trainee ${i+1}"><label class="btn ghost sm">${okPhoto(t.photo)?"Change photo":"Add photo"}<input type="file" accept="image/*" data-photo="${t.id}" hidden></label>${okPhoto(t.photo)?`<button class="x" data-act="rm-photo" data-id="${t.id}" aria-label="Remove photo of trainee ${i+1}">⌫</button>`:""}<button class="x" data-act="rm-tr" data-id="${t.id}" aria-label="Remove trainee ${i+1}"${d.trainees.length<=2?" disabled":""}>✕</button></div>`).join("")}</div>
       <div class="row-actions"><button class="btn ghost" data-act="add-tr"${d.trainees.length>=12?" disabled":""}>Add trainee</button></div></section>
-    <section class="card"><h2>The rounds</h2><p class="hint">One statement per round, then pick who it's about.${hasEx?' <span class="exnote">The filled-in statements are examples. Replace them with real facts about your trainees.</span>':""}</p>
-      ${d.statements.map((s,i)=>`<div class="srow"><span class="sn">${i+1}</span><textarea class="inp" id="st-${s.id}" data-st="${s.id}" rows="2" maxlength="160" placeholder="Write a statement about one trainee" aria-label="Statement ${i+1}">${esc(s.text)}</textarea><select class="inp" id="sa-${s.id}" data-sa="${s.id}" aria-label="Who is statement ${i+1} about?">${answerOpts(s.answer)}</select><button class="x" data-act="rm-st" data-id="${s.id}" aria-label="Remove statement ${i+1}">✕</button></div>`).join("")||'<p class="muted">No statements yet.</p>'}
+    <section class="card"><h2>The rounds</h2><p class="hint">One statement per round, then pick who it's about. Add a one-line story to tell the room more when the answer is revealed.${hasEx?' <span class="exnote">The filled-in statements are examples. Replace them with real facts about your trainees.</span>':""}</p>
+      ${d.statements.map((s,i)=>`<div class="srow"><span class="sn">${i+1}</span><textarea class="inp" id="st-${s.id}" data-st="${s.id}" rows="2" maxlength="160" placeholder="Write a statement about one trainee" aria-label="Statement ${i+1}">${esc(s.text)}</textarea><select class="inp" id="sa-${s.id}" data-sa="${s.id}" aria-label="Who is statement ${i+1} about?">${answerOpts(s.answer)}</select><button class="x" data-act="rm-st" data-id="${s.id}" aria-label="Remove statement ${i+1}">✕</button><input class="inp story-in" id="sy-${s.id}" data-sy="${s.id}" value="${esc(s.story||"")}" maxlength="140" placeholder="Story shown at the reveal (optional)" aria-label="Story for statement ${i+1}"></div>`).join("")||'<p class="muted">No statements yet.</p>'}
       <div class="row-actions"><button class="btn ghost" data-act="add-st"${d.statements.length>=30?" disabled":""}>Add statement</button><button class="btn ghost" data-act="examples">Add example statements</button></div></section>
     ${S.code?`<section class="card"><h2>Players</h2><p class="hint">${nPlayers} ${nPlayers===1?"player is":"players are"} in room ${esc(S.code)}. Clearing the list removes people who left; anyone still connected rejoins automatically.</p><div class="row-actions"><button class="btn ${S.confirm==="clear"?"armed":"ghost"}" data-act="clear"${nPlayers?"":" disabled"}>${S.confirm==="clear"?"Tap again to clear":"Clear player list"}</button></div></section>`:""}
     <div class="setup-actions"><span class="muted">${running?"Saving doesn't change the game in progress. Restart to use the new setup.":"Players can join as soon as you start."}</span>
@@ -1176,10 +1338,10 @@ function setupHTML(){
   </div>`;
 }
 function validate(d){
-  const ts=d.trainees.map(t=>({id:t.id,name:cleanNick(t.name)})).filter(t=>t.name);
+  const ts=d.trainees.map(t=>{const o={id:t.id,name:cleanNick(t.name)};if(okPhoto(t.photo))o.photo=t.photo;return o}).filter(t=>t.name);
   if(ts.length<2)return {err:"Add at least two trainees."};
   const ids=new Set(ts.map(t=>t.id));
-  const list=d.statements.map((s,i)=>({id:s.id,text:clean(s.text,160),answer:s.answer||"",i}));
+  const list=d.statements.map((s,i)=>({id:s.id,text:clean(s.text,160),answer:s.answer||"",story:clean(s.story||"",140),i}));
   const statements=list.filter(s=>s.text);
   if(!statements.length)return {err:"Add at least one statement."};
   const miss=statements.find(s=>!ids.has(s.answer));
@@ -1187,12 +1349,26 @@ function validate(d){
   return {ok:{title:clean(d.title,40)||"The Trainee Stakes",cur:clean(d.cur,3)||"€",
     start:Math.max(10,Math.floor(Number(d.start))||1000),seed:Math.max(0,Math.floor(Number(d.seed))||0),
     wheel:d.wheel!==false,payer:cleanNick(d.payer),theme:lookOk(d.theme)?d.theme:LOOKS[0][0],
-    trainees:ts,statements:statements.map(({id,text,answer})=>({id,text,answer}))}};
+    timer:Math.min(300,Math.max(0,Math.floor(Number(d.timer))||0)),comeback:Math.max(0,Math.floor(Number(d.comeback))||0),live:!!d.live,
+    trainees:ts,statements:statements.map(({id,text,answer,story})=>({id,text,answer,story}))}};
 }
 async function saveSetup(){
   const v=validate(S.draft);if(v.err){toast(v.err);return null}
   await withTimeout(FB.set(hpath("setup"),v.ok),12000);
-  S.host=Object.assign({},S.host,{setup:v.ok});return v.ok;
+  S.host=Object.assign({},S.host,{setup:v.ok});
+  if(S.code&&S.game)await withTimeout(FB.set(gpath("photos"),photosOf(v.ok)),12000).catch(()=>{});
+  return v.ok;
+}
+async function loadPhoto(id,file){
+  try{
+    const url=URL.createObjectURL(file),img=new Image();
+    await new Promise((res,rej)=>{img.onload=res;img.onerror=rej;img.src=url});
+    const n=Math.min(img.naturalWidth,img.naturalHeight),c=document.createElement("canvas");c.width=c.height=200;
+    c.getContext("2d").drawImage(img,(img.naturalWidth-n)/2,(img.naturalHeight-n)/2,n,n,0,0,200,200);
+    URL.revokeObjectURL(url);
+    const t=S.draft.trainees.find(x=>x.id===id);if(!t)return;
+    t.photo=c.toDataURL("image/jpeg",.8);rebuildSetup();toast("Photo added. Save the setup to keep it.");
+  }catch(e){toast("Couldn't read that image. Try a JPG or PNG.")}
 }
 function rebuildSetup(focusId){S.lastKey=null;render();if(focusId){const el=document.getElementById(focusId);if(el)el.focus()}}
 
@@ -1213,10 +1389,10 @@ function slipHead(g){
   const bal=balances(g),k=myKey(),st=standings(),i=st.findIndex(x=>x.k===k);
   return `<div class="tickhead"><div class="who"><span>${esc(S.me.nick)}</span>${i>=0&&rounds(g).length?`<em class="rk2">#${rankAt(st,i)}</em>`:""}</div><div class="bal2"><small>Balance</small>${fmt(balOf(bal,k))}</div></div>`;
 }
-function fieldMini(g){return `<div class="mini">${trainees(g).map(t=>`<div class="mrow">${cloth(t,true)}<span class="mn">${esc(t.name)}</span><span></span></div>`).join("")}</div>`}
+function fieldMini(g){return `<div class="mini">${trainees(g).map(t=>`<div class="mrow">${face(t,"sm")}<span class="mn">${esc(t.name)}</span><span></span></div>`).join("")}</div>`}
 function distMini(g,bets){
   const bk=book(bets);
-  return `<div class="mini">${trainees(g).map(t=>{const s=bk.by[t.id]||0,w=bk.stakes?Math.round(s/bk.stakes*100):0;return `<div class="mrow">${cloth(t,true)}<div class="min0"><span class="mn">${esc(t.name)}</span><div class="mbar"><i style="width:${w}%"></i></div></div><span class="mv">${oddsText(bk.total,s)}</span></div>`}).join("")}</div>`;
+  return `<div class="mini">${trainees(g).map(t=>{const s=bk.by[t.id]||0,w=bk.stakes?Math.round(s/bk.stakes*100):0;return `<div class="mrow">${face(t,"sm")}<div class="min0"><span class="mn">${esc(t.name)}</span><div class="mbar"><i style="width:${w}%"></i></div></div><span class="mv">${oddsText(bk.total,s)}</span></div>`}).join("")}</div>`;
 }
 function topMini(n){
   const st=standings(),k=myKey(),mine=st.findIndex(x=>x.k===k);
@@ -1231,21 +1407,26 @@ function slipHTML(){
   if(!g)return slipBox(`<div class="sliphead"><div><div class="sliptitle">${esc(S.me.nick)}</div><div class="serial">Room ${esc(S.code)} · waiting</div></div></div><p class="q">The show hasn't started yet.</p><p class="note">This ticket updates by itself when the host starts the game. <button class="linkbtn" data-act="rename">Change nickname</button></p>`);
   const head=slipHead(g),r=g.round,k=myKey();
   switch(g.phase){
-    case "lobby":return slipBox(`${head}<p class="label">You're in</p><p class="q">Wait for round 1.</p><p class="note">Each round shows a statement about one trainee. Bet on who you think it is. Winners split the pot by stake, so the less popular the right answer, the more it pays.${g.wheel?" Then the bonus wheel can multiply the house money in the pot, up to 20×.":""}</p><p class="note"><button class="linkbtn" data-act="rename">Change nickname</button></p>`);
+    case "lobby":return slipBox(`${head}<p class="label">You're in</p><p class="q">Wait for round 1.</p><p class="note">Each round shows a statement about one trainee. Bet on who you think it is. Winners split the pot by stake, so the less popular the right answer, the more it pays.${g.wheel?" Then the bonus wheel can multiply the house money in the pot, up to 20×.":""}${g.comeback>0?` Out of money? You get ${fmt(g.comeback)} comeback money at the next round.`:""}</p><p class="note"><button class="linkbtn" data-act="rename">Change nickname</button></p>`);
     case "betting":return slipBox(head+bettingSlip(g));
     case "locked":{
       const lb=r.bets&&r.bets[k],si=g.wheel?spinInfo(r):null,m=si&&si.done?si.mult:1;let body;
-      if(lb){const t=trainee(lb.t),bk=book(r.bets,m);body=`<div class="betbox">${cloth(t)}<div class="min0"><b>${fmt(lb.a)} on ${esc(t.name)}</b><span>Pays ${fmt(Math.floor(lb.a*bk.total/bk.by[lb.t]))} if right${m>1?` (house money ×${m})`:""}</span></div></div>`}
+      if(lb){const t=trainee(lb.t),bk=book(r.bets,m);body=`<div class="betbox">${face(t)}<div class="min0"><b>${fmt(lb.a)} on ${esc(t.name)}</b><span>Pays ${fmt(Math.floor(lb.a*bk.total/bk.by[lb.t]))} if right${m>1?` (house money ×${m})`:""}</span></div></div>`}
       else body=`<p class="note">You sat this round out.</p>`;
       const wheel=g.wheel?`<p class="label">Bonus wheel</p><div class="wheelslot">${wheelHTML(r,"small")}${!si?`<p class="note" style="margin:0">Waiting for the host to spin.</p>`:!si.done?`<p class="note" style="margin:0"><b>Spinning…</b></p>`:`<p class="paysx${S.seen.has("pm"+r.k)?"":" pop"}">${si.mult>1?`House money ×${si.mult}!`:"No bonus this round"}</p>`}</div>`:`<p class="label">How the room bet</p>${distMini(g,r.bets||{})}`;
       if(si&&si.done)S.seen.add("pm"+r.k);
       return slipBox(`${head}<p class="label">Round ${r.n+1} · betting closed</p><p class="q">${esc(r.text)}</p>${body}${wheel}`);
     }
     case "revealed":{
+      const di=drumInfo(g),myb=r.bets&&r.bets[k];
+      if(!di.done){
+        const mt=myb?trainee(myb.t):null;
+        return slipBox(`${head}<p class="label">Round ${r.n+1} · the answer is…</p><p class="q">${esc(r.text)}</p><div class="drumq">?</div><div class="mini">${trainees(g).map(t=>`<div class="mrow${di.out.has(t.id)?" outrow":di.left<=2?" final2":""}">${face(t,"sm")}<span class="mn">${esc(t.name)}${mt&&mt.id===t.id?" · your pick":""}</span><span>${di.out.has(t.id)?"✕":""}</span></div>`).join("")}</div>`);
+      }
       const t=trainee(r.answer),st=settle(r,g.seed),lb=r.bets&&r.bets[k],net=st.nets[k];
       if(lb&&lb.t===r.answer&&!S.seen.has("win-"+r.k)){fxOnce("win-"+r.k);buzz([60,40,60,40,180])}
       const stamp=lb?(lb.t===r.answer?stampOnce("s"+r.k,"win",`Winner ${signed(net)}`):stampOnce("s"+r.k,"lose",`Lost ${fmt(lb.a)}`)):stampOnce("s"+r.k,"neutral","Sat out");
-      return slipBox(`${head}<p class="label">Round ${r.n+1} · result</p><p class="q">${esc(r.text)}</p><div class="betbox">${cloth(t)}<div class="min0"><b>It was ${esc(t.name)}</b><span>${st.win?`Pot of ${fmt(st.pot)}${st.m>1?` (house money ×${st.m})`:""} split among the winners`:`Nobody picked ${esc(t.name)}. The house keeps the pot.`}</span></div></div>${stamp}`);
+      return slipBox(`${head}<p class="label">Round ${r.n+1} · result</p><p class="q">${esc(r.text)}</p><div class="betbox">${face(t)}<div class="min0"><b>It was ${esc(t.name)}</b><span>${st.win?`Pot of ${fmt(st.pot)}${st.m>1?` (house money ×${st.m})`:""} split among the winners`:`Nobody picked ${esc(t.name)}. The house keeps the pot.`}</span></div></div>${stamp}${r.story?`<p class="note storyp">${esc(r.story)}</p>`:""}`);
     }
     case "standings":return slipBox(`${head}<p class="label">Standings after round ${rounds(g).length}</p>${topMini(5)}<p class="note">Next round coming up.</p>`);
     case "final":{
@@ -1265,30 +1446,32 @@ function bettingSlip(g){
   if(S.stakeRound!==r.k){S.stakeRound=r.k;S.pickT=mine?mine.t:null;S.stake=mine?Math.min(mine.a,mb):Math.min(100,mb)}
   if(mine&&S.pickT===null){S.pickT=mine.t;S.stake=Math.min(mine.a,mb)}
   S.stake=Math.max(0,Math.min(S.stake,mb));
-  const q=`<p class="rlabel">Round ${r.n+1} of ${g.total} · who is it?</p><p class="q bet">${esc(r.text)}</p>`;
+  const up=timeLeft(g)===0,hide=!g.live;
+  const rescued=g.comeback>0&&rounds(g).length>0&&balOf(balances(g,true),k)<=0;
+  const q=`${rescued?`<p class="comeback">+${fmt(g.comeback)} comeback money. Keep playing!</p>`:""}<p class="rlabel">Round ${r.n+1} of ${g.total} · who is it? ${cdPill(g)}</p><p class="q bet">${esc(r.text)}</p>`;
   if(mb<=0)return q+stampOnce("bust"+g.gid,"neutral","Bust")+`<p class="note">You're out of money for this game. Watch the rest and enjoy the show.</p>`;
   const two=ts.length>=4,fresh=S.pickT!==S.lastPick;S.lastPick=S.pickT;
   const picks=ts.map(t=>{
     const o=oddsText(bk.total,bk.by[t.id]||0),cls=`pick${fresh&&S.pickT===t.id?" fresh":""}`,pr=`data-act="pick" data-t="${t.id}" aria-pressed="${S.pickT===t.id}"`;
-    return two?`<button class="${cls}" ${pr}>${cloth(t,true)}<span class="min0"><span class="pn2">${esc(t.name)}</span><span class="po">${o==="—"?"no bets yet":"pays "+o}</span></span></button>`
-              :`<button class="${cls}" ${pr}>${cloth(t,true)}<span class="pn2">${esc(t.name)}</span><span class="po">${o}</span></button>`;
+    return two?`<button class="${cls}" ${pr}>${face(t,"sm")}<span class="min0"><span class="pn2">${esc(t.name)}</span>${hide?"":`<span class="po">${o==="—"?"no bets yet":"pays "+o}</span>`}</span></button>`
+              :`<button class="${cls}" ${pr}>${face(t,"sm")}<span class="pn2">${esc(t.name)}</span><span class="po">${hide?"":o}</span></button>`;
   }).join("");
   const pt=S.pickT?trainee(S.pickT):null;
   let est="";
   if(pt&&S.stake>0){
     const tot=bk.total-(mine?mine.a:0)+S.stake,onT=(bk.by[pt.id]||0)-(mine&&mine.t===pt.id?mine.a:0)+S.stake;
-    est=`Pays ~${fmt(Math.floor(S.stake*tot/onT))}${g.wheel?" + wheel bonus":" if right"}`;
+    est=hide?"Payout shown when betting closes":`Pays ~${fmt(Math.floor(S.stake*tot/onT))}${g.wheel?" + wheel bonus":" if right"}`;
   }
   const bump=S.lastStake!==null&&S.lastStake!==S.stake;S.lastStake=S.stake;
   const changed=!mine||mine.t!==S.pickT||mine.a!==S.stake;
-  const label=!pt?"Pick a trainee":S.stake<=0?"Add a stake":mine?(changed?`Update: ${fmt(S.stake)} on ${esc(pt.name)}`:"Bet placed ✓"):`Bet ${fmt(S.stake)} on ${esc(pt.name)}`;
+  const label=up?"Time's up!":!pt?"Pick a trainee":S.stake<=0?"Add a stake":mine?(changed?`Update: ${fmt(S.stake)} on ${esc(pt.name)}`:"Bet placed ✓"):`Bet ${fmt(S.stake)} on ${esc(pt.name)}`;
   const mt=mine?trainee(mine.t):null;
   const coins=[[10,"c10"],[50,"c50"],[100,"c100"],[500,"c500"]].map(([v,c])=>`<button class="coin ${c}" data-act="chip" data-v="${v}" aria-label="Add ${fmt(v)}"><span>+${v}</span></button>`).join("");
   return `${q}<div class="picks${two?" grid2":""}">${picks}</div>
     <div class="stakerow"><b class="${bump?"bump":""}">${fmt(S.stake)}</b><span>${est||`of ${fmt(mb)}`}</span></div>
     <div class="chips">${coins}</div>
     <div class="stakebtns"><button class="sbtn clear" data-act="zero"${S.stake<=0?" disabled":""}>✕ Clear</button><button class="sbtn allin" data-act="allin">All in</button></div>
-    <button class="place" data-act="place"${(!pt||S.stake<=0||!changed)?" disabled":""}>${label}</button>
+    <button class="place" data-act="place"${(up||!pt||S.stake<=0||!changed)?" disabled":""}>${label}</button>
     ${mine&&mt?`<p class="betstatus"><b>✓ ${fmt(mine.a)} on ${esc(mt.name)}</b> · <button class="linkbtn" data-act="withdraw">Withdraw</button></p>`:`<p class="betstatus">You can change your bet until betting closes.</p>`}`;
 }
 
@@ -1302,6 +1485,7 @@ const H={
   "copy-host":()=>copyText(hostURL(S.hostKey),"Host link copied"),
   open1:()=>run(()=>openRace(0)),
   close:()=>run(closeBetting),
+  addtime:()=>run(addTime),
   spin:()=>run(spinWheel),
   reopen:()=>run(reopen),
   reveal:()=>run(reveal),
@@ -1310,6 +1494,7 @@ const H={
   again:()=>{if(!armed("again"))return;if(!S.host||!S.host.setup){toast("Open Setup to start a new game.");return}run(startGame)},
   clear:()=>{if(!armed("clear"))return;run(async()=>{await clearPlayers();toast("Player list cleared")})},
   "add-tr":()=>{if(S.draft.trainees.length>=12)return;const id="t"+rid();S.draft.trainees.push({id,name:""});rebuildSetup("tr-"+id)},
+  "rm-photo":b=>{const t=S.draft.trainees.find(x=>x.id===b.dataset.id);if(t){delete t.photo;rebuildSetup()}},
   "rm-tr":b=>{const id=b.dataset.id;if(S.draft.trainees.length<=2)return;S.draft.trainees=S.draft.trainees.filter(t=>t.id!==id);S.draft.statements.forEach(s=>{if(s.answer===id)s.answer=""});rebuildSetup()},
   "add-st":()=>{const id="s"+rid();S.draft.statements.push({id,text:"",answer:""});rebuildSetup("st-"+id)},
   "rm-st":b=>{S.draft.statements=S.draft.statements.filter(s=>s.id!==b.dataset.id);rebuildSetup()},
@@ -1354,9 +1539,11 @@ document.addEventListener("input",e=>{
   if(el.dataset.f)d[el.dataset.f]=el.type==="checkbox"?el.checked:el.value;
   else if(el.dataset.tr){const t=d.trainees.find(x=>x.id===el.dataset.tr);if(t){t.name=el.value;const i=d.trainees.indexOf(t);document.querySelectorAll(`option[value="${t.id}"]`).forEach(o=>{o.textContent=`#${i+1} ${el.value||"Trainee "+(i+1)}`})}}
   else if(el.dataset.st){const s=d.statements.find(x=>x.id===el.dataset.st);if(s)s.text=el.value}
+  else if(el.dataset.sy){const s=d.statements.find(x=>x.id===el.dataset.sy);if(s)s.story=el.value}
 });
 document.addEventListener("change",e=>{
   const el=e.target;
+  if(el.dataset.photo&&S.draft&&el.files&&el.files[0]){loadPhoto(el.dataset.photo,el.files[0]);return}
   if(el.dataset.sa&&S.draft){const s=S.draft.statements.find(x=>x.id===el.dataset.sa);if(s)s.answer=el.value}
   else if(el.type==="checkbox"&&el.dataset.f&&S.draft)S.draft[el.dataset.f]=el.checked;
 });
@@ -1387,7 +1574,7 @@ async function boot(){
     },e=>{clearTimeout(t);onDbError(e)});
   }else{
     subscribeGame();
-    FB.on(".info/connected",c=>{if(c)registerMe()},()=>{});
+    FB.on(".info/connected",c=>{const was=S.conn;S.conn=!!c;if(c&&!was)registerMe()},()=>{});
   }
 }
 boot();
