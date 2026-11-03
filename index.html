@@ -1,0 +1,948 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#06211a">
+<title>The Trainee Stakes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=DotGothic16&display=swap">
+<style>
+/* Layout: a tote board for the meeting-room screen, a racing-pink betting slip on every phone.
+   One committed racecourse look: mown turf, amber tote bulbs, pink slips. */
+:root{
+  color-scheme: dark;
+  --turf:#0b3326;
+  --panel:#06211a;
+  --line:rgba(222,240,230,.14);
+  --chalk:#ecf4ef;
+  --mist:#9dbdae;
+  --amber:#ffb326;
+  --amber-ink:#2b1c00;
+  --slip:#f8dad2;
+  --slip-line:rgba(19,40,30,.18);
+  --ink:#13281e;
+  --ink-soft:#5a6b62;
+  --win:#0d6b3a;
+  --lose:#b3291b;
+  --up:#8fe6b0;
+  --down:#ff917f;
+  --paper:#ffffff;
+  --f-display:"Big Shoulders Display","Arial Narrow","Roboto Condensed",Impact,sans-serif;
+  --f-body:"Archivo",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-dot:"DotGothic16","Courier New",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background-color:var(--turf);background-image:repeating-linear-gradient(90deg,transparent 0 140px,rgba(255,255,255,.028) 140px 280px);color:var(--chalk);font-family:var(--f-body);font-size:15px;line-height:1.45;min-height:100vh}
+[hidden]{display:none!important}
+img,svg{max-width:100%}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+button{font:inherit;color:inherit;cursor:pointer}
+button:disabled{cursor:not-allowed;opacity:.45}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.min0{min-width:0}
+h1,h2,h3,p{margin:0}
+
+/* top bar */
+.top{border-bottom:1px solid var(--line);background:var(--panel);padding-top:env(safe-area-inset-top,0px)}
+.top .wrap{display:flex;align-items:center;gap:10px 14px;flex-wrap:wrap;padding-block:10px}
+.brand{font-family:var(--f-display);font-weight:900;font-size:22px;letter-spacing:.04em;text-transform:uppercase;margin-right:auto;display:flex;align-items:center;gap:10px;min-width:0;line-height:1.1}
+.bulb{flex:none;width:10px;height:10px;border-radius:50%;background:var(--amber);box-shadow:0 0 10px var(--amber)}
+.roomcode{font-family:var(--f-dot);color:var(--amber);font-size:15px;letter-spacing:.08em;border:1px solid var(--line);border-radius:999px;padding:4px 12px}
+.tabs{display:flex;gap:2px;background:var(--turf);border:1px solid var(--line);border-radius:999px;padding:3px}
+.tab{background:none;border:0;padding:6px 12px;border-radius:999px;font-size:13px;font-weight:600;color:var(--mist)}
+.tab[aria-pressed="true"]{background:var(--chalk);color:var(--ink)}
+.iconbtn{background:none;border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;color:var(--mist)}
+main{padding-block:28px 56px}
+body.dock-on main{padding-bottom:150px}
+
+/* shared type */
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mist)}
+.mega{font-family:var(--f-display);font-weight:900;font-size:clamp(46px,9vw,120px);line-height:.9;text-transform:uppercase;letter-spacing:.01em;margin:8px 0 16px;text-wrap:balance;overflow-wrap:anywhere}
+.lede{font-size:clamp(16px,1.6vw,20px);max-width:62ch}
+.muted{color:var(--mist)}
+
+/* saddle cloths */
+.cloth{flex:none;width:42px;height:42px;display:grid;place-items:center;font-family:var(--f-display);font-weight:900;font-size:25px;line-height:1;border-radius:4px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.3),0 1px 0 rgba(0,0,0,.45)}
+.cloth.sm{width:32px;height:32px;font-size:19px}
+
+/* lobby */
+.lobby{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:32px;align-items:start}
+@media (max-width:860px){.lobby{grid-template-columns:minmax(0,1fr)}}
+.field{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;margin-top:12px}
+.runner{display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 12px;min-width:0}
+.runner b{font-family:var(--f-display);font-weight:800;font-size:23px;text-transform:uppercase;overflow-wrap:anywhere;line-height:1.05}
+.joined{display:flex;gap:24px;align-items:center;flex-wrap:wrap;margin-top:28px;padding-top:20px;border-top:1px dashed var(--line)}
+.chiprow{display:flex;flex-wrap:wrap;gap:8px;min-width:0;flex:1}
+.chip{display:inline-flex;gap:8px;align-items:baseline;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-weight:600;max-width:100%;overflow-wrap:anywhere}
+.chip.off{opacity:.5}
+.chip .plus{font-family:var(--f-dot);color:var(--amber)}
+.qrcard{background:var(--paper);color:var(--ink);border-radius:12px;padding:18px;width:min(340px,100%);text-align:center;box-shadow:0 16px 40px rgba(0,0,0,.35)}
+.qrcard .qr{display:block;width:100%;height:auto;image-rendering:pixelated}
+.qrcard .scan{font-family:var(--f-display);font-weight:900;font-size:28px;text-transform:uppercase;letter-spacing:.04em;line-height:1;margin-bottom:10px}
+.qrcard .code{font-family:var(--f-dot);font-size:34px;letter-spacing:.14em;margin-top:8px;line-height:1}
+.qrcard .small{font-size:12px;color:var(--ink-soft);margin-top:4px}
+.overlay{position:fixed;inset:0;z-index:50;background:rgba(3,20,15,.92);display:grid;place-items:center;padding:24px max(16px,env(safe-area-inset-right,0px)) 24px max(16px,env(safe-area-inset-left,0px))}
+.overlay .qrcard{width:min(560px,90vmin)}
+.overlay .qrcard .code{font-size:clamp(34px,6vmin,60px)}
+
+/* race board */
+.racehead{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.raceno{font-family:var(--f-display);font-weight:900;font-size:clamp(24px,2.6vw,36px);text-transform:uppercase;letter-spacing:.05em;color:var(--amber);line-height:1}
+.raceno small{color:var(--mist);font-size:.62em;letter-spacing:.08em}
+.pill{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;padding:5px 11px;border-radius:999px;border:1px solid currentColor;line-height:1}
+.pill.open{color:var(--up)}
+.pill.shut{color:var(--down)}
+.pill.res{color:var(--amber)}
+.statement{font-family:var(--f-display);font-weight:800;font-size:clamp(34px,5.4vw,80px);line-height:1;margin:14px 0 24px;text-wrap:balance;max-width:24ch;overflow-wrap:anywhere}
+.tote{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:4px 18px 12px;box-shadow:inset 0 0 0 4px rgba(0,0,0,.22)}
+.totehead{display:flex;gap:32px;flex-wrap:wrap;align-items:flex-end;padding:14px 0 12px}
+.metric span{display:block;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--mist);margin-bottom:4px}
+.metric b{font-family:var(--f-dot);font-weight:400;color:var(--amber);font-size:clamp(32px,4.4vw,58px);line-height:1;text-shadow:0 0 14px rgba(255,179,38,.35);font-variant-numeric:tabular-nums}
+.metric.small b{font-size:clamp(24px,3vw,38px)}
+.toterow{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:14px;align-items:center;padding:11px 0;border-top:1px dashed var(--line)}
+.toterow .nm{font-family:var(--f-display);font-weight:800;font-size:clamp(21px,2.4vw,34px);text-transform:uppercase;line-height:1.05;overflow-wrap:anywhere}
+.toterow .sub{font-size:13px;color:var(--mist);font-variant-numeric:tabular-nums;margin-top:2px}
+.bar{height:6px;border-radius:3px;background:rgba(255,255,255,.08);margin-top:7px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--amber);border-radius:3px;transition:width .5s ease}
+.odds{font-family:var(--f-dot);color:var(--amber);font-size:clamp(24px,3.2vw,46px);text-align:right;min-width:3em;font-variant-numeric:tabular-nums;text-shadow:0 0 12px rgba(255,179,38,.3);line-height:1}
+.toterow.winner{background:var(--amber);color:var(--amber-ink);border-radius:8px;padding-inline:12px;margin-inline:-12px;border-top-color:transparent}
+.toterow.winner .sub,.toterow.winner .odds{color:var(--amber-ink);text-shadow:none}
+.toterow.winner .bar{background:rgba(0,0,0,.14)}
+.toterow.winner .bar i{background:var(--amber-ink)}
+.toterow.winner + .toterow{border-top-color:transparent}
+.toterow.loser{opacity:.4}
+@media (min-width:900px){.rows.two{display:grid;grid-template-columns:1fr 1fr;column-gap:40px}}
+.wtag{display:inline-block;margin-left:10px;font-family:var(--f-body);font-size:11px;font-weight:800;letter-spacing:.14em;padding:3px 7px;border-radius:3px;background:var(--amber-ink);color:var(--amber);vertical-align:middle}
+.verdict{margin-top:22px;font-size:clamp(17px,1.8vw,22px);font-weight:600;max-width:60ch}
+.payouts{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px}
+.flash{animation:flash .9s ease-out 1}
+@keyframes flash{0%{box-shadow:0 0 0 0 rgba(255,179,38,.9)}100%{box-shadow:0 0 0 22px rgba(255,179,38,0)}}
+
+/* standings */
+.ladder{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;margin-top:14px}
+.ladder td{padding:10px 8px;border-top:1px dashed var(--line);vertical-align:middle}
+.rk{font-family:var(--f-display);font-weight:900;font-size:28px;color:var(--mist);width:2.4em}
+.ladder tr.podium .rk{color:var(--amber)}
+.pn{font-family:var(--f-display);font-weight:800;font-size:clamp(21px,2.2vw,32px);text-transform:uppercase;overflow-wrap:anywhere;line-height:1.05}
+.pb{font-family:var(--f-dot);color:var(--amber);font-size:clamp(20px,2.4vw,34px);text-align:right;white-space:nowrap}
+.pd{text-align:right;font-size:13px;white-space:nowrap;color:var(--mist);width:6em}
+.pd.up{color:var(--up)}
+.pd.down{color:var(--down)}
+.champ{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin:6px 0 10px}
+.trophy{flex:none;width:72px;height:72px;border-radius:50%;display:grid;place-items:center;background:var(--amber);color:var(--amber-ink);font-family:var(--f-display);font-weight:900;font-size:40px}
+
+/* host dock */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--panel);border-top:1px solid var(--line);padding-top:10px;padding-bottom:calc(10px + env(safe-area-inset-bottom,0px));box-shadow:0 -10px 30px rgba(0,0,0,.3)}
+.dock .wrap{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.dock .status{margin-right:auto;font-size:13px;color:var(--mist);min-width:0;flex:1 1 220px}
+.dock .status b{color:var(--chalk)}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:0;border-radius:6px;padding:11px 16px;font-weight:700;font-size:14px;background:var(--chalk);color:var(--ink);line-height:1.2;text-decoration:none;display:inline-block}
+.btn.primary{background:var(--amber);color:var(--amber-ink)}
+.btn.ghost{background:transparent;color:var(--chalk);border:1px solid var(--line)}
+.btn.armed{background:var(--lose);color:var(--chalk)}
+.kbd{font-size:11px;color:var(--mist)}
+
+/* betting slip */
+.slipwrap{max-width:520px;margin:0 auto;filter:drop-shadow(0 16px 28px rgba(0,0,0,.42))}
+.slipwrap>*{min-width:0}
+.slip{background:var(--slip);color:var(--ink);border-radius:2px 2px 8px 8px;padding:24px 18px 22px;
+  -webkit-mask:radial-gradient(circle at 8px 0,transparent 5px,#000 5.5px) 0 0/16px 100% repeat-x;
+  mask:radial-gradient(circle at 8px 0,transparent 5px,#000 5.5px) 0 0/16px 100% repeat-x}
+.sliphead{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;border-bottom:1px dashed var(--slip-line);padding-bottom:12px;margin-bottom:16px}
+.sliptitle{font-family:var(--f-display);font-weight:900;font-size:24px;letter-spacing:.04em;text-transform:uppercase;line-height:1;overflow-wrap:anywhere}
+.serial{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-top:5px;font-variant-numeric:tabular-nums}
+.bal{text-align:right;flex:none}
+.bal span{display:block;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+.bal b{display:block;font-family:var(--f-display);font-weight:900;font-size:28px;line-height:1;font-variant-numeric:tabular-nums;margin-top:3px}
+.q{font-family:var(--f-display);font-weight:800;font-size:clamp(26px,6.4vw,34px);line-height:1.04;text-wrap:balance;margin:2px 0 6px;overflow-wrap:anywhere}
+.label{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin:16px 0 8px}
+.picks{display:grid;gap:6px}
+.pick{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;text-align:left;background:rgba(255,255,255,.42);border:1.5px solid transparent;border-radius:6px;padding:8px 12px 8px 8px;color:var(--ink)}
+.pick .pn2{font-family:var(--f-display);font-weight:800;font-size:21px;text-transform:uppercase;overflow-wrap:anywhere;line-height:1.05}
+.pick .po{font-family:var(--f-dot);font-size:18px;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+.pick[aria-pressed="true"]{border-color:var(--ink);background:rgba(255,255,255,.85);box-shadow:inset 5px 0 0 var(--ink)}
+.stake{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.stake b{font-family:var(--f-display);font-weight:900;font-size:44px;line-height:1;font-variant-numeric:tabular-nums}
+.stake span{font-size:13px;color:var(--ink-soft)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.cbtn{border:1.5px solid var(--ink);background:transparent;color:var(--ink);border-radius:999px;padding:8px 13px;font-weight:700;font-size:13px;font-variant-numeric:tabular-nums}
+.place{width:100%;margin-top:18px;border:0;border-radius:6px;padding:15px;background:var(--ink);color:var(--slip);font-weight:800;font-size:16px}
+.note{font-size:13.5px;color:var(--ink-soft);margin-top:12px}
+.note b{color:var(--ink)}
+.linkbtn{background:none;border:0;padding:0;text-decoration:underline;color:var(--ink);font-weight:600;font-size:13.5px}
+.ticket{display:flex;gap:12px;align-items:center;background:rgba(255,255,255,.5);border-radius:6px;padding:10px 12px;margin-top:10px}
+.ticket b{display:block;font-family:var(--f-display);font-weight:800;font-size:22px;text-transform:uppercase;line-height:1.05;overflow-wrap:anywhere}
+.ticket .min0>span{display:block;font-size:13px;color:var(--ink-soft)}
+.stamp{display:inline-block;border:3px solid currentColor;border-radius:6px;padding:6px 14px;font-family:var(--f-display);font-weight:900;font-size:30px;letter-spacing:.06em;text-transform:uppercase;transform:rotate(-5deg);margin:6px 0 10px;line-height:1.1}
+.stamp.win{color:var(--win)}
+.stamp.lose{color:var(--lose)}
+.stamp.neutral{color:var(--ink-soft)}
+.anim{animation:thump .45s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes thump{from{transform:rotate(-5deg) scale(1.6);opacity:0}to{transform:rotate(-5deg) scale(1);opacity:1}}
+.mini{display:grid;gap:6px;margin-top:6px}
+.mrow{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;font-variant-numeric:tabular-nums}
+.mrow .mn{font-weight:700;overflow-wrap:anywhere}
+.mrow .mv{font-weight:700}
+.mrow.me{background:rgba(255,255,255,.55);border-radius:4px;padding:2px 6px;margin-inline:-6px}
+.mbar{height:5px;border-radius:3px;background:var(--slip-line);margin-top:4px;overflow:hidden}
+.mbar i{display:block;height:100%;background:var(--ink)}
+.mrk{font-family:var(--f-display);font-weight:900;font-size:20px;width:1.6em;color:var(--ink-soft)}
+.join-in{width:100%;padding:13px 12px;border:1.5px solid var(--ink);border-radius:6px;background:rgba(255,255,255,.6);color:var(--ink);font:inherit;font-size:17px;margin-top:6px}
+.join-in:focus{outline:2px solid var(--ink);outline-offset:1px}
+.join-in.code{font-family:var(--f-dot);font-size:26px;letter-spacing:.2em;text-transform:uppercase}
+pre.rules{background:rgba(255,255,255,.55);border-radius:6px;padding:10px 12px;font-size:12.5px;line-height:1.4;overflow-x:auto;margin:8px 0 0;color:var(--ink)}
+ol.steps{margin:8px 0 0;padding-left:20px;font-size:13.5px;color:var(--ink-soft);display:grid;gap:4px}
+ol.steps b{color:var(--ink)}
+
+/* setup */
+.setup{max-width:880px;margin:0 auto;display:grid;gap:18px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px}
+.card h2{font-family:var(--f-display);font-weight:900;text-transform:uppercase;letter-spacing:.04em;font-size:26px;line-height:1.05}
+.hint{color:var(--mist);font-size:13.5px;margin:4px 0 14px;max-width:64ch}
+.grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+label.f{display:grid;gap:6px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mist)}
+.inp{width:100%;background:var(--turf);border:1px solid var(--line);border-radius:6px;padding:10px 12px;color:var(--chalk);font:inherit;font-size:15px;letter-spacing:normal;text-transform:none}
+.inp:focus{border-color:var(--amber);outline:none;box-shadow:0 0 0 2px rgba(255,179,38,.25)}
+textarea.inp{resize:vertical;min-height:46px;line-height:1.35}
+.tlist{display:grid;gap:8px}
+.trow{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center}
+.srow{display:grid;grid-template-columns:2em minmax(0,1fr) minmax(140px,210px) 40px;grid-template-areas:"n t w x";gap:10px;align-items:start;padding:12px 0;border-top:1px dashed var(--line)}
+.srow:first-of-type{border-top:0}
+.srow .sn{grid-area:n;font-family:var(--f-display);font-weight:900;font-size:22px;color:var(--mist);padding-top:6px}
+.srow textarea{grid-area:t}
+.srow select{grid-area:w}
+.srow .x{grid-area:x}
+@media (max-width:620px){.srow{grid-template-columns:2em minmax(0,1fr) 40px;grid-template-areas:"n t x" ". w ."}}
+.x{background:none;border:1px solid var(--line);border-radius:6px;width:40px;height:42px;color:var(--mist);font-size:15px}
+.row-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.setup-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end;align-items:center}
+.setup-actions .muted{margin-right:auto;font-size:13.5px}
+.exnote{display:inline-block;background:rgba(255,179,38,.14);color:var(--amber);border-radius:4px;padding:1px 6px;font-weight:600}
+.linkbox{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.linkbox code{flex:1 1 240px;min-width:0;overflow-wrap:anywhere;background:var(--turf);border:1px solid var(--line);border-radius:6px;padding:9px 11px;font-size:13px;color:var(--mist)}
+.warn{color:var(--amber);font-size:13.5px;margin-top:10px}
+
+/* toast */
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(100px + env(safe-area-inset-bottom,0px));background:var(--chalk);color:var(--ink);padding:11px 16px;border-radius:8px;font-weight:600;font-size:14px;z-index:60;width:max-content;max-width:min(92vw,520px);box-shadow:0 8px 24px rgba(0,0,0,.35)}
+
+@media (max-width:520px){
+  .tote{padding-inline:12px}
+  .toterow{gap:10px}
+  .totehead{gap:20px}
+  .brand{font-size:19px}
+}
+@media (prefers-reduced-motion:reduce){.anim,.flash{animation:none}.bar i{transition:none}}
+</style>
+<script>/* QR Code Generator for JavaScript, Copyright (c) 2009 Kazuhiko Arase, MIT license */
+// Copyright (c) 2009 Kazuhiko Arase
+// Licensed under the MIT license:
+var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],f={},c=function(t,r){o=function(t){for(var r=new Array(t),e=0;e<t;e+=1){r[e]=new Array(t);for(var n=0;n<t;n+=1)r[e][n]=null}return r}(i=4*e+17),l(0,0),l(i-7,0),l(0,i-7),s(),h(),d(t,r),e>=7&&v(t),null==a&&(a=p(e,n,u)),w(a,r)},l=function(t,r){for(var e=-1;e<=7;e+=1)if(!(t+e<=-1||i<=t+e))for(var n=-1;n<=7;n+=1)r+n<=-1||i<=r+n||(o[t+e][r+n]=0<=e&&e<=6&&(0==n||6==n)||0<=n&&n<=6&&(0==e||6==e)||2<=e&&e<=4&&2<=n&&n<=4)},h=function(){for(var t=8;t<i-8;t+=1)null==o[t][6]&&(o[t][6]=t%2==0);for(var r=8;r<i-8;r+=1)null==o[6][r]&&(o[6][r]=r%2==0)},s=function(){for(var t=B.getPatternPosition(e),r=0;r<t.length;r+=1)for(var n=0;n<t.length;n+=1){var i=t[r],a=t[n];if(null==o[i][a])for(var u=-2;u<=2;u+=1)for(var f=-2;f<=2;f+=1)o[i+u][a+f]=-2==u||2==u||-2==f||2==f||0==u&&0==f}},v=function(t){for(var r=B.getBCHTypeNumber(e),n=0;n<18;n+=1){var a=!t&&1==(r>>n&1);o[Math.floor(n/3)][n%3+i-8-3]=a}for(n=0;n<18;n+=1){a=!t&&1==(r>>n&1);o[n%3+i-8-3][Math.floor(n/3)]=a}},d=function(t,r){for(var e=n<<3|r,a=B.getBCHTypeInfo(e),u=0;u<15;u+=1){var f=!t&&1==(a>>u&1);u<6?o[u][8]=f:u<8?o[u+1][8]=f:o[i-15+u][8]=f}for(u=0;u<15;u+=1){f=!t&&1==(a>>u&1);u<8?o[8][i-u-1]=f:u<9?o[8][15-u-1+1]=f:o[8][15-u-1]=f}o[i-8][8]=!t},w=function(t,r){for(var e=-1,n=i-1,a=7,u=0,f=B.getMaskFunction(r),c=i-1;c>0;c-=2)for(6==c&&(c-=1);;){for(var g=0;g<2;g+=1)if(null==o[n][c-g]){var l=!1;u<t.length&&(l=1==(t[u]>>>a&1)),f(n,c-g)&&(l=!l),o[n][c-g]=l,-1==(a-=1)&&(u+=1,a=7)}if((n+=e)<0||i<=n){n-=e,e=-e;break}}},p=function(t,r,e){for(var n=A.getRSBlocks(t,r),o=b(),i=0;i<e.length;i+=1){var a=e[i];o.put(a.getMode(),4),o.put(a.getLength(),B.getLengthInBits(a.getMode(),t)),a.write(o)}var u=0;for(i=0;i<n.length;i+=1)u+=n[i].dataCount;if(o.getLengthInBits()>8*u)throw"code length overflow. ("+o.getLengthInBits()+">"+8*u+")";for(o.getLengthInBits()+4<=8*u&&o.put(0,4);o.getLengthInBits()%8!=0;)o.putBit(!1);for(;!(o.getLengthInBits()>=8*u||(o.put(236,8),o.getLengthInBits()>=8*u));)o.put(17,8);return function(t,r){for(var e=0,n=0,o=0,i=new Array(r.length),a=new Array(r.length),u=0;u<r.length;u+=1){var f=r[u].dataCount,c=r[u].totalCount-f;n=Math.max(n,f),o=Math.max(o,c),i[u]=new Array(f);for(var g=0;g<i[u].length;g+=1)i[u][g]=255&t.getBuffer()[g+e];e+=f;var l=B.getErrorCorrectPolynomial(c),h=k(i[u],l.getLength()-1).mod(l);for(a[u]=new Array(l.getLength()-1),g=0;g<a[u].length;g+=1){var s=g+h.getLength()-a[u].length;a[u][g]=s>=0?h.getAt(s):0}}var v=0;for(g=0;g<r.length;g+=1)v+=r[g].totalCount;var d=new Array(v),w=0;for(g=0;g<n;g+=1)for(u=0;u<r.length;u+=1)g<i[u].length&&(d[w]=i[u][g],w+=1);for(g=0;g<o;g+=1)for(u=0;u<r.length;u+=1)g<a[u].length&&(d[w]=a[u][g],w+=1);return d}(o,n)};f.addData=function(t,r){var e=null;switch(r=r||"Byte"){case"Numeric":e=M(t);break;case"Alphanumeric":e=x(t);break;case"Byte":e=m(t);break;case"Kanji":e=L(t);break;default:throw"mode:"+r}u.push(e),a=null},f.isDark=function(t,r){if(t<0||i<=t||r<0||i<=r)throw t+","+r;return o[t][r]},f.getModuleCount=function(){return i},f.make=function(){if(e<1){for(var t=1;t<40;t++){for(var r=A.getRSBlocks(t,n),o=b(),i=0;i<u.length;i++){var a=u[i];o.put(a.getMode(),4),o.put(a.getLength(),B.getLengthInBits(a.getMode(),t)),a.write(o)}var g=0;for(i=0;i<r.length;i++)g+=r[i].dataCount;if(o.getLengthInBits()<=8*g)break}e=t}c(!1,function(){for(var t=0,r=0,e=0;e<8;e+=1){c(!0,e);var n=B.getLostPoint(f);(0==e||t>n)&&(t=n,r=e)}return r}())},f.createTableTag=function(t,r){t=t||2;var e="";e+='<table style="',e+=" border-width: 0px; border-style: none;",e+=" border-collapse: collapse;",e+=" padding: 0px; margin: "+(r=void 0===r?4*t:r)+"px;",e+='">',e+="<tbody>";for(var n=0;n<f.getModuleCount();n+=1){e+="<tr>";for(var o=0;o<f.getModuleCount();o+=1)e+='<td style="',e+=" border-width: 0px; border-style: none;",e+=" border-collapse: collapse;",e+=" padding: 0px; margin: 0px;",e+=" width: "+t+"px;",e+=" height: "+t+"px;",e+=" background-color: ",e+=f.isDark(n,o)?"#000000":"#ffffff",e+=";",e+='"/>';e+="</tr>"}return e+="</tbody>",e+="</table>"},f.createSvgTag=function(t,r,e,n){var o={};"object"==typeof arguments[0]&&(t=(o=arguments[0]).cellSize,r=o.margin,e=o.alt,n=o.title),t=t||2,r=void 0===r?4*t:r,(e="string"==typeof e?{text:e}:e||{}).text=e.text||null,e.id=e.text?e.id||"qrcode-description":null,(n="string"==typeof n?{text:n}:n||{}).text=n.text||null,n.id=n.text?n.id||"qrcode-title":null;var i,a,u,c,g=f.getModuleCount()*t+2*r,l="";for(c="l"+t+",0 0,"+t+" -"+t+",0 0,-"+t+"z ",l+='<svg version="1.1" xmlns="http://www.w3.org/2000/svg"',l+=o.scalable?"":' width="'+g+'px" height="'+g+'px"',l+=' viewBox="0 0 '+g+" "+g+'" ',l+=' preserveAspectRatio="xMinYMin meet"',l+=n.text||e.text?' role="img" aria-labelledby="'+y([n.id,e.id].join(" ").trim())+'"':"",l+=">",l+=n.text?'<title id="'+y(n.id)+'">'+y(n.text)+"</title>":"",l+=e.text?'<description id="'+y(e.id)+'">'+y(e.text)+"</description>":"",l+='<rect width="100%" height="100%" fill="white" cx="0" cy="0"/>',l+='<path d="',a=0;a<f.getModuleCount();a+=1)for(u=a*t+r,i=0;i<f.getModuleCount();i+=1)f.isDark(a,i)&&(l+="M"+(i*t+r)+","+u+c);return l+='" stroke="transparent" fill="black"/>',l+="</svg>"},f.createDataURL=function(t,r){t=t||2,r=void 0===r?4*t:r;var e=f.getModuleCount()*t+2*r,n=r,o=e-r;return I(e,e,(function(r,e){if(n<=r&&r<o&&n<=e&&e<o){var i=Math.floor((r-n)/t),a=Math.floor((e-n)/t);return f.isDark(a,i)?0:1}return 1}))},f.createImgTag=function(t,r,e){t=t||2,r=void 0===r?4*t:r;var n=f.getModuleCount()*t+2*r,o="";return o+="<img",o+=' src="',o+=f.createDataURL(t,r),o+='"',o+=' width="',o+=n,o+='"',o+=' height="',o+=n,o+='"',e&&(o+=' alt="',o+=y(e),o+='"'),o+="/>"};var y=function(t){for(var r="",e=0;e<t.length;e+=1){var n=t.charAt(e);switch(n){case"<":r+="&lt;";break;case">":r+="&gt;";break;case"&":r+="&amp;";break;case'"':r+="&quot;";break;default:r+=n}}return r};return f.createASCII=function(t,r){if((t=t||1)<2)return function(t){t=void 0===t?2:t;var r,e,n,o,i,a=1*f.getModuleCount()+2*t,u=t,c=a-t,g={"██":"█","█ ":"▀"," █":"▄","  ":" "},l={"██":"▀","█ ":"▀"," █":" ","  ":" "},h="";for(r=0;r<a;r+=2){for(n=Math.floor((r-u)/1),o=Math.floor((r+1-u)/1),e=0;e<a;e+=1)i="█",u<=e&&e<c&&u<=r&&r<c&&f.isDark(n,Math.floor((e-u)/1))&&(i=" "),u<=e&&e<c&&u<=r+1&&r+1<c&&f.isDark(o,Math.floor((e-u)/1))?i+=" ":i+="█",h+=t<1&&r+1>=c?l[i]:g[i];h+="\n"}return a%2&&t>0?h.substring(0,h.length-a-1)+Array(a+1).join("▀"):h.substring(0,h.length-1)}(r);t-=1,r=void 0===r?2*t:r;var e,n,o,i,a=f.getModuleCount()*t+2*r,u=r,c=a-r,g=Array(t+1).join("██"),l=Array(t+1).join("  "),h="",s="";for(e=0;e<a;e+=1){for(o=Math.floor((e-u)/t),s="",n=0;n<a;n+=1)i=1,u<=n&&n<c&&u<=e&&e<c&&f.isDark(o,Math.floor((n-u)/t))&&(i=0),s+=i?g:l;for(o=0;o<t;o+=1)h+=s+"\n"}return h.substring(0,h.length-1)},f.renderTo2dContext=function(t,r){r=r||2;for(var e=f.getModuleCount(),n=0;n<e;n++)for(var o=0;o<e;o++)t.fillStyle=f.isDark(n,o)?"black":"white",t.fillRect(n*r,o*r,r,r)},f};t.stringToBytes=(t.stringToBytesFuncs={default:function(t){for(var r=[],e=0;e<t.length;e+=1){var n=t.charCodeAt(e);r.push(255&n)}return r}}).default,t.createStringToBytes=function(t,r){var e=function(){for(var e=S(t),n=function(){var t=e.read();if(-1==t)throw"eof";return t},o=0,i={};;){var a=e.read();if(-1==a)break;var u=n(),f=n()<<8|n();i[String.fromCharCode(a<<8|u)]=f,o+=1}if(o!=r)throw o+" != "+r;return i}(),n="?".charCodeAt(0);return function(t){for(var r=[],o=0;o<t.length;o+=1){var i=t.charCodeAt(o);if(i<128)r.push(i);else{var a=e[t.charAt(o)];"number"==typeof a?(255&a)==a?r.push(a):(r.push(a>>>8),r.push(255&a)):r.push(n)}}return r}};var r,e,n,o,i,a=1,u=2,f=4,c=8,g={L:1,M:0,Q:3,H:2},l=0,h=1,s=2,v=3,d=4,w=5,p=6,y=7,B=(r=[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]],e=1335,n=7973,i=function(t){for(var r=0;0!=t;)r+=1,t>>>=1;return r},(o={}).getBCHTypeInfo=function(t){for(var r=t<<10;i(r)-i(e)>=0;)r^=e<<i(r)-i(e);return 21522^(t<<10|r)},o.getBCHTypeNumber=function(t){for(var r=t<<12;i(r)-i(n)>=0;)r^=n<<i(r)-i(n);return t<<12|r},o.getPatternPosition=function(t){return r[t-1]},o.getMaskFunction=function(t){switch(t){case l:return function(t,r){return(t+r)%2==0};case h:return function(t,r){return t%2==0};case s:return function(t,r){return r%3==0};case v:return function(t,r){return(t+r)%3==0};case d:return function(t,r){return(Math.floor(t/2)+Math.floor(r/3))%2==0};case w:return function(t,r){return t*r%2+t*r%3==0};case p:return function(t,r){return(t*r%2+t*r%3)%2==0};case y:return function(t,r){return(t*r%3+(t+r)%2)%2==0};default:throw"bad maskPattern:"+t}},o.getErrorCorrectPolynomial=function(t){for(var r=k([1],0),e=0;e<t;e+=1)r=r.multiply(k([1,C.gexp(e)],0));return r},o.getLengthInBits=function(t,r){if(1<=r&&r<10)switch(t){case a:return 10;case u:return 9;case f:case c:return 8;default:throw"mode:"+t}else if(r<27)switch(t){case a:return 12;case u:return 11;case f:return 16;case c:return 10;default:throw"mode:"+t}else{if(!(r<41))throw"type:"+r;switch(t){case a:return 14;case u:return 13;case f:return 16;case c:return 12;default:throw"mode:"+t}}},o.getLostPoint=function(t){for(var r=t.getModuleCount(),e=0,n=0;n<r;n+=1)for(var o=0;o<r;o+=1){for(var i=0,a=t.isDark(n,o),u=-1;u<=1;u+=1)if(!(n+u<0||r<=n+u))for(var f=-1;f<=1;f+=1)o+f<0||r<=o+f||0==u&&0==f||a==t.isDark(n+u,o+f)&&(i+=1);i>5&&(e+=3+i-5)}for(n=0;n<r-1;n+=1)for(o=0;o<r-1;o+=1){var c=0;t.isDark(n,o)&&(c+=1),t.isDark(n+1,o)&&(c+=1),t.isDark(n,o+1)&&(c+=1),t.isDark(n+1,o+1)&&(c+=1),0!=c&&4!=c||(e+=3)}for(n=0;n<r;n+=1)for(o=0;o<r-6;o+=1)t.isDark(n,o)&&!t.isDark(n,o+1)&&t.isDark(n,o+2)&&t.isDark(n,o+3)&&t.isDark(n,o+4)&&!t.isDark(n,o+5)&&t.isDark(n,o+6)&&(e+=40);for(o=0;o<r;o+=1)for(n=0;n<r-6;n+=1)t.isDark(n,o)&&!t.isDark(n+1,o)&&t.isDark(n+2,o)&&t.isDark(n+3,o)&&t.isDark(n+4,o)&&!t.isDark(n+5,o)&&t.isDark(n+6,o)&&(e+=40);var g=0;for(o=0;o<r;o+=1)for(n=0;n<r;n+=1)t.isDark(n,o)&&(g+=1);return e+=Math.abs(100*g/r/r-50)/5*10},o),C=function(){for(var t=new Array(256),r=new Array(256),e=0;e<8;e+=1)t[e]=1<<e;for(e=8;e<256;e+=1)t[e]=t[e-4]^t[e-5]^t[e-6]^t[e-8];for(e=0;e<255;e+=1)r[t[e]]=e;var n={glog:function(t){if(t<1)throw"glog("+t+")";return r[t]},gexp:function(r){for(;r<0;)r+=255;for(;r>=256;)r-=255;return t[r]}};return n}();function k(t,r){if(void 0===t.length)throw t.length+"/"+r;var e=function(){for(var e=0;e<t.length&&0==t[e];)e+=1;for(var n=new Array(t.length-e+r),o=0;o<t.length-e;o+=1)n[o]=t[o+e];return n}(),n={getAt:function(t){return e[t]},getLength:function(){return e.length},multiply:function(t){for(var r=new Array(n.getLength()+t.getLength()-1),e=0;e<n.getLength();e+=1)for(var o=0;o<t.getLength();o+=1)r[e+o]^=C.gexp(C.glog(n.getAt(e))+C.glog(t.getAt(o)));return k(r,0)},mod:function(t){if(n.getLength()-t.getLength()<0)return n;for(var r=C.glog(n.getAt(0))-C.glog(t.getAt(0)),e=new Array(n.getLength()),o=0;o<n.getLength();o+=1)e[o]=n.getAt(o);for(o=0;o<t.getLength();o+=1)e[o]^=C.gexp(C.glog(t.getAt(o))+r);return k(e,0).mod(t)}};return n}var A=function(){var t=[[1,26,19],[1,26,16],[1,26,13],[1,26,9],[1,44,34],[1,44,28],[1,44,22],[1,44,16],[1,70,55],[1,70,44],[2,35,17],[2,35,13],[1,100,80],[2,50,32],[2,50,24],[4,25,9],[1,134,108],[2,67,43],[2,33,15,2,34,16],[2,33,11,2,34,12],[2,86,68],[4,43,27],[4,43,19],[4,43,15],[2,98,78],[4,49,31],[2,32,14,4,33,15],[4,39,13,1,40,14],[2,121,97],[2,60,38,2,61,39],[4,40,18,2,41,19],[4,40,14,2,41,15],[2,146,116],[3,58,36,2,59,37],[4,36,16,4,37,17],[4,36,12,4,37,13],[2,86,68,2,87,69],[4,69,43,1,70,44],[6,43,19,2,44,20],[6,43,15,2,44,16],[4,101,81],[1,80,50,4,81,51],[4,50,22,4,51,23],[3,36,12,8,37,13],[2,116,92,2,117,93],[6,58,36,2,59,37],[4,46,20,6,47,21],[7,42,14,4,43,15],[4,133,107],[8,59,37,1,60,38],[8,44,20,4,45,21],[12,33,11,4,34,12],[3,145,115,1,146,116],[4,64,40,5,65,41],[11,36,16,5,37,17],[11,36,12,5,37,13],[5,109,87,1,110,88],[5,65,41,5,66,42],[5,54,24,7,55,25],[11,36,12,7,37,13],[5,122,98,1,123,99],[7,73,45,3,74,46],[15,43,19,2,44,20],[3,45,15,13,46,16],[1,135,107,5,136,108],[10,74,46,1,75,47],[1,50,22,15,51,23],[2,42,14,17,43,15],[5,150,120,1,151,121],[9,69,43,4,70,44],[17,50,22,1,51,23],[2,42,14,19,43,15],[3,141,113,4,142,114],[3,70,44,11,71,45],[17,47,21,4,48,22],[9,39,13,16,40,14],[3,135,107,5,136,108],[3,67,41,13,68,42],[15,54,24,5,55,25],[15,43,15,10,44,16],[4,144,116,4,145,117],[17,68,42],[17,50,22,6,51,23],[19,46,16,6,47,17],[2,139,111,7,140,112],[17,74,46],[7,54,24,16,55,25],[34,37,13],[4,151,121,5,152,122],[4,75,47,14,76,48],[11,54,24,14,55,25],[16,45,15,14,46,16],[6,147,117,4,148,118],[6,73,45,14,74,46],[11,54,24,16,55,25],[30,46,16,2,47,17],[8,132,106,4,133,107],[8,75,47,13,76,48],[7,54,24,22,55,25],[22,45,15,13,46,16],[10,142,114,2,143,115],[19,74,46,4,75,47],[28,50,22,6,51,23],[33,46,16,4,47,17],[8,152,122,4,153,123],[22,73,45,3,74,46],[8,53,23,26,54,24],[12,45,15,28,46,16],[3,147,117,10,148,118],[3,73,45,23,74,46],[4,54,24,31,55,25],[11,45,15,31,46,16],[7,146,116,7,147,117],[21,73,45,7,74,46],[1,53,23,37,54,24],[19,45,15,26,46,16],[5,145,115,10,146,116],[19,75,47,10,76,48],[15,54,24,25,55,25],[23,45,15,25,46,16],[13,145,115,3,146,116],[2,74,46,29,75,47],[42,54,24,1,55,25],[23,45,15,28,46,16],[17,145,115],[10,74,46,23,75,47],[10,54,24,35,55,25],[19,45,15,35,46,16],[17,145,115,1,146,116],[14,74,46,21,75,47],[29,54,24,19,55,25],[11,45,15,46,46,16],[13,145,115,6,146,116],[14,74,46,23,75,47],[44,54,24,7,55,25],[59,46,16,1,47,17],[12,151,121,7,152,122],[12,75,47,26,76,48],[39,54,24,14,55,25],[22,45,15,41,46,16],[6,151,121,14,152,122],[6,75,47,34,76,48],[46,54,24,10,55,25],[2,45,15,64,46,16],[17,152,122,4,153,123],[29,74,46,14,75,47],[49,54,24,10,55,25],[24,45,15,46,46,16],[4,152,122,18,153,123],[13,74,46,32,75,47],[48,54,24,14,55,25],[42,45,15,32,46,16],[20,147,117,4,148,118],[40,75,47,7,76,48],[43,54,24,22,55,25],[10,45,15,67,46,16],[19,148,118,6,149,119],[18,75,47,31,76,48],[34,54,24,34,55,25],[20,45,15,61,46,16]],r=function(t,r){var e={};return e.totalCount=t,e.dataCount=r,e},e={};return e.getRSBlocks=function(e,n){var o=function(r,e){switch(e){case g.L:return t[4*(r-1)+0];case g.M:return t[4*(r-1)+1];case g.Q:return t[4*(r-1)+2];case g.H:return t[4*(r-1)+3];default:return}}(e,n);if(void 0===o)throw"bad rs block @ typeNumber:"+e+"/errorCorrectionLevel:"+n;for(var i=o.length/3,a=[],u=0;u<i;u+=1)for(var f=o[3*u+0],c=o[3*u+1],l=o[3*u+2],h=0;h<f;h+=1)a.push(r(c,l));return a},e}(),b=function(){var t=[],r=0,e={getBuffer:function(){return t},getAt:function(r){var e=Math.floor(r/8);return 1==(t[e]>>>7-r%8&1)},put:function(t,r){for(var n=0;n<r;n+=1)e.putBit(1==(t>>>r-n-1&1))},getLengthInBits:function(){return r},putBit:function(e){var n=Math.floor(r/8);t.length<=n&&t.push(0),e&&(t[n]|=128>>>r%8),r+=1}};return e},M=function(t){var r=a,e=t,n={getMode:function(){return r},getLength:function(t){return e.length},write:function(t){for(var r=e,n=0;n+2<r.length;)t.put(o(r.substring(n,n+3)),10),n+=3;n<r.length&&(r.length-n==1?t.put(o(r.substring(n,n+1)),4):r.length-n==2&&t.put(o(r.substring(n,n+2)),7))}},o=function(t){for(var r=0,e=0;e<t.length;e+=1)r=10*r+i(t.charAt(e));return r},i=function(t){if("0"<=t&&t<="9")return t.charCodeAt(0)-"0".charCodeAt(0);throw"illegal char :"+t};return n},x=function(t){var r=u,e=t,n={getMode:function(){return r},getLength:function(t){return e.length},write:function(t){for(var r=e,n=0;n+1<r.length;)t.put(45*o(r.charAt(n))+o(r.charAt(n+1)),11),n+=2;n<r.length&&t.put(o(r.charAt(n)),6)}},o=function(t){if("0"<=t&&t<="9")return t.charCodeAt(0)-"0".charCodeAt(0);if("A"<=t&&t<="Z")return t.charCodeAt(0)-"A".charCodeAt(0)+10;switch(t){case" ":return 36;case"$":return 37;case"%":return 38;case"*":return 39;case"+":return 40;case"-":return 41;case".":return 42;case"/":return 43;case":":return 44;default:throw"illegal char :"+t}};return n},m=function(r){var e=f,n=t.stringToBytes(r),o={getMode:function(){return e},getLength:function(t){return n.length},write:function(t){for(var r=0;r<n.length;r+=1)t.put(n[r],8)}};return o},L=function(r){var e=c,n=t.stringToBytesFuncs.SJIS;if(!n)throw"sjis not supported.";!function(t,r){var e=n("友");if(2!=e.length||38726!=(e[0]<<8|e[1]))throw"sjis not supported."}();var o=n(r),i={getMode:function(){return e},getLength:function(t){return~~(o.length/2)},write:function(t){for(var r=o,e=0;e+1<r.length;){var n=(255&r[e])<<8|255&r[e+1];if(33088<=n&&n<=40956)n-=33088;else{if(!(57408<=n&&n<=60351))throw"illegal char at "+(e+1)+"/"+n;n-=49472}n=192*(n>>>8&255)+(255&n),t.put(n,13),e+=2}if(e<r.length)throw"illegal char at "+(e+1)}};return i},D=function(){var t=[],r={writeByte:function(r){t.push(255&r)},writeShort:function(t){r.writeByte(t),r.writeByte(t>>>8)},writeBytes:function(t,e,n){e=e||0,n=n||t.length;for(var o=0;o<n;o+=1)r.writeByte(t[o+e])},writeString:function(t){for(var e=0;e<t.length;e+=1)r.writeByte(t.charCodeAt(e))},toByteArray:function(){return t},toString:function(){var r="";r+="[";for(var e=0;e<t.length;e+=1)e>0&&(r+=","),r+=t[e];return r+="]"}};return r},S=function(t){var r=t,e=0,n=0,o=0,i={read:function(){for(;o<8;){if(e>=r.length){if(0==o)return-1;throw"unexpected end of file./"+o}var t=r.charAt(e);if(e+=1,"="==t)return o=0,-1;t.match(/^\s$/)||(n=n<<6|a(t.charCodeAt(0)),o+=6)}var i=n>>>o-8&255;return o-=8,i}},a=function(t){if(65<=t&&t<=90)return t-65;if(97<=t&&t<=122)return t-97+26;if(48<=t&&t<=57)return t-48+52;if(43==t)return 62;if(47==t)return 63;throw"c:"+t};return i},I=function(t,r,e){for(var n=function(t,r){var e=t,n=r,o=new Array(t*r),i={setPixel:function(t,r,n){o[r*e+t]=n},write:function(t){t.writeString("GIF87a"),t.writeShort(e),t.writeShort(n),t.writeByte(128),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(255),t.writeByte(255),t.writeByte(255),t.writeString(","),t.writeShort(0),t.writeShort(0),t.writeShort(e),t.writeShort(n),t.writeByte(0);var r=a(2);t.writeByte(2);for(var o=0;r.length-o>255;)t.writeByte(255),t.writeBytes(r,o,255),o+=255;t.writeByte(r.length-o),t.writeBytes(r,o,r.length-o),t.writeByte(0),t.writeString(";")}},a=function(t){for(var r=1<<t,e=1+(1<<t),n=t+1,i=u(),a=0;a<r;a+=1)i.add(String.fromCharCode(a));i.add(String.fromCharCode(r)),i.add(String.fromCharCode(e));var f,c,g,l=D(),h=(f=l,c=0,g=0,{write:function(t,r){if(t>>>r!=0)throw"length over";for(;c+r>=8;)f.writeByte(255&(t<<c|g)),r-=8-c,t>>>=8-c,g=0,c=0;g|=t<<c,c+=r},flush:function(){c>0&&f.writeByte(g)}});h.write(r,n);var s=0,v=String.fromCharCode(o[s]);for(s+=1;s<o.length;){var d=String.fromCharCode(o[s]);s+=1,i.contains(v+d)?v+=d:(h.write(i.indexOf(v),n),i.size()<4095&&(i.size()==1<<n&&(n+=1),i.add(v+d)),v=d)}return h.write(i.indexOf(v),n),h.write(e,n),h.flush(),l.toByteArray()},u=function(){var t={},r=0,e={add:function(n){if(e.contains(n))throw"dup key:"+n;t[n]=r,r+=1},size:function(){return r},indexOf:function(r){return t[r]},contains:function(r){return void 0!==t[r]}};return e};return i}(t,r),o=0;o<r;o+=1)for(var i=0;i<t;i+=1)n.setPixel(i,o,e(i,o));var a=D();n.write(a);for(var u=function(){var t=0,r=0,e=0,n="",o={},i=function(t){n+=String.fromCharCode(a(63&t))},a=function(t){if(t<0);else{if(t<26)return 65+t;if(t<52)return t-26+97;if(t<62)return t-52+48;if(62==t)return 43;if(63==t)return 47}throw"n:"+t};return o.writeByte=function(n){for(t=t<<8|255&n,r+=8,e+=1;r>=6;)i(t>>>r-6),r-=6},o.flush=function(){if(r>0&&(i(t<<6-r),t=0,r=0),e%3!=0)for(var o=3-e%3,a=0;a<o;a+=1)n+="="},o.toString=function(){return n},o}(),f=a.toByteArray(),c=0;c<f.length;c+=1)u.writeByte(f[c]);return u.flush(),"data:image/gif;base64,"+u};return t}();qrcode.stringToBytesFuncs["UTF-8"]=function(t){return function(t){for(var r=[],e=0;e<t.length;e++){var n=t.charCodeAt(e);n<128?r.push(n):n<2048?r.push(192|n>>6,128|63&n):n<55296||n>=57344?r.push(224|n>>12,128|n>>6&63,128|63&n):(e++,n=65536+((1023&n)<<10|1023&t.charCodeAt(e)),r.push(240|n>>18,128|n>>12&63,128|n>>6&63,128|63&n))}return r}(t)},function(t){"function"==typeof define&&define.amd?define([],t):"object"==typeof exports&&(module.exports=t())}((function(){return qrcode}));
+</script>
+</head>
+<body>
+<header class="top"><div class="wrap" id="topbar"><div class="brand"><span class="bulb"></span><span>The Trainee Stakes</span></div></div></header>
+<main><div class="wrap" id="main">
+  <div class="slipwrap"><div class="slip">
+    <div class="sliptitle">The Trainee Stakes</div>
+    <p class="q" style="margin-top:12px">Loading the track…</p>
+    <p class="note">Bet play money on which trainee fits each statement.</p>
+  </div></div>
+</div></main>
+<div id="dock"></div>
+<div id="overlay"></div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<noscript><p style="padding:16px">This game needs JavaScript turned on.</p></noscript>
+
+<script type="module">
+/* ============================================================
+   The Trainee Stakes — play-money betting game
+   OPTIONAL: paste your Firebase Realtime Database URL between the quotes,
+   e.g. "https://my-game-default-rtdb.europe-west1.firebasedatabase.app".
+   Leave it empty and the page asks for it the first time you host.
+   ============================================================ */
+const DATABASE_URL = "";
+const FIREBASE_SDK = "10.12.2";
+
+/* Standard racing saddle-cloth colours, numbers 1–12 */
+const SADDLE=[["#d42a2a","#ffffff"],["#f4f4ef","#111111"],["#1f5fbf","#ffffff"],["#f5d22e","#111111"],["#1f8c4d","#ffffff"],["#111111","#f5d22e"],["#f08a24","#111111"],["#f5a3c0","#111111"],["#3ec6c6","#c42020"],["#6b3fa2","#ffffff"],["#9ba1a6","#c42020"],["#b6e03c","#111111"]];
+const EXAMPLES=[
+  "Has eaten a full pizza in under four minutes.",
+  "Can cook a full meal for 20 people.",
+  "Has lived in more than two countries.",
+  "Has met a famous athlete.",
+  "Once got lost on the way to their own job interview.",
+  "Has a hidden talent they have performed on stage.",
+  "Was the last one to figure out the coffee machine here.",
+  "Speaks three or more languages."
+];
+const RULES=`{
+  "rules": {
+    "games": { "$code": { ".read": true, ".write": true } },
+    "hosts": { "$key": { ".read": true, ".write": true } }
+  }
+}`;
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const clone=o=>JSON.parse(JSON.stringify(o));
+const clean=(s,n)=>typeof s==="string"?s.replace(/[\u0000-\u001f\u007f​-‏‪-‮⁠-⁤﻿]/g,"").replace(/\s+/g," ").trim().slice(0,n):"";
+const cleanNick=s=>clean(s,24);
+function randStr(n,alpha){const a=alpha||"abcdefghijklmnopqrstuvwxyz0123456789";const b=new Uint8Array(n);crypto.getRandomValues(b);return Array.from(b,x=>a[x%a.length]).join("")}
+const rid=()=>randStr(8);
+function lsGet(k){try{return JSON.parse(localStorage.getItem(k)||"null")}catch(e){return null}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function withTimeout(p,ms){return Promise.race([p,new Promise((_,rej)=>setTimeout(()=>rej({code:"timeout"}),ms))])}
+function isPerm(e){return /permission/i.test(String(e&&(e.code||e.message)||""))}
+
+/* ---------- database URL + routing ---------- */
+function normDb(s){
+  s=String(s||"").trim();if(!s)return "";
+  if(!/^https?:\/\//i.test(s))s="https://"+s;
+  try{const u=new URL(s);if(!/(\.firebaseio\.com|\.firebasedatabase\.app)$/i.test(u.hostname))return "";return "https://"+u.hostname.toLowerCase()}catch(e){return ""}
+}
+const shortDb=u=>u.replace(/^https:\/\//,"");
+const HP=new URLSearchParams(location.hash.slice(1));
+const MODE=HP.get("host")?"host":HP.get("join")?"player":"landing";
+let DBURL=normDb(HP.get("db"))||normDb(DATABASE_URL)||normDb(lsGet("stakes.db"));
+const baseURL=()=>location.origin+location.pathname;
+const joinURL=code=>`${baseURL()}#join=${code}&db=${shortDb(DBURL)}`;
+const hostURL=key=>`${baseURL()}#host=${key}&db=${shortDb(DBURL)}`;
+window.addEventListener("hashchange",()=>location.reload());
+
+/* ---------- database layer (Firebase Realtime Database) ---------- */
+let FB=null;
+async function connect(url){
+  if(window.__MOCK_FB){FB=window.__MOCK_FB;return}
+  const base=`https://www.gstatic.com/firebasejs/${FIREBASE_SDK}/`;
+  const [A,D]=await Promise.all([import(base+"firebase-app.js"),import(base+"firebase-database.js")]);
+  const app=A.initializeApp({databaseURL:url});
+  const db=D.getDatabase(app);
+  const r=p=>D.ref(db,p);
+  FB={
+    on:(p,cb,err)=>D.onValue(r(p),s=>cb(s.val()),e=>err&&err(e)),
+    set:(p,v)=>D.set(r(p),v),
+    update:(p,v)=>D.update(r(p),v),
+    get:async p=>(await D.get(r(p))).val(),
+    remove:p=>D.remove(r(p)),
+    onDisconnectUpdate:(p,v)=>D.onDisconnect(r(p)).update(v)
+  };
+}
+
+/* ---------- state ---------- */
+const S={
+  mode:MODE,hostKey:HP.get("host")||"",code:(HP.get("join")||"").toUpperCase().replace(/[^A-Z0-9]/g,"").slice(0,6),
+  host:undefined,game:undefined,players:{},bets:{},betsKey:null,
+  view:null,lastKey:null,draft:null,stale:false,busy:false,connected:null,problem:null,
+  me:{pid:"",nick:""},pickT:null,stake:0,stakeRound:null,
+  confirm:null,confirmT:null,toastT:null,showQR:false,primary:null,
+  seen:new Set(),wq:Promise.resolve(),unsub:{},gameSub:null,rereg:0
+};
+
+/* ---------- money and payouts (parimutuel) ---------- */
+function fmt(n){const c=(S.game&&S.game.cur)||"€";return c+Math.round(Math.abs(n)).toLocaleString("en-US")}
+function signed(n){return (n<0?"−":"+")+fmt(n)}
+/* Pot = house money + every stake. Winners split the pot in proportion to their stake. */
+function settle(r,seed){
+  const bets=r.bets||{};let pot=seed||0,win=0;
+  for(const b of Object.values(bets)){pot+=b.a;if(b.t===r.answer)win+=b.a}
+  const nets={};
+  for(const [k,b] of Object.entries(bets))nets[k]=(win>0&&b.t===r.answer)?Math.floor(b.a*pot/win)-b.a:-b.a;
+  return {pot,win,nets};
+}
+function rounds(g){const r=g.rounds;return Array.isArray(r)?r:r?Object.values(r):[]}
+function trainees(g){const t=g&&g.trainees;return Array.isArray(t)?t:t?Object.values(t):[]}
+function balances(g){
+  const bal={};
+  for(const r of rounds(g)){const {nets}=settle(r,g.seed);for(const [k,n] of Object.entries(nets))bal[k]=(k in bal?bal[k]:g.start)+n}
+  return bal;
+}
+function balOf(bal,k){return k in bal?bal[k]:S.game.start}
+function book(bets){
+  const by={};let total=(S.game&&S.game.seed)||0,stakes=0,count=0;
+  for(const b of Object.values(bets)){by[b.t]=(by[b.t]||0)+b.a;total+=b.a;stakes+=b.a;count++}
+  return {by,total,stakes,count};
+}
+function oddsText(total,stake){if(!stake)return "—";const o=total/stake;return (o>=10?Math.round(o):o.toFixed(1))+"×"}
+
+/* ---------- people ---------- */
+const myKey=()=>S.me.pid;
+function nickOf(k){const p=S.players[k];return (p&&cleanNick(p.nick))||"Player"}
+function rosterList(){return Object.entries(S.players||{}).filter(([,p])=>p&&cleanNick(p.nick)).map(([k,p])=>({k,nick:cleanNick(p.nick),on:!!p.online}))}
+const onlineCount=()=>rosterList().filter(p=>p.on).length;
+const trainee=id=>trainees(S.game).find(t=>t.id===id);
+function cloth(t,sm){const c=SADDLE[(t.no-1)%SADDLE.length];return `<span class="cloth${sm?" sm":""}" style="background:${c[0]};color:${c[1]}" aria-hidden="true">${t.no}</span>`}
+function cleanBets(raw,g){
+  const bal=balances(g),ids=new Set(trainees(g).map(t=>t.id)),out={};
+  for(const [k,b] of Object.entries(raw||{})){
+    if(!b||!ids.has(b.t))continue;
+    const a=Math.min(Math.floor(Number(b.a)),balOf(bal,k));
+    if(a>0)out[k]={t:b.t,a};
+  }
+  return out;
+}
+/* Bets for the current race: live while betting is open, then the locked record */
+function liveBets(){
+  const g=S.game,r=g&&g.round;if(!r)return {};
+  if(g.phase==="betting")return S.betsKey===r.k?cleanBets(S.bets,g):{};
+  return r.bets||{};
+}
+function standings(){
+  const g=S.game,bal=balances(g),keys=new Set(rosterList().map(p=>p.k));
+  for(const r of rounds(g))for(const k of Object.keys(r.bets||{}))keys.add(k);
+  const rs=rounds(g),last=rs.length?settle(rs[rs.length-1],g.seed).nets:{};
+  return [...keys].map(k=>({k,nick:nickOf(k),bal:balOf(bal,k),d:last[k]||0})).sort((a,b)=>b.bal-a.bal||a.nick.localeCompare(b.nick));
+}
+function rankAt(st,i){let j=i;while(j>0&&st[j-1].bal===st[i].bal)j--;return j+1}
+
+/* ---------- QR ---------- */
+function qrSVG(text){
+  try{
+    const q=qrcode(0,"M");q.addData(text);q.make();
+    const n=q.getModuleCount(),m=4,s=n+2*m;let d="";
+    for(let y=0;y<n;y++)for(let x=0;x<n;x++)if(q.isDark(y,x))d+=`M${x+m} ${y+m}h1v1h-1z`;
+    return `<svg class="qr" viewBox="0 0 ${s} ${s}" shape-rendering="crispEdges" role="img" aria-label="QR code to join the game"><rect width="${s}" height="${s}" fill="#ffffff"/><path d="${d}" fill="#000000"/></svg>`;
+  }catch(e){return ""}
+}
+function qrCard(){
+  const code=S.game&&S.code;if(!code)return "";
+  return `<div class="qrcard"><div class="scan">Scan to bet</div>${qrSVG(joinURL(code))}<div class="small">Room code</div><div class="code">${esc(code)}</div></div>`;
+}
+
+/* ---------- writes ---------- */
+function errMsg(e){
+  const c=e&&e.code;
+  if(c==="norun")return "The answers for this game are missing. Open Setup and restart the game.";
+  if(c==="timeout")return "The database didn't answer. Check the connection and try again.";
+  if(isPerm(e))return "The database refused the change. Check the rules in your Firebase console.";
+  return "Couldn't save that. Try again in a moment.";
+}
+function queue(fn){const p=S.wq.then(fn);S.wq=p.catch(()=>{});return p}
+const gpath=p=>`games/${S.code}/${p}`;
+const hpath=p=>p?`hosts/${S.hostKey}/${p}`:`hosts/${S.hostKey}`;
+async function setGame(next){next.updated=Date.now();await withTimeout(FB.set(gpath("state"),clone(next)),12000)}
+async function run(fn){
+  if(S.busy)return;S.busy=true;renderChrome(screenKey());
+  try{await queue(fn)}catch(e){toast(errMsg(e))}
+  finally{S.busy=false;render()}
+}
+function runOk(){const r=S.host&&S.host.run;return !!(r&&S.game&&r.gid===S.game.gid)}
+function runStatements(){const s=S.host.run.statements;return Array.isArray(s)?s:Object.values(s||{})}
+
+async function newCode(){
+  for(let i=0;i<8;i++){
+    const c=randStr(4,"ABCDEFGHJKLMNPQRSTUVWXYZ23456789");
+    const ex=await withTimeout(FB.get(`games/${c}/state`),12000);
+    if(!ex)return c;
+  }
+  return randStr(6,"ABCDEFGHJKLMNPQRSTUVWXYZ23456789");
+}
+async function startGame(){
+  const sd=normalizeSetup(clone(S.host.setup)),gid=rid().slice(0,6);
+  if(!S.code){S.code=await newCode();await withTimeout(FB.update(hpath(""),{code:S.code}),12000);subscribeGame()}
+  const statements=sd.statements.map(s=>({text:s.text,answer:s.answer}));
+  await withTimeout(FB.update(hpath(""),{run:{gid,statements}}),12000);
+  S.host=Object.assign({},S.host,{run:{gid,statements}});
+  await FB.remove(gpath("bets")).catch(()=>{});
+  await setGame({title:sd.title,cur:sd.cur,start:sd.start,seed:sd.seed,
+    trainees:sd.trainees.map((t,i)=>({id:t.id,name:t.name,no:i+1})),
+    total:sd.statements.length,gid,idx:-1,phase:"lobby"});
+  S.view="board";
+}
+async function openRace(i){
+  if(!runOk())throw {code:"norun"};
+  const g=clone(S.game);g.idx=i;g.phase="betting";g.round={k:g.gid+"-"+i,n:i,text:runStatements()[i].text};
+  await setGame(g);
+}
+async function closeBetting(){
+  const g=clone(S.game);
+  const raw=await withTimeout(FB.get(gpath("bets/"+g.round.k)),12000);
+  g.round.bets=cleanBets(raw,S.game);g.phase="locked";
+  await setGame(g);
+}
+async function reopen(){const g=clone(S.game);delete g.round.bets;g.phase="betting";await setGame(g)}
+async function reveal(){
+  if(!runOk())throw {code:"norun"};
+  const g=clone(S.game);g.round.answer=runStatements()[g.idx].answer;
+  g.rounds=rounds(g).concat([g.round]);g.phase="revealed";await setGame(g);
+}
+async function showStandings(){const g=clone(S.game);g.phase="standings";await setGame(g)}
+async function nextRace(){
+  const g=S.game;if(g.idx+1<g.total)return openRace(g.idx+1);
+  const n=clone(g);n.phase="final";await setGame(n);
+}
+async function clearPlayers(){await withTimeout(FB.remove(gpath("players")),12000)}
+
+/* ---------- player writes ---------- */
+function registerMe(){
+  if(S.mode!=="player"||!FB||!S.me.nick||!S.code)return;
+  const p=gpath("players/"+S.me.pid);
+  FB.onDisconnectUpdate(p,{online:false}).catch(()=>{});
+  const cur=S.players[S.me.pid];
+  FB.update(p,{nick:S.me.nick,online:true,j:(cur&&cur.j)||Date.now()}).catch(()=>{});
+}
+async function placeBet(){
+  const r=S.game&&S.game.round;if(!r||S.game.phase!=="betting"||!S.pickT||S.stake<=0)return;
+  try{await withTimeout(FB.set(gpath(`bets/${r.k}/${S.me.pid}`),{t:S.pickT,a:S.stake,at:Date.now()}),12000);toast("Bet placed. You can change it until betting closes.")}
+  catch(e){toast(errMsg(e))}
+}
+async function withdrawBet(){
+  const r=S.game&&S.game.round;if(!r)return;
+  try{await withTimeout(FB.remove(gpath(`bets/${r.k}/${S.me.pid}`)),12000);toast("Bet withdrawn")}catch(e){toast(errMsg(e))}
+}
+
+/* ---------- subscriptions ---------- */
+function onDbError(e){S.problem=isPerm(e)?"rules":"unreachable";render()}
+function subscribeGame(){
+  if(!S.code||S.gameSub===S.code)return;
+  S.gameSub=S.code;
+  const t=setTimeout(()=>{if(S.game===undefined){S.stale=true;render()}},10000);
+  FB.on(gpath("state"),v=>{
+    clearTimeout(t);S.stale=false;S.game=v||null;
+    const rk=S.game&&S.game.phase==="betting"&&S.game.round?S.game.round.k:null;
+    if(rk!==S.betsKey){
+      if(S.unsub.bets)S.unsub.bets();S.unsub.bets=null;S.bets={};S.betsKey=rk;
+      if(rk)S.unsub.bets=FB.on(gpath("bets/"+rk),b=>{if(S.betsKey===rk){S.bets=b||{};render()}},onDbError);
+    }
+    if(S.view===null)S.view=S.mode==="host"?(S.game?"board":"setup"):"play";
+    render();
+  },e=>{clearTimeout(t);onDbError(e)});
+  FB.on(gpath("players"),v=>{
+    S.players=v||{};
+    if(S.mode==="player"&&S.me.nick&&!S.players[S.me.pid]&&Date.now()-S.rereg>5000){S.rereg=Date.now();registerMe()}
+    render();
+  },onDbError);
+}
+
+/* ---------- toast + confirm + copy ---------- */
+function toast(msg){const t=$("#toast");t.textContent=msg;t.hidden=false;clearTimeout(S.toastT);S.toastT=setTimeout(()=>{t.hidden=true},3800)}
+function armed(name){
+  if(S.confirm===name){S.confirm=null;clearTimeout(S.confirmT);return true}
+  S.confirm=name;clearTimeout(S.confirmT);
+  S.confirmT=setTimeout(()=>{S.confirm=null;S.lastKey=null;render()},4000);
+  S.lastKey=null;render();return false;
+}
+function copyText(text,okMsg){
+  const done=()=>toast(okMsg||"Copied");
+  const fallback=()=>{const ta=document.createElement("textarea");ta.value=text;ta.setAttribute("readonly","");ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand("copy")}catch(e){}ta.remove();ok?done():toast("Couldn't copy. Select the text and copy it yourself.")};
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(text).then(done,fallback);else fallback();
+}
+
+/* ---------- screens ---------- */
+function screenKey(){
+  if(S.problem)return "problem-"+S.problem;
+  if(S.mode==="landing")return "landing";
+  if(S.mode==="host"){
+    if(S.host===undefined)return "boot";
+    if(S.view==="setup"||(!S.code&&S.view!=="board"))return "setup";
+    if(S.code&&S.game===undefined)return "boot";
+    return "board";
+  }
+  if(!S.code)return "landing";
+  if(S.game===undefined)return "boot";
+  if(!S.me.nick)return "join";
+  return "slip";
+}
+const STATIC=new Set(["setup","join","landing"]);
+
+function render(){
+  const key=screenKey();
+  renderChrome(key);
+  if(STATIC.has(key)&&key===S.lastKey)return;
+  const first=key!==S.lastKey;S.lastKey=key;
+  if(key==="setup"&&!S.draft)S.draft=S.host&&S.host.setup?normalizeSetup(clone(S.host.setup)):defaultDraft();
+  $("#main").innerHTML=build(key);
+  if(first&&key==="join"){const n=$("#nick");if(n)n.focus({preventScroll:true})}
+}
+function build(key){
+  switch(key){
+    case "problem-rules":return rulesCard();
+    case "problem-unreachable":return msgCard("Can't reach the game database","Check your internet connection and reload the page. If you're on a company network, try mobile data.");
+    case "boot":return msgCard("Connecting to the track…",S.stale?"This is taking longer than usual. Check your connection; the board appears as soon as it loads.":"The live board loads in a moment.");
+    case "landing":return landingHTML();
+    case "setup":return setupHTML();
+    case "board":return boardHTML();
+    case "join":return joinHTML();
+    case "slip":return slipHTML();
+  }
+  return "";
+}
+function msgCard(title,body,extra){return `<div class="slipwrap"><div class="slip"><div class="sliptitle">${esc((S.game&&S.game.title)||"The Trainee Stakes")}</div><p class="q" style="margin-top:12px">${esc(title)}</p><p class="note">${esc(body)}</p>${extra||""}</div></div>`}
+function rulesCard(){
+  return `<div class="slipwrap"><div class="slip"><div class="sliptitle">Database rules needed</div>
+    <p class="q" style="margin-top:12px">Firebase is blocking the game.</p>
+    <ol class="steps"><li>Open your project in the <b>Firebase console</b>.</li><li>Go to <b>Realtime Database → Rules</b>.</li><li>Replace everything with the rules below and tap <b>Publish</b>.</li><li>Reload this page.</li></ol>
+    <pre class="rules" id="rules-text">${esc(RULES)}</pre>
+    <button class="place" data-act="copy-rules">Copy the rules</button></div></div>`;
+}
+
+function renderChrome(key){
+  const g=S.game,title=(g&&g.title)||"The Trainee Stakes";
+  let right="";
+  if(S.mode==="host"&&!["boot","problem-rules","problem-unreachable"].includes(key)){
+    const v=key==="board"?"board":"setup";
+    right=`<div class="tabs" role="group" aria-label="Host views">
+      <button class="tab" data-act="view" data-v="board" aria-pressed="${v==="board"}"${S.code?"":" disabled"}>Board</button>
+      <button class="tab" data-act="view" data-v="setup" aria-pressed="${v==="setup"}">Setup</button></div>
+      ${v==="board"?'<button class="iconbtn" data-act="fs">Full screen</button>':""}`;
+  }else if(S.mode==="player"&&S.code){
+    right=`<span class="roomcode" aria-label="Room code">${esc(S.code)}</span>`;
+  }
+  $("#topbar").innerHTML=`<div class="brand"><span class="bulb"></span><span>${esc(title)}</span></div>${right}`;
+  const dock=key==="board"?dockHTML():"";
+  $("#dock").innerHTML=dock;
+  document.body.classList.toggle("dock-on",!!dock);
+  $("#overlay").innerHTML=S.showQR&&key==="board"&&S.game?`<div class="overlay" data-act="qr" role="dialog" aria-label="Join QR code">${qrCard()}</div>`:"";
+}
+
+/* ---------- landing ---------- */
+function landingHTML(){
+  const saved=lsGet("stakes.hostlink");
+  return `<div class="slipwrap" style="display:grid;gap:22px">
+    <form class="slip" id="join-code-form" autocomplete="off">
+      <div class="sliptitle">Join a game</div>
+      <p class="note" style="margin-top:6px">Scanning the QR code on the big screen is quickest. Or type the room code.</p>
+      <label class="label" for="code-in" style="display:block">Room code</label>
+      <input class="join-in code" id="code-in" maxlength="6" placeholder="K7QX" autocapitalize="characters" required>
+      ${DBURL?"":`<p class="note"><b>This page doesn't know which game server to use.</b> Scan the QR code instead.</p>`}
+      <button class="place" type="submit"${DBURL?"":" disabled"}>Join</button>
+    </form>
+    <form class="slip" id="host-form" autocomplete="off">
+      <div class="sliptitle">Host a game</div>
+      ${saved?`<p class="note" style="margin-top:6px">You've hosted on this device before. <a class="linkbtn" href="${esc(saved)}">Open your host page</a></p>`:""}
+      <label class="label" for="db-in" style="display:block">Firebase database URL</label>
+      <input class="join-in" id="db-in" inputmode="url" placeholder="https://your-game-default-rtdb.europe-west1.firebasedatabase.app" value="${esc(DBURL)}" required>
+      <ol class="steps">
+        <li>At <b>console.firebase.google.com</b>, create a project (Analytics not needed).</li>
+        <li>Open <b>Build → Realtime Database → Create database</b>, pick Europe, start in <b>locked mode</b>.</li>
+        <li>In the <b>Rules</b> tab, paste the rules below and tap <b>Publish</b>.</li>
+        <li>Copy the URL shown at the top of the <b>Data</b> tab and paste it above.</li>
+      </ol>
+      <pre class="rules">${esc(RULES)}</pre>
+      <p class="note"><button class="linkbtn" type="button" data-act="copy-rules">Copy the rules</button></p>
+      <button class="place" type="submit"${S.busy?" disabled":""}>Create my host page</button>
+    </form></div>`;
+}
+
+/* ---------- host: board ---------- */
+function boardHTML(){
+  const g=S.game;
+  if(!g)return msgCard("No game running","Open Setup and start the game. Players who scan the QR code will see a waiting slip until then.",`<button class="place" data-act="view" data-v="setup">Go to setup</button>`);
+  if(g.phase==="lobby")return boardLobby(g);
+  if(g.phase==="standings")return boardStandings(g,false);
+  if(g.phase==="final")return boardStandings(g,true);
+  return boardRace(g);
+}
+function boardLobby(g){
+  const roster=rosterList(),ts=trainees(g);
+  return `<section class="lobby"><div class="min0">
+    <p class="eyebrow">Today's race card</p>
+    <h1 class="mega">${esc(g.title)}</h1>
+    <p class="lede">Bet play money on which trainee fits each statement. Everyone starts with <b>${fmt(g.start)}</b>${g.seed?` and the house adds <b>${fmt(g.seed)}</b> to every pot`:""}. Back the right trainee and you split the pot with everyone else who did, so the less popular the right answer, the bigger your share.</p>
+    <p class="eyebrow" style="margin-top:30px">The field · ${ts.length} runners · ${g.total} ${g.total===1?"race":"races"}</p>
+    <div class="field">${ts.map(t=>`<div class="runner">${cloth(t)}<b>${esc(t.name)}</b></div>`).join("")}</div>
+    <div class="joined">
+      <div class="metric"><span>In the betting</span><b>${roster.length}</b></div>
+      <div class="chiprow">${roster.map(r=>`<span class="chip${r.on?"":" off"}">${esc(r.nick)}</span>`).join("")||'<span class="muted">Nobody yet. Players appear here as they join.</span>'}</div>
+    </div></div>
+    ${qrCard()}
+  </section>`;
+}
+function boardRace(g){
+  const r=g.round,bets=liveBets(),bk=book(bets),ans=g.phase==="revealed"?r.answer:null,ts=trainees(g);
+  const pill=g.phase==="betting"?'<span class="pill open">Betting open</span>':g.phase==="locked"?'<span class="pill shut">Betting closed</span>':'<span class="pill res">Result</span>';
+  const flash=ans&&!S.seen.has("b"+r.k);if(ans)S.seen.add("b"+r.k);
+  const rows=ts.map(t=>{
+    const s=bk.by[t.id]||0,nb=Object.values(bets).filter(b=>b.t===t.id).length;
+    const cls=ans?(t.id===ans?" winner"+(flash?" flash":""):" loser"):"";
+    const w=bk.stakes?Math.round(s/bk.stakes*100):0;
+    return `<div class="toterow${cls}">${cloth(t)}<div class="min0"><div class="nm">${esc(t.name)}${t.id===ans?'<span class="wtag">WINNER</span>':""}</div><div class="sub">${fmt(s)} · ${nb} ${nb===1?"bet":"bets"} · ${w}%</div><div class="bar"><i style="width:${w}%"></i></div></div><div class="odds">${oddsText(bk.total,s)}</div></div>`;
+  }).join("");
+  let after="";
+  if(ans){
+    const st=settle(r,g.seed),wt=trainee(ans);
+    const winners=Object.entries(st.nets).filter(([k])=>r.bets[k].t===ans).sort((a,b)=>b[1]-a[1]);
+    after=winners.length
+      ?`<p class="verdict">${winners.length} ${winners.length===1?"player":"players"} backed #${wt.no} ${esc(wt.name)} and split the ${fmt(st.pot)} pot.</p><div class="payouts">${winners.slice(0,10).map(([k,n])=>`<span class="chip">${esc(nickOf(k))} <span class="plus">${signed(n)}</span></span>`).join("")}${winners.length>10?`<span class="chip">+${winners.length-10} more</span>`:""}</div>`
+      :`<p class="verdict">Nobody backed #${wt.no} ${esc(wt.name)}. The house keeps the ${fmt(st.pot)} pot.</p>`;
+  }
+  return `<section>
+    <div class="racehead"><span class="raceno">Race ${r.n+1} <small>of ${g.total}</small></span>${pill}</div>
+    <h2 class="statement">${esc(r.text)}</h2>
+    <div class="tote">
+      <div class="totehead"><div class="metric"><span>Pot</span><b>${fmt(bk.total)}</b></div><div class="metric small"><span>Bets</span><b>${bk.count}</b></div>${g.seed?`<div class="metric small"><span>House money</span><b>${fmt(g.seed)}</b></div>`:""}</div>
+      <div class="rows${ts.length>6?" two":""}">${rows}</div>
+    </div>
+    ${after}
+  </section>`;
+}
+function boardStandings(g,final){
+  const st=standings(),n=rounds(g).length,top=st.slice(0,10);
+  const rows=top.map((p,i)=>{const rk=rankAt(st,i),d=p.d;return `<tr class="${rk<=3?"podium":""}"><td class="rk">${rk}</td><td class="pn">${esc(p.nick)}</td><td class="pd ${d>0?"up":d<0?"down":""}">${n&&!final?(d?signed(d):"±0"):""}</td><td class="pb">${fmt(p.bal)}</td></tr>`}).join("");
+  const head=final&&st.length
+    ?`<p class="eyebrow">Final result · ${n} ${n===1?"race":"races"}</p><div class="champ"><div class="trophy" aria-hidden="true">1</div><div class="min0"><h1 class="mega" style="margin:0">${esc(st[0].nick)}</h1><p class="lede">wins ${esc(g.title)} with <b>${fmt(st[0].bal)}</b></p></div></div>`
+    :`<p class="eyebrow">${final?"Final result":`Standings after race ${n} of ${g.total}`}</p><h1 class="mega" style="font-size:clamp(40px,7vw,90px)">${final?"No bets placed":"The leaderboard"}</h1>`;
+  return `<section>${head}${st.length?`<div style="overflow-x:auto"><table class="ladder">${rows}</table></div>`:""}${st.length>10?`<p class="muted" style="margin-top:12px">+ ${st.length-10} more players</p>`:""}</section>`;
+}
+function btn(act,label,cls,extra){return `<button class="btn ${cls||""}" data-act="${act}" ${S.busy?"disabled":""} ${extra||""}>${label}</button>`}
+function dockHTML(){
+  const g=S.game,live=onlineCount();
+  const conn=`<b>${live}</b> ${live===1?"phone":"phones"} connected`;
+  let status="",btns="";S.primary=null;
+  if(!g){status="No game running";btns=btn("view","Go to setup","primary",'data-v="setup"')}
+  else{
+    const last=g.idx+1>=g.total,nextLabel=last?"Final results":`Open race ${g.idx+2}`;
+    const qr=`<button class="btn ghost" data-act="qr">Show QR</button>`;
+    switch(g.phase){
+      case "lobby":status=`Lobby · ${conn}`;btns=btn("open1","Open race 1","primary");S.primary="open1";break;
+      case "betting":{const n=Object.keys(liveBets()).length;status=`Race ${g.idx+1} of ${g.total} · <b>${n}</b> ${n===1?"bet":"bets"} in · ${conn}`;btns=qr+btn("close","Close betting","primary");S.primary="close";break}
+      case "locked":status=`Race ${g.idx+1} of ${g.total} · betting closed`;btns=btn("reopen","Reopen betting","ghost")+btn("reveal","Reveal the winner","primary");S.primary="reveal";break;
+      case "revealed":status=`Race ${g.idx+1} of ${g.total} · result`;btns=btn("standings","Show standings","ghost")+btn("next",nextLabel,"primary");S.primary="next";break;
+      case "standings":status=`Standings after race ${g.idx+1} · ${conn}`;btns=qr+btn("next",nextLabel,"primary");S.primary="next";break;
+      case "final":status=`Game over · ${conn}`;btns=btn("again",S.confirm==="again"?"Tap again to restart":"Play again",S.confirm==="again"?"armed":"primary");break;
+    }
+  }
+  return `<div class="dock"><div class="wrap"><div class="status">${status}${S.primary?'<span class="kbd"> · → key works too</span>':""}</div><div class="btns">${btns}</div></div></div>`;
+}
+
+/* ---------- host: setup ---------- */
+function defaultDraft(){return {title:"The Trainee Stakes",cur:"€",start:1000,seed:500,trainees:[0,1,2,3].map(()=>({id:"t"+rid(),name:""})),statements:EXAMPLES.slice(0,4).map(text=>({id:"s"+rid(),text,answer:""}))}}
+function normalizeSetup(d){
+  d.trainees=Array.isArray(d.trainees)?d.trainees:Object.values(d.trainees||{});
+  d.statements=Array.isArray(d.statements)?d.statements:Object.values(d.statements||{});
+  return d;
+}
+function answerOpts(sel){
+  return `<option value="">Who is it about?</option>`+S.draft.trainees.map((t,i)=>`<option value="${t.id}"${t.id===sel?" selected":""}>#${i+1} ${esc(t.name||"Trainee "+(i+1))}</option>`).join("");
+}
+function setupHTML(){
+  const d=S.draft,g=S.game,running=g&&g.phase!=="final";
+  const hasEx=d.statements.some(s=>EXAMPLES.includes(s.text));
+  const nPlayers=rosterList().length;
+  const hl=hostURL(S.hostKey);
+  return `<div class="setup">
+    <div><p class="eyebrow">Host only · players never see this page</p>
+      <h1 class="mega" style="font-size:clamp(40px,7vw,84px)">Set up the race card</h1>
+      <p class="lede">Add your trainees, write one statement per race and mark who it's really about. The answers stay off the players' phones until you reveal them.</p></div>
+    <section class="card"><h2>Your host link</h2><p class="hint">Open this link on the laptop you'll present from. It's the only way back to these controls, so bookmark it.</p>
+      <div class="linkbox"><code id="host-link">${esc(hl)}</code><button class="btn ghost" data-act="copy-host">Copy link</button></div>
+      <p class="warn">Keep this link to yourself. Anyone with it can run the game and see the answers.</p></section>
+    <section class="card"><h2>The game</h2><p class="hint">All money is play money.</p><div class="grid4">
+      <label class="f">Game name<input class="inp" id="f-title" data-f="title" value="${esc(d.title)}" maxlength="40"></label>
+      <label class="f">Currency sign<input class="inp" id="f-cur" data-f="cur" value="${esc(d.cur)}" maxlength="3"></label>
+      <label class="f">Starting balance<input class="inp" id="f-start" data-f="start" type="number" min="10" step="10" inputmode="numeric" value="${esc(d.start)}"></label>
+      <label class="f">House money per race<input class="inp" id="f-seed" data-f="seed" type="number" min="0" step="10" inputmode="numeric" value="${esc(d.seed)}"></label>
+    </div></section>
+    <section class="card"><h2>The field</h2><p class="hint">Your trainees, 2 to 12. Each gets a saddle-cloth number and colour, like a real race card.</p>
+      <div class="tlist">${d.trainees.map((t,i)=>`<div class="trow">${cloth({no:i+1})}<input class="inp" id="tr-${t.id}" data-tr="${t.id}" value="${esc(t.name)}" placeholder="Trainee ${i+1}'s name" maxlength="24" aria-label="Trainee ${i+1}"><button class="x" data-act="rm-tr" data-id="${t.id}" aria-label="Remove trainee ${i+1}"${d.trainees.length<=2?" disabled":""}>✕</button></div>`).join("")}</div>
+      <div class="row-actions"><button class="btn ghost" data-act="add-tr"${d.trainees.length>=12?" disabled":""}>Add trainee</button></div></section>
+    <section class="card"><h2>The races</h2><p class="hint">One statement per race, then pick who it's about.${hasEx?' <span class="exnote">The filled-in statements are examples. Replace them with real facts about your trainees.</span>':""}</p>
+      ${d.statements.map((s,i)=>`<div class="srow"><span class="sn">${i+1}</span><textarea class="inp" id="st-${s.id}" data-st="${s.id}" rows="2" maxlength="160" placeholder="Write a statement about one trainee" aria-label="Statement ${i+1}">${esc(s.text)}</textarea><select class="inp" id="sa-${s.id}" data-sa="${s.id}" aria-label="Who is statement ${i+1} about?">${answerOpts(s.answer)}</select><button class="x" data-act="rm-st" data-id="${s.id}" aria-label="Remove statement ${i+1}">✕</button></div>`).join("")||'<p class="muted">No statements yet.</p>'}
+      <div class="row-actions"><button class="btn ghost" data-act="add-st"${d.statements.length>=30?" disabled":""}>Add statement</button><button class="btn ghost" data-act="examples">Add example statements</button></div></section>
+    ${S.code?`<section class="card"><h2>Players</h2><p class="hint">${nPlayers} ${nPlayers===1?"player is":"players are"} in room ${esc(S.code)}. Clearing the list removes people who left; anyone still connected rejoins automatically.</p><div class="row-actions"><button class="btn ${S.confirm==="clear"?"armed":"ghost"}" data-act="clear"${nPlayers?"":" disabled"}>${S.confirm==="clear"?"Tap again to clear":"Clear player list"}</button></div></section>`:""}
+    <div class="setup-actions"><span class="muted">${running?"Saving doesn't change the game in progress. Restart to use the new card.":"Players can join as soon as you start."}</span>
+      <button class="btn ghost" data-act="save"${S.busy?" disabled":""}>Save setup</button>
+      <button class="btn ${S.confirm==="start"?"armed":"primary"}" data-act="start"${S.busy?" disabled":""}>${running?(S.confirm==="start"?"Tap again: this resets the game":"Save and restart game"):"Save and start game"}</button></div>
+  </div>`;
+}
+function validate(d){
+  const ts=d.trainees.map(t=>({id:t.id,name:cleanNick(t.name)})).filter(t=>t.name);
+  if(ts.length<2)return {err:"Add at least two trainees."};
+  const ids=new Set(ts.map(t=>t.id));
+  const list=d.statements.map((s,i)=>({id:s.id,text:clean(s.text,160),answer:s.answer||"",i}));
+  const statements=list.filter(s=>s.text);
+  if(!statements.length)return {err:"Add at least one statement."};
+  const miss=statements.find(s=>!ids.has(s.answer));
+  if(miss)return {err:`Statement ${miss.i+1} needs an answer. Pick who it's about.`};
+  return {ok:{title:clean(d.title,40)||"The Trainee Stakes",cur:clean(d.cur,3)||"€",
+    start:Math.max(10,Math.floor(Number(d.start))||1000),seed:Math.max(0,Math.floor(Number(d.seed))||0),
+    trainees:ts,statements:statements.map(({id,text,answer})=>({id,text,answer}))}};
+}
+async function saveSetup(){
+  const v=validate(S.draft);if(v.err){toast(v.err);return null}
+  await withTimeout(FB.update(hpath(""),{setup:v.ok}),12000);
+  S.host=Object.assign({},S.host,{setup:v.ok});return v.ok;
+}
+function rebuildSetup(focusId){S.lastKey=null;render();if(focusId){const el=document.getElementById(focusId);if(el)el.focus()}}
+
+/* ---------- player ---------- */
+function joinHTML(){
+  return `<div class="slipwrap"><form class="slip" id="join-form" autocomplete="off">
+    <div class="sliptitle">Betting slip</div>
+    <p class="serial">${esc((S.game&&S.game.title)||"The Trainee Stakes")} · Room ${esc(S.code)}</p>
+    <p class="q" style="margin-top:16px">What should the board call you?</p>
+    <label class="label" for="nick" style="display:block">Nickname</label>
+    <input class="join-in" id="nick" maxlength="24" placeholder="e.g. Excel Wizard" value="${esc(S.me.nick)}" required>
+    <button class="place" type="submit">Join the betting</button>
+    <p class="note">Your nickname shows on the big screen. No account needed, and all money is play money.</p>
+  </form></div>`;
+}
+function slipBox(inner){return `<div class="slipwrap"><div class="slip">${inner}</div></div>`}
+function slipHead(g){
+  const bal=balances(g),k=myKey(),st=standings(),i=st.findIndex(x=>x.k===k);
+  const race=g.round?`Race ${g.round.n+1}`:"Lobby";
+  return `<div class="sliphead"><div class="min0"><div class="sliptitle">${esc(S.me.nick)}</div><div class="serial">${race} · ${i>=0?`Rank ${rankAt(st,i)} of ${st.length}`:"New player"} · Slip ${esc(S.me.pid.slice(0,4).toUpperCase())}</div></div><div class="bal"><span>Balance</span><b>${fmt(balOf(bal,k))}</b></div></div>`;
+}
+function fieldMini(g){return `<div class="mini">${trainees(g).map(t=>`<div class="mrow">${cloth(t,true)}<span class="mn">${esc(t.name)}</span><span></span></div>`).join("")}</div>`}
+function distMini(g,bets){
+  const bk=book(bets);
+  return `<div class="mini">${trainees(g).map(t=>{const s=bk.by[t.id]||0,w=bk.stakes?Math.round(s/bk.stakes*100):0;return `<div class="mrow">${cloth(t,true)}<div class="min0"><span class="mn">${esc(t.name)}</span><div class="mbar"><i style="width:${w}%"></i></div></div><span class="mv">${oddsText(bk.total,s)}</span></div>`}).join("")}</div>`;
+}
+function topMini(n){
+  const st=standings(),k=myKey(),mine=st.findIndex(x=>x.k===k);
+  const show=st.slice(0,n).map((p,i)=>({p,i}));
+  if(mine>=n)show.push({p:st[mine],i:mine});
+  return `<div class="mini">${show.map(({p,i})=>`<div class="mrow${p.k===k?" me":""}"><span class="mrk">${rankAt(st,i)}</span><span class="mn">${esc(p.nick)}${p.k===k?" (you)":""}</span><span class="mv">${fmt(p.bal)}</span></div>`).join("")||'<p class="note">No bets yet.</p>'}</div>`;
+}
+function stampOnce(id,cls,text){const a=!S.seen.has(id);S.seen.add(id);return `<span class="stamp ${cls}${a?" anim":""}">${text}</span>`}
+
+function slipHTML(){
+  const g=S.game;
+  if(!g)return slipBox(`<div class="sliphead"><div><div class="sliptitle">${esc(S.me.nick)}</div><div class="serial">Room ${esc(S.code)} · waiting</div></div></div><p class="q">The betting hasn't opened yet.</p><p class="note">This slip updates by itself when the host starts the game. <button class="linkbtn" data-act="rename">Change nickname</button></p>`);
+  const head=slipHead(g),r=g.round,k=myKey();
+  switch(g.phase){
+    case "lobby":return slipBox(`${head}<p class="label">You're in</p><p class="q">Wait for race 1.</p><p class="note">Each race shows a statement about one trainee. Bet on who you think it is. Winners split the pot by stake, so the less popular the right answer, the more it pays.</p><p class="label">The field</p>${fieldMini(g)}<p class="note"><button class="linkbtn" data-act="rename">Change nickname</button></p>`);
+    case "betting":return slipBox(head+bettingSlip(g));
+    case "locked":{
+      const lb=r.bets&&r.bets[k];let body;
+      if(lb){const t=trainee(lb.t),bk=book(r.bets);body=`<div class="ticket">${cloth(t)}<div class="min0"><b>${fmt(lb.a)} on ${esc(t.name)}</b><span>Pays ${fmt(Math.floor(lb.a*bk.total/bk.by[lb.t]))} if right</span></div></div>`}
+      else body=`<p class="note">You sat this race out.</p>`;
+      return slipBox(`${head}<p class="label">Race ${r.n+1} · betting closed</p><p class="q">${esc(r.text)}</p>${body}<p class="label">How the room bet</p>${distMini(g,r.bets||{})}`);
+    }
+    case "revealed":{
+      const t=trainee(r.answer),st=settle(r,g.seed),lb=r.bets&&r.bets[k],net=st.nets[k];
+      const stamp=lb?(lb.t===r.answer?stampOnce("s"+r.k,"win",`Winner ${signed(net)}`):stampOnce("s"+r.k,"lose",`Lost ${fmt(lb.a)}`)):stampOnce("s"+r.k,"neutral","Sat out");
+      return slipBox(`${head}<p class="label">Race ${r.n+1} · result</p><p class="q">${esc(r.text)}</p><div class="ticket">${cloth(t)}<div class="min0"><b>It was ${esc(t.name)}</b><span>${st.win?`Pot of ${fmt(st.pot)} split among the winners`:`Nobody picked ${esc(t.name)}. The house keeps the pot.`}</span></div></div>${stamp}`);
+    }
+    case "standings":return slipBox(`${head}<p class="label">Standings after race ${rounds(g).length}</p>${topMini(5)}<p class="note">Next race coming up.</p>`);
+    case "final":{
+      const sts=standings(),i=sts.findIndex(x=>x.k===k),rk=i>=0?rankAt(sts,i):null;
+      const stamp=rk===1?stampOnce("final"+g.gid,"win","Champion"):rk?stampOnce("final"+g.gid,"neutral",`Finished #${rk}`):"";
+      return slipBox(`${head}<p class="label">Final result</p>${stamp}${topMini(5)}<p class="note">Thanks for playing ${esc(g.title)}.</p>`);
+    }
+  }
+  return slipBox(head);
+}
+function bettingSlip(g){
+  const r=g.round,k=myKey(),mb=balOf(balances(g),k),ts=trainees(g);
+  const bets=liveBets(),bk=book(bets),mine=bets[k]||null;
+  if(S.stakeRound!==r.k){S.stakeRound=r.k;S.pickT=mine?mine.t:null;S.stake=mine?Math.min(mine.a,mb):Math.min(100,mb)}
+  S.stake=Math.max(0,Math.min(S.stake,mb));
+  const q=`<p class="label">Race ${r.n+1} of ${g.total} · who is it?</p><p class="q">${esc(r.text)}</p>`;
+  if(mb<=0)return q+stampOnce("bust"+g.gid,"neutral","Bust")+`<p class="note">You're out of money for this game. Watch the rest and enjoy the show.</p>`;
+  const picks=ts.map(t=>`<button class="pick" data-act="pick" data-t="${t.id}" aria-pressed="${S.pickT===t.id}">${cloth(t,true)}<span class="pn2">${esc(t.name)}</span><span class="po">${oddsText(bk.total,bk.by[t.id]||0)}</span></button>`).join("");
+  const pt=S.pickT?trainee(S.pickT):null;
+  let est="";
+  if(pt&&S.stake>0){
+    const tot=bk.total-(mine?mine.a:0)+S.stake,onT=(bk.by[pt.id]||0)-(mine&&mine.t===pt.id?mine.a:0)+S.stake;
+    est=`Pays about ${fmt(Math.floor(S.stake*tot/onT))} if right`;
+  }
+  const changed=!mine||mine.t!==S.pickT||mine.a!==S.stake;
+  const label=!pt?"Pick a trainee first":S.stake<=0?"Add a stake":mine?(changed?`Update bet: ${fmt(S.stake)} on #${pt.no}`:"Bet placed ✓"):`Place ${fmt(S.stake)} on #${pt.no} ${esc(pt.name)}`;
+  const mt=mine?trainee(mine.t):null;
+  return `${q}
+    <p class="label">Tap a trainee · live odds</p><div class="picks">${picks}</div>
+    <p class="label">Stake</p>
+    <div class="stake"><b>${fmt(S.stake)}</b><span>${est||`of ${fmt(mb)}`}</span></div>
+    <div class="chips">${[10,50,100,500].map(v=>`<button class="cbtn" data-act="chip" data-v="${v}">+${fmt(v)}</button>`).join("")}<button class="cbtn" data-act="allin">All in</button><button class="cbtn" data-act="zero">Clear</button></div>
+    <button class="place" data-act="place"${(!pt||S.stake<=0||!changed)?" disabled":""}>${label}</button>
+    ${mine&&mt?`<p class="note">On your slip: <b>${fmt(mine.a)} on #${mt.no} ${esc(mt.name)}</b>. You can change it until betting closes. <button class="linkbtn" data-act="withdraw">Withdraw bet</button></p>`:`<p class="note">Nothing leaves your balance until betting closes. Odds move as people bet.</p>`}`;
+}
+
+/* ---------- events ---------- */
+const H={
+  view:b=>{S.view=b.dataset.v;S.confirm=null;S.showQR=false;render();window.scrollTo(0,0)},
+  fs:()=>{const el=document.documentElement;if(!el.requestFullscreen){toast("Use your browser's full-screen mode (F11 on most laptops).");return}el.requestFullscreen().catch(()=>toast("Use your browser's full-screen mode (F11 on most laptops)."))},
+  qr:()=>{S.showQR=!S.showQR;render()},
+  "copy-rules":()=>copyText(RULES,"Rules copied"),
+  "copy-host":()=>copyText(hostURL(S.hostKey),"Host link copied"),
+  open1:()=>run(()=>openRace(0)),
+  close:()=>run(closeBetting),
+  reopen:()=>run(reopen),
+  reveal:()=>run(reveal),
+  standings:()=>run(showStandings),
+  next:()=>run(nextRace),
+  again:()=>{if(!armed("again"))return;if(!S.host||!S.host.setup){toast("Open Setup to start a new game.");return}run(startGame)},
+  clear:()=>{if(!armed("clear"))return;run(async()=>{await clearPlayers();toast("Player list cleared")})},
+  "add-tr":()=>{if(S.draft.trainees.length>=12)return;const id="t"+rid();S.draft.trainees.push({id,name:""});rebuildSetup("tr-"+id)},
+  "rm-tr":b=>{const id=b.dataset.id;if(S.draft.trainees.length<=2)return;S.draft.trainees=S.draft.trainees.filter(t=>t.id!==id);S.draft.statements.forEach(s=>{if(s.answer===id)s.answer=""});rebuildSetup()},
+  "add-st":()=>{const id="s"+rid();S.draft.statements.push({id,text:"",answer:""});rebuildSetup("st-"+id)},
+  "rm-st":b=>{S.draft.statements=S.draft.statements.filter(s=>s.id!==b.dataset.id);rebuildSetup()},
+  examples:()=>{const have=new Set(S.draft.statements.map(s=>s.text));const add=EXAMPLES.filter(t=>!have.has(t));if(!add.length){toast("All the example statements are already in.");return}add.forEach(text=>S.draft.statements.push({id:"s"+rid(),text,answer:""}));rebuildSetup()},
+  save:()=>run(async()=>{if(await saveSetup())toast("Setup saved")}),
+  start:()=>{const g=S.game;if(g&&g.phase!=="final"&&!armed("start"))return;run(async()=>{if(await saveSetup()){await startGame();toast("Game started. Players can scan the QR code now.")}})},
+  pick:b=>{S.pickT=b.dataset.t;render()},
+  chip:b=>{const mb=balOf(balances(S.game),myKey());S.stake=Math.min(mb,S.stake+Number(b.dataset.v));render()},
+  allin:()=>{S.stake=balOf(balances(S.game),myKey());render()},
+  zero:()=>{S.stake=0;render()},
+  place:()=>placeBet(),
+  withdraw:()=>withdrawBet(),
+  rename:()=>{S.lastKey=null;const n=S.me.nick;S.me.nick="";render();const el=$("#nick");if(el){el.value=n;el.select()}}
+};
+document.addEventListener("click",e=>{const b=e.target.closest("[data-act]");if(!b||b.disabled)return;const f=H[b.dataset.act];if(f){e.preventDefault();f(b,e)}});
+document.addEventListener("submit",async e=>{
+  const id=e.target.id;e.preventDefault();
+  if(id==="join-form"){
+    const n=cleanNick($("#nick").value);if(!n){toast("Type a nickname first.");return}
+    S.me.nick=n;lsSet("stakes.me",S.me);registerMe();S.lastKey=null;render();window.scrollTo(0,0);
+  }else if(id==="join-code-form"){
+    const c=$("#code-in").value.toUpperCase().replace(/[^A-Z0-9]/g,"").slice(0,6);if(!c||!DBURL){toast("Type the room code from the big screen.");return}
+    location.hash=`join=${c}&db=${shortDb(DBURL)}`;
+  }else if(id==="host-form"){
+    const url=normDb($("#db-in").value);
+    if(!url){toast("That doesn't look like a Firebase database URL. It ends in firebaseio.com or firebasedatabase.app.");return}
+    if(S.busy)return;S.busy=true;toast("Checking the database…");
+    try{
+      await connect(url);const key=randStr(20);
+      await withTimeout(FB.set(`hosts/${key}/created`,Date.now()),12000);
+      DBURL=url;lsSet("stakes.db",url);const link=hostURL(key);lsSet("stakes.hostlink",link);
+      location.hash=`host=${key}&db=${shortDb(url)}`;
+    }catch(err){S.busy=false;if(isPerm(err)){S.problem="rules";render()}else toast(err&&err.code==="timeout"?"The database didn't answer. Check the URL and try again.":"Couldn't connect to that database. Check the URL.")}
+  }
+});
+document.addEventListener("input",e=>{
+  const el=e.target,d=S.draft;if(!d)return;
+  if(el.dataset.f)d[el.dataset.f]=el.value;
+  else if(el.dataset.tr){const t=d.trainees.find(x=>x.id===el.dataset.tr);if(t){t.name=el.value;const i=d.trainees.indexOf(t);document.querySelectorAll(`option[value="${t.id}"]`).forEach(o=>{o.textContent=`#${i+1} ${el.value||"Trainee "+(i+1)}`})}}
+  else if(el.dataset.st){const s=d.statements.find(x=>x.id===el.dataset.st);if(s)s.text=el.value}
+});
+document.addEventListener("change",e=>{const el=e.target;if(el.dataset.sa&&S.draft){const s=S.draft.statements.find(x=>x.id===el.dataset.sa);if(s)s.answer=el.value}});
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape"&&S.showQR){S.showQR=false;render();return}
+  if(e.key!=="ArrowRight"||S.mode!=="host"||!S.primary||S.busy||S.lastKey!=="board")return;
+  if(e.target.closest("input,textarea,select,[contenteditable]"))return;
+  e.preventDefault();const f=H[S.primary];if(f)f();
+});
+
+/* ---------- boot ---------- */
+async function boot(){
+  const saved=lsGet("stakes.me");
+  S.me=saved&&typeof saved.pid==="string"&&/^[a-z0-9]{8,32}$/.test(saved.pid)?{pid:saved.pid,nick:cleanNick(saved.nick)}:{pid:randStr(16),nick:""};
+  lsSet("stakes.me",S.me);
+  if(S.mode==="landing"||(S.mode!=="landing"&&!DBURL)){S.mode="landing";render();return}
+  render();
+  try{await connect(DBURL)}catch(e){S.problem="unreachable";render();return}
+  lsSet("stakes.db",DBURL);
+  if(S.mode==="host"){
+    const t=setTimeout(()=>{if(S.host===undefined){S.stale=true;render()}},10000);
+    FB.on(hpath(""),v=>{
+      clearTimeout(t);S.host=v||{};
+      if(S.host.code&&!S.code){S.code=S.host.code;subscribeGame()}
+      if(!S.code&&S.view===null)S.view="setup";
+      render();
+    },e=>{clearTimeout(t);onDbError(e)});
+  }else{
+    subscribeGame();
+    FB.on(".info/connected",c=>{S.connected=!!c;if(c)registerMe()},()=>{});
+  }
+}
+boot();
+</script>
+</body>
+</html>
