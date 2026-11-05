@@ -111,8 +111,8 @@ body.dock-on .wrap{max-width:1500px}
 .joined .chip{font-size:clamp(15px,min(1.6vw,2.5vh),22px);padding:min(8px,.9vh) 15px}
 .mega.lob{font-size:clamp(34px,min(6vw,8vh),92px);margin:6px 0 min(18px,2vh)}
 .mega.sm{font-size:clamp(30px,min(5vw,7vh),72px);margin:6px 0 8px}
-.steps-big{list-style:none;margin:0;padding:0;display:grid;gap:min(12px,1.4vh);max-width:1000px}
-.steps-big li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:center;font-size:clamp(16px,min(1.9vw,2.9vh),27px);font-weight:800;line-height:1.25}
+.steps-big{list-style:none;margin:0;padding:0;display:grid;gap:min(12px,1.1vh);max-width:1000px}
+.steps-big li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:center;font-size:clamp(15px,min(1.9vw,2.65vh),27px);font-weight:800;line-height:1.25}
 .steps-big i{font-style:normal;font-family:var(--f-display);width:1.7em;height:1.7em;border-radius:50%;display:grid;place-items:center;background:var(--green);color:var(--ink);font-size:.95em}
 .steps-big li:nth-child(2) i{background:var(--magenta);color:var(--text)}
 .steps-big li:nth-child(3) i{background:var(--yellow)}
@@ -523,6 +523,39 @@ body.calm :is(.runner,.qrcard){animation:none}
 body.calm .pill.open{animation-duration:2.6s}
 body.calm .btn.primary{animation-duration:3.4s}
 body.hype .bulbs{animation-duration:.5s}
+
+/* ---------- backstory vote + story time ---------- */
+.racehead{position:relative}
+.svote{position:absolute;right:0;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:12px;background:var(--panel);border:3px solid var(--green);border-radius:999px;padding:5px 8px 5px 16px;z-index:2}
+.svote .svl{font-weight:900;font-size:clamp(13px,1.9vh,17px);color:var(--text);white-space:nowrap}
+.svote .svbar{width:clamp(90px,10vw,180px);margin:0}
+.svote b{font-family:var(--f-display);font-weight:400;font-size:clamp(17px,2.7vh,26px);color:var(--yellow);white-space:nowrap}
+.svote .svs{margin:0;white-space:nowrap;background:var(--panel-2);border-radius:999px;padding:4px 10px}
+@media (max-width:1000px){.svote{position:static;transform:none;margin-left:auto}}
+.svote .svt{display:flex;justify-content:space-between;gap:10px;align-items:baseline;font-weight:900;font-size:clamp(13px,1.8vh,16px);color:var(--text)}
+.svote .svt b{font-family:var(--f-display);font-weight:400;font-size:clamp(18px,2.8vh,26px);color:var(--yellow);white-space:nowrap}
+.svbar{height:10px;border-radius:5px;background:rgba(255,255,255,.12);overflow:hidden;margin-top:5px}
+.svbar i{display:block;height:100%;background:linear-gradient(90deg,var(--green),var(--yellow),var(--magenta));border-radius:5px;transition:width .6s ease-out}
+.svs{font-size:11.5px;font-weight:800;color:var(--muted);margin-top:3px}
+.svote.off{border-color:var(--line);padding:7px 16px}
+.svote.off .svl{color:var(--muted)}
+.stgrid{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(36px,5vw,90px);align-items:center;min-height:calc(100vh - 260px);padding-left:20px}
+.face.hero{--fs:clamp(170px,40vh,400px)}
+.face.hero .ph{box-shadow:0 0 0 10px var(--ring),0 0 0 18px var(--panel)}
+.face.hero i{min-width:64px;height:64px;font-size:34px;border-radius:16px;right:6px;bottom:6px}
+.sthead{font-family:var(--f-display);font-weight:400;font-size:clamp(46px,min(8vw,13vh),150px);line-height:.95;color:var(--green);text-shadow:3px 3px 0 var(--magenta),6px 6px 0 var(--cyan);margin:6px 0 14px}
+.stname{font-size:clamp(22px,min(2.6vw,4.4vh),44px);font-weight:900;color:var(--text)}
+.stq{font-size:clamp(22px,min(2.6vw,4.4vh),46px);font-weight:900;line-height:1.12;color:var(--text);margin-top:10px;max-width:34ch;text-wrap:pretty}
+@media (max-width:880px){.stgrid{grid-template-columns:minmax(0,1fr);justify-items:start}.face.hero{--fs:150px}}
+.place.vote{background:var(--magenta);color:var(--ink);box-shadow:0 5px 0 var(--magenta-deep);margin-top:12px}
+.voted{margin-top:12px;background:var(--ticket-tint);border-radius:12px;padding:10px 12px;font-weight:900;text-align:center}
+.voted small{display:block;font-size:12.5px;font-weight:800;color:var(--ink-soft);margin-top:2px}
+.vmeter{height:8px;border-radius:4px;background:var(--ticket-line);overflow:hidden;margin-top:6px}
+.vmeter i{display:block;height:100%;background:linear-gradient(90deg,var(--magenta),var(--orange))}
+html[data-look="orange"] .sthead{color:#ffffff;text-shadow:3px 3px 0 #db536a,6px 6px 0 #2b1205}
+html[data-look="green"] .sthead{color:#ffffff;text-shadow:3px 3px 0 #ff2d95,6px 6px 0 #160933}
+html[data-look="green"] :is(.stname,.stq){color:#160933}
+html[data-look="burst"] :is(.stname,.stq){text-shadow:0 2px 0 #160933,0 0 14px #160933,0 0 28px #160933}
 @media (prefers-reduced-motion:reduce){
   body::before,.brand,.bulbs,.runner,.qrcard,.pill,.wtag,.btn,.trophy,.slip::before,.wheel .b0,.wheel .b1,.wheel .b2,.multi.jackpot b{animation:none!important}
   .anim,.flash,.pop,.bump,.popin .chip,.pick.fresh,.toterow.final2,.mrow.final2,.dots i,.drumq,.timer b,.cdpill,.rows.grow .bar i,.rows.grow .odds{animation:none}
@@ -646,6 +679,7 @@ const S={
   me:{pid:"",nick:""},pickT:null,stake:0,stakeRound:null,lastStake:null,lastPot:null,
   confirm:null,confirmT:null,toastT:null,showQR:false,primary:null,
   seen:new Set(),spinStart:{},revealStart:{},photos:{},autoClosed:null,cdSec:null,drumStep:null,
+  votes:{},votesKey:null,storyFired:null,
   fx:new Set(),wq:Promise.resolve(),unsub:{},gameSub:null,rereg:0
 };
 
@@ -853,8 +887,49 @@ setInterval(()=>{
     }
     if(tl<=0&&S.mode==="host"&&S.autoClosed!==g.round.k&&!S.busy){S.autoClosed=g.round.k;run(closeBetting)}
   }else S.cdSec=null;
-  if(g.phase==="revealed"){const di=drumInfo(g);const st=di.done?"done":di.step;if(st!==S.drumStep){S.drumStep=st;if(!di.done)render()}}
+  if(g.phase==="revealed"){const di=drumInfo(g);const st=di.done?"done":di.step;if(st!==S.drumStep){S.drumStep=st;render()}checkStory()}
 },250);
+
+/* ---------- backstory vote ---------- */
+function storyMax(g){const v=g&&g.storyMax;return Math.max(0,Math.floor(Number(v==null?5:v))||0)}
+function storiesUsed(g){return rounds(g).filter(r=>r.storyTime).length}
+function storyInfo(g){
+  const r=g.round,max=storyMax(g),used=storiesUsed(g),online=onlineCount(),need=Math.max(1,Math.floor(online/2)+1);
+  const vv=S.votesKey===(r&&r.k)?S.votes:{},votes=Object.keys(vv).filter(k=>vv[k]).length;
+  const active=!!(r&&r.storyTime);
+  const open=g.phase==="revealed"&&!active&&max>0&&used<max&&drumInfo(g).done;
+  return {max,used,left:Math.max(0,max-used),online,need,votes,active,open,voted:!!vv[S.me.pid]};
+}
+/* Host: start story time as soon as a majority of the connected phones voted */
+function checkStory(){
+  if(S.mode!=="host"||S.busy)return;const g=S.game;if(!g||g.phase!=="revealed")return;
+  const si=storyInfo(g);if(!si.open||si.votes<si.need||S.storyFired===g.round.k)return;
+  S.storyFired=g.round.k;run(startStory);
+}
+async function startStory(){
+  const g=clone(S.game);if(g.phase!=="revealed"||g.round.storyTime)return;
+  if(storiesUsed(g)>=storyMax(g))return;
+  g.round.storyTime=true;const rs=rounds(g),i=rs.findIndex(x=>x.k===g.round.k);if(i>=0)rs[i].storyTime=true;g.rounds=rs;
+  await setGame(g);
+}
+function noteStory(prev,next){
+  const r=next&&next.round;if(!r||next.phase!=="revealed"||!r.storyTime)return;
+  const was=prev&&prev.round&&prev.round.k===r.k&&prev.round.storyTime;
+  if(was||!prev)return;
+  if(S.mode==="host")sfx.fanfare();else buzz([40,30,40,30,120]);
+  S.fx.add("confetti");
+}
+async function voteStory(){
+  const g=S.game,r=g&&g.round;if(!r||g.phase!=="revealed")return;
+  try{await withTimeout(FB.set(gpath(`votes/${r.k}/${S.me.pid}`),true),12000);buzz(30)}catch(e){toast(errMsg(e))}
+}
+function storyMeter(g){
+  const si=storyInfo(g);if(si.max<=0||si.active)return "";
+  if(si.left<=0)return `<div class="svote off"><span class="svl">All ${si.max} backstories used</span></div>`;
+  if(!si.open)return "";
+  const pct=Math.min(100,Math.round(si.votes/si.need*100));
+  return `<div class="svote"><span class="svl">Backstory? Vote on your phone</span><div class="svbar"><i style="width:${pct}%"></i></div><b>${si.votes}/${si.need}</b><span class="svs">${si.left} of ${si.max} left</span></div>`;
+}
 
 /* ---------- confetti + flash ---------- */
 function confetti(){
@@ -919,9 +994,10 @@ async function startGame(){
   await withTimeout(FB.update(hpath(""),{run:{gid,statements}}),12000);
   S.host=Object.assign({},S.host,{run:{gid,statements}});
   await FB.remove(gpath("bets")).catch(()=>{});
+  await FB.remove(gpath("votes")).catch(()=>{});
   await withTimeout(FB.set(gpath("photos"),photosOf(sd)),12000).catch(()=>{});
   await setGame({title:sd.title,cur:sd.cur,start:sd.start,seed:sd.seed,wheel:sd.wheel,payer:sd.payer,theme:sd.theme,
-    timer:sd.timer,comeback:sd.comeback,live:sd.live,
+    timer:sd.timer,comeback:sd.comeback,live:sd.live,storyMax:sd.storyMax,
     trainees:sd.trainees.map((t,i)=>({id:t.id,name:t.name,no:i+1})),
     total:sd.statements.length,gid,idx:-1,phase:"lobby"});
   S.view="board";
@@ -995,7 +1071,7 @@ function subscribeGame(){
   const t=setTimeout(()=>{if(S.game===undefined){S.stale=true;render()}},10000);
   FB.on(gpath("state"),v=>{
     clearTimeout(t);S.stale=false;
-    const prev=S.game;S.game=v||null;noteSpin(prev,S.game);noteReveal(prev,S.game);hostCues(prev,S.game);
+    const prev=S.game;S.game=v||null;noteSpin(prev,S.game);noteReveal(prev,S.game);noteStory(prev,S.game);hostCues(prev,S.game);
     const rk=S.game&&S.game.phase==="betting"&&S.game.round?S.game.round.k:null;
     if(rk!==S.betsKey){
       if(S.unsub.bets)S.unsub.bets();S.unsub.bets=null;S.bets={};S.betsKey=rk;S.betCount=0;
@@ -1004,6 +1080,11 @@ function subscribeGame(){
         const n=Object.keys(S.bets).length;if(n>S.betCount)sfx.coin();S.betCount=n;
         render();
       },onDbError);
+    }
+    const vk=S.game&&S.game.phase==="revealed"&&S.game.round?S.game.round.k:null;
+    if(vk!==S.votesKey){
+      if(S.unsub.votes)S.unsub.votes();S.unsub.votes=null;S.votes={};S.votesKey=vk;
+      if(vk)S.unsub.votes=FB.on(gpath("votes/"+vk),v=>{if(S.votesKey!==vk)return;S.votes=v||{};render();checkStory()},onDbError);
     }
     if(S.view===null)S.view=S.mode==="host"?(S.game?"board":"setup"):"play";
     render();
@@ -1151,7 +1232,8 @@ function boardLobby(g){
     `Each round shows <b>a statement about one trainee</b>.`,
     `<b>Bet play money</b> on who it's about${g.timer>0?", before the timer runs out":""}. Everyone starts with <b>${fmt(g.start)}</b>.`,
     `Guessed right? <b>Share the pot</b> with the other winners. The fewer winners, the bigger your share.`,
-    g.wheel?`The <b>bonus wheel</b> multiplies the house money in the pot, up to <b>20×</b>. Most money at the end wins!`:`<b>Most money</b> at the end wins!`
+    g.wheel?`The <b>bonus wheel</b> multiplies the house money in the pot, up to <b>20×</b>. Most money at the end wins!`:`<b>Most money</b> at the end wins!`,
+    ...(storyMax(g)>0?[`After each answer, <b>vote for the backstory</b>. If more than half of you vote, the trainee tells the story (max ${storyMax(g)}).`]:[])
   ];
   return `<section class="lobby"><div class="min0">
     <p class="eyebrow">Today's lineup</p>
@@ -1164,7 +1246,7 @@ function boardLobby(g){
     <div class="chiprow">${roster.map(r=>`<span class="chip${r.on?"":" off"}">${esc(r.nick)}</span>`).join("")||'<span class="muted">Nobody yet. Players appear here as they join.</span>'}</div>
   </div>`;
 }
-function toteHTML(g,bets,ans,rowCls){
+function toteHTML(g,bets,ans,rowCls,extraHead){
   const hm=houseMult(g),bk=book(bets,hm),ts=trainees(g),flash=ans&&!rowCls&&!S.seen.has("b"+g.round.k);if(ans&&!rowCls)S.seen.add("b"+g.round.k);
   const hide=g.phase==="betting"&&!g.live;
   const grow=g.phase==="locked"&&!g.live&&!S.seen.has("g"+g.round.k);if(grow)S.seen.add("g"+g.round.k);
@@ -1177,7 +1259,7 @@ function toteHTML(g,bets,ans,rowCls){
     return `<div class="toterow${cls}">${face(t)}<div class="min0"><div class="nm">${esc(t.name)}${t.id===ans&&!rowCls?'<span class="wtag">WINNER</span>':""}</div>${line}</div><div class="odds${hide?" hid":""}">${hide?"?":oddsText(bk.total,s)}</div></div>`;
   }).join("");
   return `<div class="tote">
-    <div class="totehead"><div class="metric"><span>Pot</span><b class="${bump?"bump":""}">${fmt(bk.total)}</b></div><div class="metric small"><span>Bets</span><b>${bk.count}</b></div>${g.seed?`<div class="metric small"><span>House money${hm>1?` × ${hm}`:""}</span><b class="${bump?"bump":""}">${fmt(g.seed*hm)}</b></div>`:""}</div>
+    <div class="totehead"><div class="metric"><span>Pot</span><b class="${bump?"bump":""}">${fmt(bk.total)}</b></div><div class="metric small"><span>Bets</span><b>${bk.count}</b></div>${g.seed?`<div class="metric small"><span>House money${hm>1?` × ${hm}`:""}</span><b class="${bump?"bump":""}">${fmt(g.seed*hm)}</b></div>`:""}${extraHead||""}</div>
     <div class="payshead"><span>Who is it?</span><span>${hide?"Odds shown when betting closes":"Pays"}</span></div>
     <div class="rows${ts.length>5&&g.phase==="betting"?" two":""}${grow?" grow":""}">${rows}</div>
   </div>`;
@@ -1201,6 +1283,11 @@ function boardRace(g){
     return `<section>${head}<h2 class="statement sm${long}">${esc(r.text)}</h2>
       <div class="resultgrid"><div class="drumcard"><p class="eyebrow">And the answer is</p><p class="and">${di.left<=2?"It's between two":"Who is it?"}<span class="dots"><i></i><i></i><i></i></span></p></div><div class="min0">${toteHTML(g,bets,ans,rowCls)}</div></div></section>`;
   }
+  if(ans&&r.storyTime){
+    const wt=trainee(ans),si=storyInfo(g);
+    return `<section><div class="racehead"><span class="raceno">Round ${r.n+1} <small>of ${g.total}</small></span><span class="pill mult">Story time · ${si.used} of ${si.max}</span></div>
+      <div class="stgrid">${face(wt,"hero")}<div class="min0"><p class="sthead">Story time!</p><p class="stname">${esc(wt.name)}, tell us the story behind:</p><p class="stq">“${esc(r.text)}”</p></div></div></section>`;
+  }
   if(ans){
     const st=settle(r,g.seed),wt=trainee(ans),first=!S.seen.has("p"+r.k);S.seen.add("p"+r.k);
     const winners=Object.entries(st.nets).filter(([k])=>r.bets[k].t===ans).sort((a,b)=>b[1]-a[1]);
@@ -1209,7 +1296,8 @@ function boardRace(g){
       ?`<p class="verdict">${winners.length} ${winners.length===1?"player":"players"} split the <b>${fmt(st.pot)}</b> pot${m>1?` (house money <b>× ${m}</b>)`:""}.</p><div class="payouts${first?" popin":""}">${winners.map(([k,n])=>`<span class="chip">${esc(nickOf(k))} <span class="plus">${signed(n)}</span></span>`).join("")}</div>`
       :`<p class="verdict">Nobody picked ${esc(wt.name)}. The house keeps the <b>${fmt(st.pot)}</b> pot.</p>`;
     const story=r.story?`<div class="story"><p class="t">${esc(r.story)}</p></div>`:"";
-    return `<section>${head}<h2 class="statement sm${long}">${esc(r.text)}</h2>
+    const headV=head.replace(/<\/div>$/,storyMeter(g)+"</div>");
+    return `<section>${headV}<h2 class="statement sm${long}">${esc(r.text)}</h2>
       <div class="resultgrid"><div class="resultcard"><p class="eyebrow">It was</p><div class="itwas">${face(wt,"xl")}<b>${esc(wt.name)}</b></div>${story}${verdict}</div><div class="min0">${toteHTML(g,bets,ans)}</div></div></section>`;
   }
   return `<section>${head}<h2 class="statement${long}">${esc(r.text)}</h2>${toteHTML(g,bets,null)}</section>`;
@@ -1248,7 +1336,7 @@ function dockHTML(){
         break;
       }
       case "revealed":{if(!drumInfo(g).done){status=`Round ${g.idx+1} of ${g.total} · revealing`;btns=`<button class="btn primary" disabled>Revealing…</button>`;break}
-        status=`Round ${g.idx+1} of ${g.total} · result`;btns=btn("standings","Show standings","ghost")+btn("next",nextLabel,"primary");S.primary="next";break}
+        status=g.round&&g.round.storyTime?`Round ${g.idx+1} of ${g.total} · story time`:`Round ${g.idx+1} of ${g.total} · result`;btns=btn("standings","Show standings","ghost")+btn("next",nextLabel,"primary");S.primary="next";break}
       case "standings":status=`Standings after round ${g.idx+1} · ${conn}`;btns=qr+btn("next",nextLabel,"primary");S.primary="next";break;
       case "final":status=`Game over · ${conn}`;btns=btn("again",S.confirm==="again"?"Tap again to restart":"Play again",S.confirm==="again"?"armed":"primary");break;
     }
@@ -1282,7 +1370,7 @@ async function setLook(v){
 function cycleLook(){const cur=document.documentElement.dataset.look;const i=LOOKS.findIndex(l=>l[0]===cur);setLook(LOOKS[(i+1)%LOOKS.length][0])}
 
 /* ---------- host: setup ---------- */
-function defaultDraft(){return {title:"The Trainee Stakes",cur:"€",start:1000,seed:1000,wheel:true,payer:"Jos",theme:LOOKS[0][0],timer:30,comeback:100,live:false,trainees:[0,1,2,3].map(()=>({id:"t"+rid(),name:""})),statements:EXAMPLES.slice(0,4).map(text=>({id:"s"+rid(),text,answer:""}))}}
+function defaultDraft(){return {title:"The Trainee Stakes",cur:"€",start:1000,seed:1000,wheel:true,payer:"Jos",theme:LOOKS[0][0],timer:30,comeback:100,live:false,storyMax:5,trainees:[0,1,2,3].map(()=>({id:"t"+rid(),name:""})),statements:EXAMPLES.slice(0,4).map(text=>({id:"s"+rid(),text,answer:""}))}}
 function normalizeSetup(d){
   d.trainees=Array.isArray(d.trainees)?d.trainees:Object.values(d.trainees||{});
   d.statements=Array.isArray(d.statements)?d.statements:Object.values(d.statements||{});
@@ -1292,6 +1380,7 @@ function normalizeSetup(d){
   if(d.timer===undefined)d.timer=30;
   if(d.comeback===undefined)d.comeback=100;
   if(d.live===undefined)d.live=false;
+  if(d.storyMax===undefined)d.storyMax=5;
   delete d.prize;
   return d;
 }
@@ -1318,8 +1407,9 @@ function setupHTML(){
       <label class="f">House money per round<input class="inp" id="f-seed" data-f="seed" type="number" min="0" step="10" inputmode="numeric" value="${esc(d.seed)}"></label>
       <label class="f">Betting time (seconds)<input class="inp" id="f-timer" data-f="timer" type="number" min="0" max="300" step="5" inputmode="numeric" value="${esc(d.timer)}"></label>
       <label class="f">Comeback money<input class="inp" id="f-comeback" data-f="comeback" type="number" min="0" step="10" inputmode="numeric" value="${esc(d.comeback)}"></label>
+      <label class="f">Max backstories per game<input class="inp" id="f-storymax" data-f="storyMax" type="number" min="0" max="30" step="1" inputmode="numeric" value="${esc(d.storyMax)}"></label>
     </div>
-    <p class="hint" style="margin:12px 0 0">Betting closes by itself when the timer hits 0 (0 = no timer, you close it yourself). Anyone at ${esc(d.cur||"€")}0 gets the comeback money at the start of the next round.</p>
+    <p class="hint" style="margin:12px 0 0">Betting closes by itself when the timer hits 0 (0 = no timer, you close it yourself). Anyone at ${esc(d.cur||"€")}0 gets the comeback money at the start of the next round. After each answer players can vote for the backstory; if more than half of the connected phones vote, the board switches to Story time (0 = no voting).</p>
     <label class="check" style="margin:12px 0 0"><input type="checkbox" id="f-live" data-f="live"${d.live?" checked":""}> Show live bets on the big screen while betting (off = bets stay hidden until betting closes, so people don't copy each other)</label></section>
     <section class="card"><h2>Bonus wheel and the bill</h2><p class="hint">After betting closes you spin the wheel. It lands on 1×, 2×, 3×, 5×, 10× or the rare 20×, and multiplies that round's house money, so the pot jumps for everyone who picked right. Needs house money above 0.</p>
       <label class="check"><input type="checkbox" id="f-wheel" data-f="wheel"${d.wheel?" checked":""}> Spin the bonus wheel every round</label>
@@ -1350,6 +1440,7 @@ function validate(d){
     start:Math.max(10,Math.floor(Number(d.start))||1000),seed:Math.max(0,Math.floor(Number(d.seed))||0),
     wheel:d.wheel!==false,payer:cleanNick(d.payer),theme:lookOk(d.theme)?d.theme:LOOKS[0][0],
     timer:Math.min(300,Math.max(0,Math.floor(Number(d.timer))||0)),comeback:Math.max(0,Math.floor(Number(d.comeback))||0),live:!!d.live,
+    storyMax:Math.min(30,Math.max(0,Math.floor(Number(d.storyMax))||0)),
     trainees:ts,statements:statements.map(({id,text,answer,story})=>({id,text,answer,story}))}};
 }
 async function saveSetup(){
@@ -1407,7 +1498,7 @@ function slipHTML(){
   if(!g)return slipBox(`<div class="sliphead"><div><div class="sliptitle">${esc(S.me.nick)}</div><div class="serial">Room ${esc(S.code)} · waiting</div></div></div><p class="q">The show hasn't started yet.</p><p class="note">This ticket updates by itself when the host starts the game. <button class="linkbtn" data-act="rename">Change nickname</button></p>`);
   const head=slipHead(g),r=g.round,k=myKey();
   switch(g.phase){
-    case "lobby":return slipBox(`${head}<p class="label">You're in</p><p class="q">Wait for round 1.</p><p class="note">Each round shows a statement about one trainee. Bet on who you think it is. Winners split the pot by stake, so the less popular the right answer, the more it pays.${g.wheel?" Then the bonus wheel can multiply the house money in the pot, up to 20×.":""}${g.comeback>0?` Out of money? You get ${fmt(g.comeback)} comeback money at the next round.`:""}</p><p class="note"><button class="linkbtn" data-act="rename">Change nickname</button></p>`);
+    case "lobby":return slipBox(`${head}<p class="label">You're in</p><p class="q">Wait for round 1.</p><p class="note">Each round shows a statement about one trainee. Bet on who you think it is. Winners split the pot by stake, so the less popular the right answer, the more it pays.${g.wheel?" Then the bonus wheel can multiply the house money in the pot, up to 20×.":""}${g.comeback>0?` Out of money? You get ${fmt(g.comeback)} comeback money at the next round.`:""}${storyMax(g)>0?" After each answer you can vote to hear the trainee's backstory.":""}</p><p class="note"><button class="linkbtn" data-act="rename">Change nickname</button></p>`);
     case "betting":return slipBox(head+bettingSlip(g));
     case "locked":{
       const lb=r.bets&&r.bets[k],si=g.wheel?spinInfo(r):null,m=si&&si.done?si.mult:1;let body;
@@ -1423,10 +1514,17 @@ function slipHTML(){
         const mt=myb?trainee(myb.t):null;
         return slipBox(`${head}<p class="label">Round ${r.n+1} · the answer is…</p><p class="q">${esc(r.text)}</p><div class="drumq">?</div><div class="mini">${trainees(g).map(t=>`<div class="mrow${di.out.has(t.id)?" outrow":di.left<=2?" final2":""}">${face(t,"sm")}<span class="mn">${esc(t.name)}${mt&&mt.id===t.id?" · your pick":""}</span><span>${di.out.has(t.id)?"✕":""}</span></div>`).join("")}</div>`);
       }
-      const t=trainee(r.answer),st=settle(r,g.seed),lb=r.bets&&r.bets[k],net=st.nets[k];
+      const t=trainee(r.answer),st=settle(r,g.seed),lb=r.bets&&r.bets[k],net=st.nets[k],si=storyInfo(g);
+      if(si.active)return slipBox(`${head}<p class="label">Round ${r.n+1} · story time</p><div class="billcard"><p class="label">Story time!</p><p class="big" style="font-size:30px">${esc(t.name)}</p><p>is telling the story. Look up and listen!</p></div>`);
+      let vote="";
+      if(si.open){
+        const pct=Math.min(100,Math.round(si.votes/si.need*100));
+        vote=si.voted?`<div class="voted">✓ You voted for the backstory<small>${si.votes} of the ${si.need} votes needed · ${si.left} of ${si.max} left</small><div class="vmeter"><i style="width:${pct}%"></i></div></div>`
+                     :`<button class="place vote" data-act="vote">Vote: hear ${esc(t.name)}'s backstory</button><p class="betstatus">${si.votes} of the ${si.need} votes needed · ${si.left} of ${si.max} backstories left</p>`;
+      }
       if(lb&&lb.t===r.answer&&!S.seen.has("win-"+r.k)){fxOnce("win-"+r.k);buzz([60,40,60,40,180])}
       const stamp=lb?(lb.t===r.answer?stampOnce("s"+r.k,"win",`Winner ${signed(net)}`):stampOnce("s"+r.k,"lose",`Lost ${fmt(lb.a)}`)):stampOnce("s"+r.k,"neutral","Sat out");
-      return slipBox(`${head}<p class="label">Round ${r.n+1} · result</p><p class="q">${esc(r.text)}</p><div class="betbox">${face(t)}<div class="min0"><b>It was ${esc(t.name)}</b><span>${st.win?`Pot of ${fmt(st.pot)}${st.m>1?` (house money ×${st.m})`:""} split among the winners`:`Nobody picked ${esc(t.name)}. The house keeps the pot.`}</span></div></div>${stamp}${r.story?`<p class="note storyp">${esc(r.story)}</p>`:""}`);
+      return slipBox(`${head}<p class="label">Round ${r.n+1} · result</p><p class="q">${esc(r.text)}</p><div class="betbox">${face(t)}<div class="min0"><b>It was ${esc(t.name)}</b><span>${st.win?`Pot of ${fmt(st.pot)}${st.m>1?` (house money ×${st.m})`:""} split among the winners`:`Nobody picked ${esc(t.name)}. The house keeps the pot.`}</span></div></div>${stamp}${r.story?`<p class="note storyp">${esc(r.story)}</p>`:""}${vote}`);
     }
     case "standings":return slipBox(`${head}<p class="label">Standings after round ${rounds(g).length}</p>${topMini(5)}<p class="note">Next round coming up.</p>`);
     case "final":{
@@ -1507,6 +1605,7 @@ const H={
   allin:()=>{S.stake=balOf(balances(S.game),myKey());buzz([15,20,15]);render()},
   zero:()=>{S.stake=0;buzz(12);render()},
   place:()=>placeBet(),
+  vote:()=>voteStory(),
   withdraw:()=>withdrawBet(),
   rename:()=>{S.lastKey=null;const n=S.me.nick;S.me.nick="";render();const el=$("#nick");if(el){el.value=n;el.select()}}
 };
