@@ -176,7 +176,8 @@ body.dock-on .wrap{max-width:1500px}
 .toterow.winner .bar{background:rgba(0,0,0,.14)}
 .toterow.winner .bar i{background:var(--magenta)}
 .toterow.winner + .toterow{border-top-color:transparent}
-.toterow.loser>:not(.face),.toterow.loser .face .ph{opacity:.6}
+.toterow.loser>:not(.face){opacity:.6}
+.toterow.loser .face .ph{filter:saturate(.45)}
 .toterow .face i{font-size:13px;min-width:23px;height:23px}
 @media (min-width:900px){.rows.two{display:grid;grid-template-columns:1fr 1fr;column-gap:40px}}
 .wtag{display:inline-block;margin-left:10px;font-family:var(--f-body);font-size:11px;font-weight:900;letter-spacing:.14em;padding:3px 8px;border-radius:999px;background:var(--magenta);color:var(--text);vertical-align:middle;animation:pulse 1.1s ease-in-out infinite}
@@ -485,18 +486,21 @@ body.player .place{margin-top:clamp(10px,1.6vh,14px);padding:clamp(12px,2.1vh,17
 .betstatus{font-size:13px;font-weight:800;color:var(--ink-soft);margin-top:8px;text-align:center}
 .betstatus b{color:var(--win)}
 
-/* ---------- faces (trainee photos or placeholders) ---------- */
+/* ---------- faces (trainee photo, or initials) ---------- */
 .face{position:relative;display:inline-block;flex:none;width:var(--fs,44px);height:var(--fs,44px)}
-.face .ph{display:block;width:100%;height:100%;border-radius:50%;overflow:hidden;background:#ffe9b8;box-shadow:0 0 0 3px var(--ring)}
-.face .ph img,.face .ph svg{display:block;width:100%;height:100%;object-fit:cover}
-.face i{position:absolute;right:-6px;bottom:-4px;min-width:22px;height:22px;padding:0 4px;border-radius:7px;display:grid;place-items:center;font-family:var(--f-display);font-size:12px;font-style:normal;line-height:1;box-shadow:0 0 0 2px var(--panel)}
+.face .ph{display:block;width:100%;height:100%;border-radius:50%;overflow:hidden;box-shadow:inset 0 -4px 0 rgba(0,0,0,.14),0 0 0 3px #ffffff}
+.face .ph{display:grid!important;place-items:center}
+.face .ph img{display:block;width:100%;height:100%;object-fit:cover}
+.face .ph.pic{background:#ffe9b8;box-shadow:0 0 0 3px var(--ring)}
+.face .ph b{font-family:var(--f-display);font-weight:400;font-size:calc(var(--fs,44px) * .42);line-height:1;letter-spacing:-.02em}
+.face i{position:absolute;right:-6px;bottom:-4px;min-width:22px;height:22px;padding:0 4px;border-radius:7px;display:grid;place-items:center;font-family:var(--f-display);font-size:12px;font-style:normal;line-height:1;background:#160933;color:#ffffff;box-shadow:0 0 0 2px #ffffff}
 .face.sm{--fs:36px}
 .face.sm i{min-width:18px;height:18px;font-size:10px;border-radius:6px;right:-5px;bottom:-3px}
 .face.xl{--fs:clamp(64px,11vh,130px)}
 .face.xl .ph{box-shadow:0 0 0 6px var(--ring),0 0 0 11px var(--panel)}
 .face.xl i{min-width:36px;height:36px;font-size:20px;border-radius:10px;right:-2px;bottom:-2px}
 .toterow .face{--fs:clamp(30px,4.9vh,56px)}
-.slip .face i{box-shadow:0 0 0 2px var(--ticket)}
+.slip .face .ph{box-shadow:inset 0 -4px 0 rgba(0,0,0,.14),0 0 0 2px #160933}
 .payshead{display:flex;justify-content:space-between;gap:12px;font-size:10.5px;line-height:1.2;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding:0 2px 3px}
 .toterow .odds.hid{opacity:.5}
 .rows.grow .bar i{transform-origin:left center;animation:grow 1.6s cubic-bezier(.2,.8,.2,1) both}
@@ -665,7 +669,6 @@ const SADDLE=[["#2dff6e","#160933"],["#ff2d95","#160933"],["#ffe014","#160933"],
 const WHEEL=[2,1,3,2,5,1,2,10,3,2,1,5,2,3,20,1,2,5,3,10];
 const WCOL={1:["#18e0ff","#160933"],2:["#ffe014","#160933"],3:["#ff2d95","#ffffff"],5:["#2dff6e","#160933"],10:["#ff8a1f","#160933"],20:["url(#rb)","#160933"]};
 const SPIN_MS=9000,TURNS=12,SWEEP_MS=2700,SWEEP_HOLD=500;
-const SIL=`<svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" fill="#ffe9b8"/><circle cx="20" cy="16" r="7.5" fill="rgba(22,9,51,.42)"/><path d="M5 41c1-10 7-15 15-15s14 5 15 15z" fill="rgba(22,9,51,.42)"/></svg>`;
 /* Looks the host can switch between; the first is the default */
 const LOOKS=[["purple","Purple party","linear-gradient(135deg,#6a12c9,#ff2d95)"],["orange","PwC orange","linear-gradient(135deg,#d04a02,#ffb600)"],["neon","Neon night","linear-gradient(135deg,#17053d,#2dff6e)"],["green","Green stage","linear-gradient(135deg,#1fe060,#ffe014)"],["burst","Colour burst","conic-gradient(#2dff6e,#ff2d95,#ffe014,#18e0ff,#2dff6e)"]];
 const lookOk=v=>LOOKS.some(l=>l[0]===v);
@@ -824,9 +827,20 @@ function nickOf(k){const p=S.players[k];return (p&&cleanNick(p.nick))||"Player"}
 function rosterList(){return Object.entries(S.players||{}).filter(([,p])=>p&&cleanNick(p.nick)).map(([k,p])=>({k,nick:cleanNick(p.nick),on:!!p.online}))}
 const onlineCount=()=>rosterList().filter(p=>p.on).length;
 const trainee=id=>trainees(S.game).find(t=>t.id===id);
-function okPhoto(p){return typeof p==="string"&&p.length<150000&&/^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(p)}
-function faceHTML(t,photo,cls){const c=SADDLE[(t.no-1)%SADDLE.length];return `<span class="face${cls?" "+cls:""}" style="--ring:${c[0]}" aria-hidden="true"><span class="ph">${okPhoto(photo)?`<img src="${photo}" alt="">`:SIL}</span><i style="background:${c[0]};color:${c[1]}">${t.no}</i></span>`}
-function face(t,cls){return faceHTML(t,S.photos[t.id],cls)}
+function initials(name){const w=String(name||"").trim().split(/\s+/).filter(Boolean);if(!w.length)return "?";return (w.length>1?w[0][0]+w[w.length-1][0]:w[0].slice(0,1)).toUpperCase()}
+function okPhoto(p){return typeof p==="string"&&p.length<900000&&/^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(p)}
+/* Photos are turned into short blob: links once, so re-rendering stays fast */
+const BLOBS=new Map();
+function imgURL(d){let u=BLOBS.get(d);if(!u){try{const b=atob(d.slice(d.indexOf(",")+1)),a=new Uint8Array(b.length);for(let k=0;k<b.length;k++)a[k]=b.charCodeAt(k);u=URL.createObjectURL(new Blob([a],{type:"image/jpeg"}))}catch(e){u=d}BLOBS.set(d,u)}return u}
+/* The host screen uses the big copy from its own setup; phones get the phone-size copy */
+function photoFor(t){
+  if(S.mode==="host"&&S.host&&S.host.setup){const ts=S.host.setup.trainees,list=Array.isArray(ts)?ts:Object.values(ts||{}),x=list.find(y=>y&&y.id===t.id);if(x){if(okPhoto(x.photoL))return x.photoL;if(okPhoto(x.photo))return x.photo}}
+  return S.photos[t.id];
+}
+function faceHTML(t,photo,cls){const c=SADDLE[(t.no-1)%SADDLE.length];
+  const inner=okPhoto(photo)?`<span class="ph pic"><img src="${imgURL(photo)}" alt="" decoding="async"></span>`:`<span class="ph" style="background:${c[0]};color:${c[1]}"><b>${esc(initials(t.name))}</b></span>`;
+  return `<span class="face${cls?" "+cls:""}" style="--ring:${c[0]}" aria-hidden="true">${inner}<i>${t.no}</i></span>`}
+function face(t,cls){return faceHTML(t,photoFor(t),cls)}
 function cloth(t,sm){const c=SADDLE[(t.no-1)%SADDLE.length];return `<span class="cloth${sm?" sm":""}" style="background:${c[0]};color:${c[1]}" aria-hidden="true">${t.no}</span>`}
 function cleanBets(raw,g){
   const bal=balances(g),ids=new Set(trainees(g).map(t=>t.id)),out={};
@@ -1076,13 +1090,14 @@ async function startGame(){
   S.host=Object.assign({},S.host,{run:{gid,statements}});
   await FB.remove(gpath("bets")).catch(()=>{});
   await FB.remove(gpath("votes")).catch(()=>{});
-  await withTimeout(FB.set(gpath("photos"),photosOf(sd)),12000).catch(()=>{});
+  await withTimeout(FB.set(gpath("photos"),photosOf(sd)),20000).catch(()=>{});
   await setGame({title:sd.title,cur:sd.cur,start:sd.start,seed:sd.seed,wheel:sd.wheel,payer:sd.payer,theme:sd.theme,
     timer:sd.timer,comeback:sd.comeback,live:sd.live,storyMax:sd.storyMax,
     trainees:sd.trainees.map((t,i)=>({id:t.id,name:t.name,no:i+1})),
     total:sd.statements.length,gid,idx:-1,phase:"lobby"});
   S.view="board";
 }
+/* Phones only get the phone-size copies; the big ones stay in the host setup */
 function photosOf(sd){const o={};(sd.trainees||[]).forEach(t=>{if(okPhoto(t.photo))o[t.id]=t.photo});return Object.keys(o).length?o:null}
 function withTimer(g){const dur=Math.max(0,Math.floor(Number(g.timer)||0));delete g.round.endsAt;delete g.round.dur;if(dur>0){g.round.dur=dur;g.round.endsAt=now()+dur*1000+800}}
 async function openRace(i){
@@ -1497,8 +1512,8 @@ function setupHTML(){
       <label class="check"><input type="checkbox" id="f-wheel" data-f="wheel"${d.wheel?" checked":""}> Spin the bonus wheel every round</label>
       <div class="grid4"><label class="f">Who pays the winner<input class="inp" id="f-payer" data-f="payer" value="${esc(d.payer)}" maxlength="24" placeholder="Leave empty to skip the joke"></label></div>
       <p class="hint" style="margin:12px 0 0">At the end the board tells the winner to send a Tikkie for everything they collected to this person.</p></section>
-    <section class="card"><h2>The contestants</h2><p class="hint">Your trainees, 2 to 12. Each gets a number, a colour and a photo. Without a photo a placeholder is shown; square photos work best.</p>
-      <div class="tlist">${d.trainees.map((t,i)=>`<div class="trow">${faceHTML({no:i+1},t.photo,"sm")}<input class="inp" id="tr-${t.id}" data-tr="${t.id}" value="${esc(t.name)}" placeholder="Trainee ${i+1}'s name" maxlength="24" aria-label="Trainee ${i+1}"><label class="btn ghost sm">${okPhoto(t.photo)?"Change photo":"Add photo"}<input type="file" accept="image/*" data-photo="${t.id}" hidden></label>${okPhoto(t.photo)?`<button class="x" data-act="rm-photo" data-id="${t.id}" aria-label="Remove photo of trainee ${i+1}">⌫</button>`:""}<button class="x" data-act="rm-tr" data-id="${t.id}" aria-label="Remove trainee ${i+1}"${d.trainees.length<=2?" disabled":""}>✕</button></div>`).join("")}</div>
+    <section class="card"><h2>The contestants</h2><p class="hint">Your trainees, 2 to 12. Each gets a number, a colour and an optional photo; without a photo their initial is shown. Use a clear photo of at least 600 × 600 pixels. It is cropped to a square around the face.</p>
+      <div class="tlist">${d.trainees.map((t,i)=>`<div class="trow">${faceHTML({no:i+1,name:t.name||String(i+1)},t.photoL||t.photo,"sm")}<input class="inp" id="tr-${t.id}" data-tr="${t.id}" value="${esc(t.name)}" placeholder="Trainee ${i+1}'s name" maxlength="24" aria-label="Trainee ${i+1}"><label class="btn ghost sm">${okPhoto(t.photo)?"Change photo":"Add photo"}<input type="file" accept="image/*" data-photo="${t.id}" hidden></label>${okPhoto(t.photo)?`<button class="x" data-act="rm-photo" data-id="${t.id}" aria-label="Remove photo of trainee ${i+1}">⌫</button>`:""}<button class="x" data-act="rm-tr" data-id="${t.id}" aria-label="Remove trainee ${i+1}"${d.trainees.length<=2?" disabled":""}>✕</button></div>`).join("")}</div>
       <div class="row-actions"><button class="btn ghost" data-act="add-tr"${d.trainees.length>=12?" disabled":""}>Add trainee</button></div></section>
     <section class="card"><h2>The rounds</h2><p class="hint">One statement per round, then pick who it's about. Add a one-line story to tell the room more when the answer is revealed.${hasEx?' <span class="exnote">The filled-in statements are examples. Replace them with real facts about your trainees.</span>':""}</p>
       ${d.statements.map((s,i)=>`<div class="srow"><span class="sn">${i+1}</span><textarea class="inp" id="st-${s.id}" data-st="${s.id}" rows="2" maxlength="160" placeholder="Write a statement about one trainee" aria-label="Statement ${i+1}">${esc(s.text)}</textarea><select class="inp" id="sa-${s.id}" data-sa="${s.id}" aria-label="Who is statement ${i+1} about?">${answerOpts(s.answer)}</select><button class="x" data-act="rm-st" data-id="${s.id}" aria-label="Remove statement ${i+1}">✕</button><input class="inp story-in" id="sy-${s.id}" data-sy="${s.id}" value="${esc(s.story||"")}" maxlength="140" placeholder="Story shown at the reveal (optional)" aria-label="Story for statement ${i+1}"></div>`).join("")||'<p class="muted">No statements yet.</p>'}
@@ -1510,7 +1525,7 @@ function setupHTML(){
   </div>`;
 }
 function validate(d){
-  const ts=d.trainees.map(t=>{const o={id:t.id,name:cleanNick(t.name)};if(okPhoto(t.photo))o.photo=t.photo;return o}).filter(t=>t.name);
+  const ts=d.trainees.map(t=>{const o={id:t.id,name:cleanNick(t.name)};if(okPhoto(t.photo))o.photo=t.photo;if(okPhoto(t.photoL))o.photoL=t.photoL;return o}).filter(t=>t.name);
   if(ts.length<2)return {err:"Add at least two trainees."};
   const ids=new Set(ts.map(t=>t.id));
   const list=d.statements.map((s,i)=>({id:s.id,text:clean(s.text,160),answer:s.answer||"",story:clean(s.story||"",140),i}));
@@ -1527,20 +1542,31 @@ function validate(d){
 }
 async function saveSetup(){
   const v=validate(S.draft);if(v.err){toast(v.err);return null}
-  await withTimeout(FB.set(hpath("setup"),v.ok),12000);
+  await withTimeout(FB.set(hpath("setup"),v.ok),25000);
   S.host=Object.assign({},S.host,{setup:v.ok});
-  if(S.code&&S.game)await withTimeout(FB.set(gpath("photos"),photosOf(v.ok)),12000).catch(()=>{});
+  if(S.code&&S.game)await withTimeout(FB.set(gpath("photos"),photosOf(v.ok)),20000).catch(()=>{});
   return v.ok;
+}
+/* Photo upload: crop a square around the face, then shrink in halves for a sharp result.
+   Two copies: 1000 px for the big screen (host only) and 540 px for the phones. */
+function squareJPEG(src,size,q){
+  let cur=src,w=src.width;
+  while(w/2>=size){const h=Math.round(w/2),c=document.createElement("canvas");c.width=c.height=h;const x=c.getContext("2d");x.imageSmoothingEnabled=true;x.imageSmoothingQuality="high";x.drawImage(cur,0,0,w,w,0,0,h,h);cur=c;w=h}
+  const out=document.createElement("canvas");out.width=out.height=size;const o=out.getContext("2d");o.imageSmoothingEnabled=true;o.imageSmoothingQuality="high";o.drawImage(cur,0,0,w,w,0,0,size,size);
+  return out.toDataURL("image/jpeg",q);
 }
 async function loadPhoto(id,file){
   try{
     const url=URL.createObjectURL(file),img=new Image();
     await new Promise((res,rej)=>{img.onload=res;img.onerror=rej;img.src=url});
-    const n=Math.min(img.naturalWidth,img.naturalHeight),c=document.createElement("canvas");c.width=c.height=200;
-    c.getContext("2d").drawImage(img,(img.naturalWidth-n)/2,(img.naturalHeight-n)/2,n,n,0,0,200,200);
+    const W=img.naturalWidth,H=img.naturalHeight,n=Math.min(W,H),sx=(W-n)/2,sy=H>W?(H-n)*.3:(H-n)/2;
+    const m=Math.min(n,2048),base=document.createElement("canvas");base.width=base.height=m;
+    const bx=base.getContext("2d");bx.imageSmoothingEnabled=true;bx.imageSmoothingQuality="high";bx.drawImage(img,sx,sy,n,n,0,0,m,m);
     URL.revokeObjectURL(url);
     const t=S.draft.trainees.find(x=>x.id===id);if(!t)return;
-    t.photo=c.toDataURL("image/jpeg",.8);rebuildSetup();toast("Photo added. Save the setup to keep it.");
+    t.photoL=squareJPEG(base,Math.min(1000,m),.88);t.photo=squareJPEG(base,Math.min(540,m),.85);
+    rebuildSetup();
+    toast(n<600?`Photo added, but it's only ${n} px wide, so it may look soft on the big screen. Save the setup to keep it.`:"Photo added. Save the setup to keep it.");
   }catch(e){toast("Couldn't read that image. Try a JPG or PNG.")}
 }
 function rebuildSetup(focusId){S.lastKey=null;render();if(focusId){const el=document.getElementById(focusId);if(el)el.focus()}}
@@ -1678,7 +1704,7 @@ const H={
   again:()=>{if(!armed("again"))return;if(!S.host||!S.host.setup){toast("Open Setup to start a new game.");return}run(startGame)},
   clear:()=>{if(!armed("clear"))return;run(async()=>{await clearPlayers();toast("Player list cleared")})},
   "add-tr":()=>{if(S.draft.trainees.length>=12)return;const id="t"+rid();S.draft.trainees.push({id,name:""});rebuildSetup("tr-"+id)},
-  "rm-photo":b=>{const t=S.draft.trainees.find(x=>x.id===b.dataset.id);if(t){delete t.photo;rebuildSetup()}},
+  "rm-photo":b=>{const t=S.draft.trainees.find(x=>x.id===b.dataset.id);if(t){delete t.photo;delete t.photoL;rebuildSetup()}},
   "rm-tr":b=>{const id=b.dataset.id;if(S.draft.trainees.length<=2)return;S.draft.trainees=S.draft.trainees.filter(t=>t.id!==id);S.draft.statements.forEach(s=>{if(s.answer===id)s.answer=""});rebuildSetup()},
   "add-st":()=>{const id="s"+rid();S.draft.statements.push({id,text:"",answer:""});rebuildSetup("st-"+id)},
   "rm-st":b=>{S.draft.statements=S.draft.statements.filter(s=>s.id!==b.dataset.id);rebuildSetup()},
@@ -1728,7 +1754,7 @@ document.addEventListener("input",e=>{
 });
 document.addEventListener("change",e=>{
   const el=e.target;
-  if(el.dataset.photo&&S.draft&&el.files&&el.files[0]){loadPhoto(el.dataset.photo,el.files[0]);return}
+  if(el.dataset.photo&&S.draft&&el.files&&el.files[0]){loadPhoto(el.dataset.photo,el.files[0]);el.value="";return}
   if(el.dataset.sa&&S.draft){const s=S.draft.statements.find(x=>x.id===el.dataset.sa);if(s)s.answer=el.value}
   else if(el.type==="checkbox"&&el.dataset.f&&S.draft)S.draft[el.dataset.f]=el.checked;
 });
