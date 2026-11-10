@@ -484,7 +484,7 @@ body.player .coin{--cs:clamp(44px,min(calc((100vw - 96px) / 5),calc(11vh - 20px)
 body.player .sbtn{padding:clamp(8px,1.4vh,12px) 10px;font-size:15px}
 body.player .place{margin-top:clamp(10px,1.6vh,14px);padding:clamp(12px,2.1vh,17px);font-size:clamp(16px,2.4vh,19px)}
 .betstatus{font-size:13px;font-weight:800;color:var(--ink-soft);margin-top:8px;text-align:center}
-.betstatus b{color:var(--win)}
+.betstatus b{color:#077a3c}
 
 /* ---------- faces (trainee photo, or initials) ---------- */
 .face{position:relative;display:inline-block;flex:none;width:var(--fs,44px);height:var(--fs,44px)}
@@ -626,6 +626,107 @@ html[data-look="burst"] :is(.stname,.stq){text-shadow:0 2px 0 #160933,0 0 14px #
 .tk.listen .face{--fs:clamp(120px,22vh,180px);margin-top:14px}
 .tk.listen .face .ph{box-shadow:0 0 0 6px var(--ring),0 0 0 10px var(--ticket),0 0 0 13px var(--ink)}
 .tk.listen p{margin:10px 0 0;font-weight:800;font-size:15px;color:var(--ink-soft)}
+/* ---------- bonus games: slot machine ---------- */
+.pill.bonus{background:var(--panel);color:var(--yellow);box-shadow:inset 0 0 0 2px var(--yellow)}
+.wheelbox{grid-template-columns:minmax(0,1fr)}
+.slot{--ch:6.4em;position:relative;font-size:clamp(8px,min(1.02vw,1.9vh),18px);width:35em;max-width:100%;background:linear-gradient(180deg,var(--panel-2),var(--panel)) var(--panel);border:.38em solid var(--green);border-radius:2.6em 2.6em 1.6em 1.6em;padding:.8em 1.4em 1.1em;box-shadow:0 0 0 .3em var(--magenta),0 1.1em 2.5em rgba(0,0,0,.5);text-align:center}
+.slot .marq{display:grid;justify-items:center;gap:.4em;padding-bottom:.65em}
+.slot .marq b{font-family:var(--f-display);font-weight:400;font-size:2em;letter-spacing:.06em;line-height:1;text-transform:uppercase;color:var(--yellow);text-shadow:.09em .09em 0 var(--magenta-deep)}
+.slot .bulbrow{display:flex;gap:.85em}
+.slot .bulbrow i{width:.6em;height:.6em;border-radius:50%;background:var(--green);animation:blink .7s steps(2) infinite}
+.slot .bulbrow i:nth-child(3n+2){background:var(--magenta);animation-delay:.35s}
+.slot .bulbrow i:nth-child(3n){background:var(--yellow);animation-delay:.18s}
+.slot .win{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6em;background:#160933;border-radius:1em;padding:0 .6em;border:.3em solid #160933;box-shadow:0 0 0 .2em var(--green)}
+.slot .reel{position:relative;height:calc(var(--ch)*2.2);overflow:hidden;background:#fffaf0}
+.slot .reel::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(22,9,51,.6) 0,rgba(22,9,51,0) 30%,rgba(22,9,51,0) 70%,rgba(22,9,51,.6) 100%);pointer-events:none}
+.slot .strip{will-change:transform}
+.slot .cell{height:var(--ch);display:grid;place-items:center}
+.slot .cell svg{display:block;width:calc(var(--ch)*.84);height:calc(var(--ch)*.84);max-width:none}
+.slot .payline{position:absolute;left:-1em;right:-1em;top:50%;height:var(--ch);transform:translateY(-50%);border-top:.25em solid var(--magenta);border-bottom:.25em solid var(--magenta);pointer-events:none}
+.slot .payline::before,.slot .payline::after{content:"";position:absolute;top:50%;border:.8em solid transparent;transform:translateY(-50%)}
+.slot .payline::before{left:-.2em;border-left-color:var(--magenta)}
+.slot .payline::after{right:-.2em;border-right-color:var(--magenta)}
+.slot .paytable{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.4em;margin-top:.8em}
+.slot .pt{display:flex;align-items:center;justify-content:center;gap:.3em;background:rgba(255,255,255,.1);box-shadow:inset 0 0 0 .14em var(--line);border-radius:.7em;padding:.25em .2em}
+.slot .pt svg{width:2em;height:2em;flex:none}
+.slot .pt b{font-family:var(--f-display);font-weight:400;font-size:1.25em;line-height:1;color:#ffffff}
+.slot .pt.on{background:#ffe014;box-shadow:inset 0 0 0 .14em #ffffff}
+.slot .pt.on b{color:#160933}
+.slot .ptcap{margin:.55em 0 0;font-size:.85em;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#ffffff}
+.slot .disp{margin-top:.6em;background:#160933;border-radius:.9em;padding:.5em .8em .6em;min-height:5.7em;display:grid;place-items:center;box-shadow:inset 0 0 0 .14em var(--line)}
+.slot .disp p{margin:0;font-weight:900;font-size:1.05em;letter-spacing:.1em;text-transform:uppercase;color:#ffffff}
+.bres{display:grid;justify-items:center;line-height:1}
+.bres b{font-family:var(--f-display);font-weight:400;color:#ffffff;text-shadow:.07em .07em 0 #ff2d95}
+.bres.jackpot b{background:linear-gradient(90deg,#2dff6e,#ffe014,#ff2d95,#18e0ff,#2dff6e);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none;animation:shimmer 2s linear infinite}
+.bres span{font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:#ffe014}
+.slot .disp .bres b{font-size:3.3em}
+.slot .disp .bres span{font-size:.85em;margin-top:.3em}
+.slot .lever{position:absolute;right:-2.9em;top:9.6em;width:2.4em;height:10.5em}
+.slot .lever::before{content:"";position:absolute;left:.9em;top:1.4em;width:.6em;height:8em;border-radius:.3em;background:linear-gradient(90deg,#cfcfd6,#7d7d88)}
+.slot .lever::after{content:"";position:absolute;left:.1em;top:0;width:2.2em;height:2.2em;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff8fa3,#d4183a 60%,#8f0f25);box-shadow:0 .2em 0 rgba(0,0,0,.4)}
+.slot .lever i{position:absolute;left:-.7em;bottom:0;width:2.2em;height:1.6em;border-radius:.4em;background:var(--green)}
+.slot.small{font-size:7px;width:auto;border-radius:1.8em;padding:1.1em 1.6em;box-shadow:0 0 0 .3em var(--magenta),0 .8em 1.6em rgba(22,9,51,.35)}
+.slot.small .win{width:30em;max-width:100%}
+/* ---------- bonus games: roulette ---------- */
+.rtable{font-size:clamp(8px,min(1.02vw,1.8vh),16px);width:45em;max-width:100%;background:radial-gradient(ellipse at 50% 40%,#0e6e40,#07432a) #0a5433;border:.7em solid #4a230a;border-radius:2.1em;box-shadow:inset 0 0 0 .2em #e7c36a,0 0 0 .25em #2a1305,0 1.1em 2.5em rgba(0,0,0,.5);padding:.9em 1.1em;display:grid;grid-template-columns:minmax(0,26fr) minmax(0,14.3fr);gap:1.1em;align-items:center;text-align:center}
+.rwheel{position:relative;width:100%;aspect-ratio:1/1;filter:drop-shadow(0 .5em .9em rgba(0,0,0,.45))}
+.rwheel>svg,.rwheel>div,.rwheel .rdrop{position:absolute;inset:0;width:100%;height:100%}
+.rwheel svg{display:block;width:100%;height:100%}
+.rdisc,.rarm{transform-origin:50% 50%;will-change:transform}
+.rtable h3{margin:0 0 .4em;font-family:var(--f-display);font-weight:400;font-size:1.45em;letter-spacing:.05em;line-height:1;text-transform:uppercase;color:#fff3c4}
+.rboxes{display:grid;gap:.45em}
+.rbox{position:relative;display:grid;justify-items:start;align-content:center;text-align:left;min-height:5.2em;padding:.4em 2.9em .4em .8em;box-shadow:inset 0 0 0 .16em #ffffff;border-radius:.5em;color:#ffffff}
+.rbox b{font-family:var(--f-display);font-weight:400;font-size:1.7em;line-height:1;text-transform:uppercase}
+.rbox span{font-size:.86em;font-weight:900;letter-spacing:.02em;margin-top:.2em}
+.rbox em{font-style:normal;font-size:.95em;font-weight:800;margin-top:.1em;font-variant-numeric:tabular-nums}
+.rbox.r{background:#c8102e}
+.rbox.b{background:#17141c}
+.rbox.g{background:#0b7a43}
+.rbox.win{box-shadow:inset 0 0 0 .16em #ffffff,0 0 0 .32em #ffe014}
+.rbox .dolly{position:absolute;right:.5em;top:50%;width:2em;height:2.9em;transform:translateY(-50%)}
+.rdisp{margin-top:.5em;background:#160933;border-radius:.9em;padding:.5em .6em .55em;min-height:5.4em;display:grid;justify-items:center;align-content:center;gap:.15em}
+.rdisp p{margin:0;font-weight:800;font-size:.95em;line-height:1.25;color:#ffffff}
+.rdisp p b{font-weight:900;color:#ffe014}
+.rdisp .bres b{font-size:2em;text-transform:uppercase;white-space:nowrap}
+.rdisp .bres span{font-size:.72em;letter-spacing:.1em;margin-top:.3em}
+/* phone: roulette colour bet */
+.rtitle{font-family:var(--f-display);font-size:clamp(20px,3.4vh,27px);line-height:1.05;margin:2px 0 4px;overflow-wrap:anywhere}
+.rsub{font-size:13px;font-weight:800;color:var(--ink-soft);margin:0}
+.mainbet{font-size:13.5px;font-weight:800;color:var(--ink-soft);margin:10px 0 0}
+.mainbet b{color:var(--ink)}
+.cpicks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:clamp(8px,1.5vh,12px)}
+.cpick{border:0;border-radius:14px;padding:4px;min-height:clamp(58px,10vh,86px);display:grid;justify-items:center;align-content:center;gap:3px;color:#ffffff;transition:transform .08s}
+.cpick b{font-family:var(--f-display);font-weight:400;font-size:clamp(14px,2.5vh,18px);line-height:1.05}
+.cpick span{font-size:12.5px;font-weight:900}
+.cpick.r{background:#c8102e}
+.cpick.b{background:#17141c}
+.cpick.g{background:#0b7a43}
+.cpick[aria-pressed="true"]{box-shadow:0 0 0 3px #ffe014,0 0 0 6px #160933}
+.cpick:active{transform:scale(.96)}
+.rnum{flex:none;width:54px;height:54px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-display);font-size:22px;line-height:1;color:#ffffff;box-shadow:0 0 0 3px #ffffff,0 0 0 5px #160933}
+.rnum.r{background:#c8102e}
+.rnum.b{background:#17141c}
+.rnum.g{background:#0b7a43}
+.sideline{margin:6px 0 0;border-radius:10px;padding:6px 12px;font-weight:800;font-size:14px}
+.sideline b{font-weight:900}
+.sideline.win{background:#077a3c;color:#ffffff}
+.sideline.lose{background:#ffe3e8;color:#a0102c;box-shadow:inset 0 0 0 2px #d4183a}
+.wheelslot .rwheel{width:min(230px,58vw)}
+/* ---------- final screen: the Tikkie ---------- */
+.finalgrid.tik{display:grid;grid-template-columns:minmax(0,1fr) clamp(260px,28vw,460px);gap:min(30px,2.2vw);align-items:start}
+@media (max-width:880px){.finalgrid.tik{grid-template-columns:minmax(0,1fr)}}
+.tikkie{font-size:clamp(11px,min(1.4vw,2.3vh),23px);background:var(--yellow);color:var(--ink);border-radius:1.4em;overflow:hidden;box-shadow:0 .5em 0 var(--yellow-deep),0 1.2em 2.4em rgba(0,0,0,.4);transform:rotate(1.5deg);margin-top:1.2em;text-align:center}
+.tkhead{background:var(--ink);padding:.8em 1em .75em;display:grid;gap:.25em}
+.tkhead b{font-family:var(--f-display);font-weight:400;font-size:1.9em;line-height:1.02;color:#ffe014;overflow-wrap:anywhere}
+.tkhead span{font-size:.8em;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:#ffffff}
+.tkbody{padding:1em 1.1em 1.2em;display:grid;gap:.35em;justify-items:center}
+.tklab{margin:0;font-weight:900;font-size:1.15em;letter-spacing:.1em;text-transform:uppercase;overflow-wrap:anywhere}
+.tkamt{margin:0;font-family:var(--f-display);font-size:min(4em,calc(24em / var(--n,6)));line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tkwho{margin:0;font-weight:800;font-size:1.5em;line-height:1.15;overflow-wrap:anywhere}
+.tkwho b{font-weight:900}
+.tkfor{margin:0;font-weight:800;font-size:.95em;overflow-wrap:anywhere}
+.tkbtn{margin-top:.7em;width:100%;background:var(--ink);color:#ffffff;border-radius:999px;padding:.75em 1em;font-weight:900;font-size:1.1em;line-height:1.2;overflow-wrap:anywhere;animation:pulse 1.4s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.slot .bulbrow i,.tkbtn,.bres.jackpot b{animation:none!important}}
 @media (prefers-reduced-motion:reduce){.buzzer{animation:none}.landed .toterow.spot{animation:none}}
 @media (prefers-reduced-motion:reduce){
   body::before,.brand,.bulbs,.runner,.qrcard,.pill,.wtag,.btn,.trophy,.slip::before,.wheel .b0,.wheel .b1,.wheel .b2,.multi.jackpot b{animation:none!important}
@@ -669,6 +770,22 @@ const SADDLE=[["#2dff6e","#160933"],["#ff2d95","#160933"],["#ffe014","#160933"],
 const WHEEL=[2,1,3,2,5,1,2,10,3,2,1,5,2,3,20,1,2,5,3,10];
 const WCOL={1:["#18e0ff","#160933"],2:["#ffe014","#160933"],3:["#ff2d95","#ffffff"],5:["#2dff6e","#160933"],10:["#ff8a1f","#160933"],20:["url(#rb)","#160933"]};
 const SPIN_MS=9000,TURNS=12,SWEEP_MS=2700,SWEEP_HOLD=500;
+/* Bonus games take turns, one per round: wheel, slot machine, roulette, wheel, … */
+const DEVS=["wheel","slot","roul"];
+const DEV_MS={wheel:SPIN_MS,slot:6200,roul:8000};
+const DEV_NAME={wheel:"wheel",slot:"slot machine",roul:"roulette"};
+const DEV_SHORT={wheel:"wheel",slot:"slot",roul:"roulette"};
+const devOf=r=>r&&DEVS.includes(r.dev)?r.dev:"wheel";
+/* Slot machine: three in a row pays that symbol's multiplier, anything else is 1×. Same odds as the wheel. */
+const SLOT=[["cherry",2],["waffle",3],["bar",5],["gem",10],["seven",20]];
+const REEL_MS=[2600,4100,5600];
+/* Roulette: 18 red, 18 black and one green 0. The colour sets the house-money multiplier (mult)
+   and players can bet their own play money on the colour (pay = what a winning stake is paid back as). */
+const RWHEEL=[0,32,15,19,4,21,2,25,17,34,6,27,13,36,11,30,8,23,10,5,24,16,33,1,20,14,31,9,22,18,29,7,28,12,35,3,26];
+const RREDS=new Set([1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36]);
+const RC={r:{name:"Red",pay:2,mult:2,bg:"#c8102e"},b:{name:"Black",pay:2,mult:2,bg:"#17141c"},g:{name:"Green 0",pay:20,mult:20,bg:"#0b7a43"}};
+const rcol=n=>n===0?"g":RREDS.has(n)?"r":"b";
+const rnum=sp=>{const n=Math.floor(Number(sp&&sp.n));return n>=0&&n<=36?n:0};
 /* Looks the host can switch between; the first is the default */
 const LOOKS=[["purple","Purple party","linear-gradient(135deg,#6a12c9,#ff2d95)"],["orange","PwC orange","linear-gradient(135deg,#d04a02,#ffb600)"],["neon","Neon night","linear-gradient(135deg,#17053d,#2dff6e)"],["green","Green stage","linear-gradient(135deg,#1fe060,#ffe014)"],["burst","Colour burst","conic-gradient(#2dff6e,#ff2d95,#ffe014,#18e0ff,#2dff6e)"]];
 const lookOk=v=>LOOKS.some(l=>l[0]===v);
@@ -750,6 +867,7 @@ const S={
   confirm:null,confirmT:null,toastT:null,showQR:false,primary:null,
   seen:new Set(),spinStart:{},revealStart:{},photos:{},autoClosed:null,cdSec:null,drumStep:null,
   votes:{},votesKey:null,storyFired:null,
+  side:{},sideKey:null,sideC:null,sideStake:0,sideRound:null,
   fx:new Set(),wq:Promise.resolve(),unsub:{},gameSub:null,rereg:0
 };
 
@@ -783,6 +901,7 @@ const sfx={
   fanfare:()=>[523,659,784,1047,784,1047,1319,1568].forEach((f,i)=>tone(f,.22,"triangle",.15,i*.12)),
   beep:sec=>tone(700+(6-sec)*90,.09,"square",.08),
   buzzer:()=>{tone(150,.55,"sawtooth",.12);tone(110,.55,"sawtooth",.1,.04)},
+  clunk:()=>{tone(170,.08,"square",.12);tone(95,.14,"triangle",.14,.02)},
   drum:times=>{for(let i=0;i<54;i++)tone(85+(i%3)*12,.07,"triangle",.1,i*.115);(times||[]).forEach(t=>tone(330,.12,"square",.06,t/1000))}
 };
 
@@ -795,14 +914,23 @@ function settle(r,seed){
   for(const b of Object.values(bets)){pot+=b.a;if(b.t===r.answer)win+=b.a}
   const nets={};
   for(const [k,b] of Object.entries(bets))nets[k]=(win>0&&b.t===r.answer)?Math.floor(b.a*pot/win)-b.a:-b.a;
-  return {pot,win,nets,m};
+  const side=sideNets(r),all=Object.assign({},nets);
+  for(const [k,n] of Object.entries(side))all[k]=(all[k]||0)+n;
+  return {pot,win,nets,m,side,all};
+}
+/* Roulette colour bets: a right call is paid back at the colour's rate, a wrong call loses the stake */
+function sideNets(r){
+  const out={};if(!r||!r.side||!r.spin||devOf(r)!=="roul")return out;
+  const c=rcol(rnum(r.spin));
+  for(const [k,b] of Object.entries(r.side)){if(b&&RC[b.c]&&b.a>0)out[k]=b.c===c?b.a*(RC[c].pay-1):-b.a}
+  return out;
 }
 function rounds(g){const r=g.rounds;return Array.isArray(r)?r:r?Object.values(r):[]}
 function trainees(g){const t=g&&g.trainees;return Array.isArray(t)?t:t?Object.values(t):[]}
 function balances(g,skipCurrent){
   const bal={},cb=Math.max(0,Number(g.comeback)||0),rs=rounds(g),known=new Set(Object.keys(S.players||{}));
   const rescue=()=>{if(!cb)return;for(const k of known){const b=k in bal?bal[k]:g.start;if(b<=0)bal[k]=b+cb}};
-  rs.forEach((r,i)=>{if(i>0)rescue();const {nets}=settle(r,g.seed);for(const [k,n] of Object.entries(nets)){known.add(k);bal[k]=(k in bal?bal[k]:g.start)+n}});
+  rs.forEach((r,i)=>{if(i>0)rescue();const nets=settle(r,g.seed).all;for(const [k,n] of Object.entries(nets)){known.add(k);bal[k]=(k in bal?bal[k]:g.start)+n}});
   const cur=g.round;if(!skipCurrent&&cur&&rs.length&&!rs.some(x=>x.k===cur.k))rescue();
   return bal;
 }
@@ -828,19 +956,20 @@ function rosterList(){return Object.entries(S.players||{}).filter(([,p])=>p&&cle
 const onlineCount=()=>rosterList().filter(p=>p.on).length;
 const trainee=id=>trainees(S.game).find(t=>t.id===id);
 function initials(name){const w=String(name||"").trim().split(/\s+/).filter(Boolean);if(!w.length)return "?";return (w.length>1?w[0][0]+w[w.length-1][0]:w[0].slice(0,1)).toUpperCase()}
-function okPhoto(p){return typeof p==="string"&&p.length<900000&&/^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(p)}
+function okPhoto(p){return typeof p==="string"&&p.length<1400000&&/^data:image\/(jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(p)}
 /* Photos are turned into short blob: links once, so re-rendering stays fast */
 const BLOBS=new Map();
-function imgURL(d){let u=BLOBS.get(d);if(!u){try{const b=atob(d.slice(d.indexOf(",")+1)),a=new Uint8Array(b.length);for(let k=0;k<b.length;k++)a[k]=b.charCodeAt(k);u=URL.createObjectURL(new Blob([a],{type:"image/jpeg"}))}catch(e){u=d}BLOBS.set(d,u)}return u}
+function imgURL(d){let u=BLOBS.get(d);if(!u){try{const b=atob(d.slice(d.indexOf(",")+1)),a=new Uint8Array(b.length);for(let k=0;k<b.length;k++)a[k]=b.charCodeAt(k);u=URL.createObjectURL(new Blob([a],{type:d.slice(5,d.indexOf(";"))}))}catch(e){u=d}BLOBS.set(d,u)}return u}
 /* The host screen uses the big copy from its own setup; phones get the phone-size copy */
-function photoFor(t){
-  if(S.mode==="host"&&S.host&&S.host.setup){const ts=S.host.setup.trainees,list=Array.isArray(ts)?ts:Object.values(ts||{}),x=list.find(y=>y&&y.id===t.id);if(x){if(okPhoto(x.photoL))return x.photoL;if(okPhoto(x.photo))return x.photo}}
+function photoFor(t,big){
+  if(S.mode==="host"&&S.host&&S.host.setup){const ts=S.host.setup.trainees,list=Array.isArray(ts)?ts:Object.values(ts||{}),x=list.find(y=>y&&y.id===t.id);
+    if(x){if(big&&okPhoto(x.photoL))return x.photoL;if(okPhoto(x.photo))return x.photo;if(okPhoto(x.photoL))return x.photoL}}
   return S.photos[t.id];
 }
 function faceHTML(t,photo,cls){const c=SADDLE[(t.no-1)%SADDLE.length];
-  const inner=okPhoto(photo)?`<span class="ph pic"><img src="${imgURL(photo)}" alt="" decoding="async"></span>`:`<span class="ph" style="background:${c[0]};color:${c[1]}"><b>${esc(initials(t.name))}</b></span>`;
+  const inner=okPhoto(photo)?`<span class="ph pic"><img src="${imgURL(photo)}" alt="" decoding="async" draggable="false"></span>`:`<span class="ph" style="background:${c[0]};color:${c[1]}"><b>${esc(initials(t.name))}</b></span>`;
   return `<span class="face${cls?" "+cls:""}" style="--ring:${c[0]}" aria-hidden="true">${inner}<i>${t.no}</i></span>`}
-function face(t,cls){return faceHTML(t,photoFor(t),cls)}
+function face(t,cls){return faceHTML(t,photoFor(t,cls==="hero"||cls==="xl"),cls)}
 function cloth(t,sm){const c=SADDLE[(t.no-1)%SADDLE.length];return `<span class="cloth${sm?" sm":""}" style="background:${c[0]};color:${c[1]}" aria-hidden="true">${t.no}</span>`}
 function cleanBets(raw,g){
   const bal=balances(g),ids=new Set(trainees(g).map(t=>t.id)),out={};
@@ -851,6 +980,19 @@ function cleanBets(raw,g){
   }
   return out;
 }
+/* Colour bets can only use what is left after the trainee bet */
+function cleanSide(raw,g){
+  const r=g.round,bal=balances(g),out={};
+  for(const [k,b] of Object.entries(raw||{})){
+    if(!b||!RC[b.c])continue;
+    const main=r&&r.bets&&r.bets[k]?r.bets[k].a:0;
+    const a=Math.min(Math.floor(Number(b.a)),balOf(bal,k)-main);
+    if(a>0)out[k]={c:b.c,a};
+  }
+  return out;
+}
+function sideLive(g){const r=g.round;return r.spin?(r.side||{}):cleanSide(S.sideKey===r.k?S.side:{},g)}
+function sideAvail(){const g=S.game,r=g&&g.round,k=myKey();if(!r)return 0;const lb=r.bets&&r.bets[k];return Math.max(0,balOf(balances(g),k)-(lb?lb.a:0))}
 function liveBets(){
   const g=S.game,r=g&&g.round;if(!r)return {};
   if(g.phase==="betting")return S.betsKey===r.k?cleanBets(S.bets,g):{};
@@ -858,35 +1000,45 @@ function liveBets(){
 }
 function standings(){
   const g=S.game,bal=balances(g),keys=new Set(rosterList().map(p=>p.k));
-  for(const r of rounds(g))for(const k of Object.keys(r.bets||{}))keys.add(k);
-  const rs=rounds(g),last=rs.length?settle(rs[rs.length-1],g.seed).nets:{};
+  for(const r of rounds(g)){for(const k of Object.keys(r.bets||{}))keys.add(k);for(const k of Object.keys(r.side||{}))keys.add(k)}
+  const rs=rounds(g),last=rs.length?settle(rs[rs.length-1],g.seed).all:{};
   return [...keys].map(k=>({k,nick:nickOf(k),bal:balOf(bal,k),d:last[k]||0})).sort((a,b)=>b.bal-a.bal||a.nick.localeCompare(b.nick));
 }
 function rankAt(st,i){let j=i;while(j>0&&st[j-1].bal===st[i].bal)j--;return j+1}
 function champions(st){return st.length?st.filter(p=>p.bal===st[0].bal):[]}
 function namesList(ps){const n=ps.map(p=>esc(p.nick));return n.length<2?n.join(""):n.slice(0,-1).join(", ")+" & "+n[n.length-1]}
 
-/* ---------- bonus wheel ---------- */
+/* ---------- bonus games: wheel, slot machine, roulette ---------- */
+function tickTrain(total,n,slowing){for(let k=1;k<=n;k++){const f=k/n;setTimeout(()=>sfx.tick(),total*(slowing?1-Math.sqrt(1-f):f))}}
 function noteSpin(prev,next){
   const s=next&&next.round&&next.round.spin;if(!s||s.id in S.spinStart)return;
   const prevSpin=prev&&prev.round&&prev.round.k===next.round.k?prev.round.spin:null;
   const live=prev!==undefined&&!prevSpin&&!REDUCED;
   S.spinStart[s.id]=live?Date.now():0;
-  const m=next.round.mult||WHEEL[s.seg]||1;
+  const dev=devOf(next.round),m=next.round.mult||(dev==="wheel"&&WHEEL[s.seg])||1;
   const landed=()=>{
     if(m>=5)S.fx.add("flash");
     if(m>=10)S.fx.add("confetti");
     sfx.land(m);if(S.mode==="player")buzz(m>=5?[60,40,60,40,160]:40);
     render();
   };
-  if(live)setTimeout(landed,SPIN_MS+60);
+  if(!live)return;
+  if(S.mode==="host"){
+    if(dev==="slot"){tickTrain(REEL_MS[2]-200,44,false);REEL_MS.forEach(t=>setTimeout(()=>sfx.clunk(),t))}
+    else if(dev==="roul")tickTrain(DEV_MS.roul*.86,40,true);
+  }
+  setTimeout(landed,DEV_MS[dev]+60);
 }
 function spinInfo(r){
   const s=r&&r.spin;if(!s)return null;
-  const st=S.spinStart[s.id]||0,el=st?Math.min(Date.now()-st,SPIN_MS):SPIN_MS;
-  const seg=((s.seg%WHEEL.length)+WHEEL.length)%WHEEL.length,step=360/WHEEL.length;
-  const jit=((h32(s.id)%1000)/1000-.5)*step*.6;
-  return {to:360*TURNS+360-(seg*step+step/2)+jit,elapsed:el,done:el>=SPIN_MS,mult:r.mult||WHEEL[seg]};
+  const dev=devOf(r),dur=DEV_MS[dev],st=S.spinStart[s.id]||0,el=st?Math.min(Date.now()-st,dur):dur;
+  const o={dev,dur,elapsed:el,done:el>=dur,mult:r.mult||1};
+  if(dev==="wheel"){
+    const seg=(((Number(s.seg)||0)%WHEEL.length)+WHEEL.length)%WHEEL.length,step=360/WHEEL.length;
+    const jit=((h32(s.id)%1000)/1000-.5)*step*.6;
+    o.to=360*TURNS+360-(seg*step+step/2)+jit;o.mult=r.mult||WHEEL[seg];
+  }
+  return o;
 }
 function wheelHTML(r,size){
   const si=spinInfo(r),n=WHEEL.length,R=100,step=360/n;let segs="",bulbs="";
@@ -903,12 +1055,117 @@ function wheelHTML(r,size){
     <svg viewBox="-125 -125 250 250" aria-hidden="true"><circle r="25" class="hub"/><text class="hubtxt${hub==="SPIN"?" sm":""}" text-anchor="middle" dominant-baseline="central">${hub}</text><path d="M-12 -124L12 -124L0 -97Z" class="pointer"/></svg>
   </div>`;
 }
+/* --- slot machine --- */
+const SYMDEFS=`<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="sy-cherry" viewBox="0 0 100 100"><path d="M36 54C40 34 50 22 62 14M66 58C66 40 64 26 62 14" fill="none" stroke="#1f7a33" stroke-width="5" stroke-linecap="round"/><ellipse cx="74" cy="16" rx="14" ry="7" fill="#2fb34f" transform="rotate(-18 74 16)"/><circle cx="34" cy="68" r="19" fill="#d4183a"/><circle cx="68" cy="72" r="19" fill="#e8213f"/><circle cx="27" cy="61" r="5" fill="#fff" opacity=".65"/><circle cx="61" cy="65" r="5" fill="#fff" opacity=".65"/></symbol>
+<symbol id="sy-waffle" viewBox="0 0 100 100"><clipPath id="sy-wc"><circle cx="50" cy="50" r="39"/></clipPath><circle cx="50" cy="50" r="43" fill="#d39a45" stroke="#7a4a12" stroke-width="5"/><g clip-path="url(#sy-wc)" fill="none" stroke="#8a5516" stroke-width="3.6"><path d="M-50 0L50 100M-30 0L70 100M-10 0L90 100M10 0L110 100M30 0L130 100M50 0L150 100M150 0L50 100M130 0L30 100M110 0L10 100M90 0L-10 100M70 0L-30 100M50 0L-50 100"/></g><circle cx="50" cy="50" r="39" fill="none" stroke="#f0c577" stroke-width="3"/><path d="M22 40A30 30 0 0 1 42 21" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" opacity=".6"/></symbol>
+<symbol id="sy-bar" viewBox="0 0 100 100"><rect x="6" y="28" width="88" height="44" rx="9" fill="#160933" stroke="#ffb600" stroke-width="5"/><text x="50" y="52" text-anchor="middle" dominant-baseline="central" font-family="Bungee,Impact,sans-serif" font-size="28" fill="#fff">BAR</text></symbol>
+<symbol id="sy-gem" viewBox="0 0 100 100"><path d="M50 92L8 40L28 14H72L92 40Z" fill="#18c8ff" stroke="#0b5f8a" stroke-width="4" stroke-linejoin="round"/><path d="M8 40H92M28 14L38 40L50 92L62 40L72 14M38 40L50 14L62 40" fill="none" stroke="#0b5f8a" stroke-width="3" stroke-linejoin="round"/><path d="M28 14H50L38 40H8Z" fill="#fff" opacity=".45"/></symbol>
+<symbol id="sy-seven" viewBox="0 0 100 100"><text x="50" y="54" text-anchor="middle" dominant-baseline="central" font-family="Bungee,Impact,sans-serif" font-size="92" fill="#e8213f" stroke="#ffe014" stroke-width="5" paint-order="stroke">7</text></symbol>
+</defs></svg>`;
+const symUse=i=>`<svg viewBox="0 0 100 100" aria-hidden="true"><use href="#sy-${SLOT[i][0]}"/></svg>`;
+/* Three matching symbols for a real multiplier; for 1× any mix that is not three in a row */
+function slotReels(m){
+  const i=SLOT.findIndex(x=>x[1]===m),n=SLOT.length;
+  if(i>=0)return `${i}${i}${i}`;
+  for(;;){const a=randInt(n),b=randInt(2)?a:randInt(n),c=randInt(n);if(!(a===b&&b===c))return `${a}${b}${c}`}
+}
+function slotHTML(r,size){
+  const si=spinInfo(r),small=size==="small",n=SLOT.length,rolling=!!(si&&!si.done);
+  const seed=h32((r.spin&&r.spin.id)||r.k||"slot");
+  const res=si?[0,1,2].map(i=>{const v=Number(String(r.spin.r||"")[i]);return v>=0&&v<n?v:0}):null;
+  const reels=[0,1,2].map(i=>{
+    const dur=REEL_MS[i],el=si?si.elapsed:0;
+    const t=res?res[i]:(seed+i*2)%n;
+    const cells=[(t+1+h32(seed+"a"+i)%(n-1))%n,t,(t+1+h32(seed+"b"+i)%(n-1))%n];
+    if(rolling){const extra=14+i*9;for(let j=0;j<extra;j++)cells.push((t+2+i+j*3)%n)}
+    const K=cells.length,pos=x=>(-(x-.6)/K*100).toFixed(3),from=pos(K-2),to=pos(1);
+    return `<div class="reel"><div class="strip"${rolling?` data-reel="1" data-dur="${dur}" data-el="${el}" data-from="${from}" data-to="${to}"`:""} style="transform:translateY(${rolling&&el<dur?from:to}%)">${cells.map(c=>`<div class="cell">${symUse(c)}</div>`).join("")}</div></div>`;
+  }).join("");
+  const label=`Slot machine${si&&si.done?`, pays ${si.mult} times`:""}`;
+  const win=`<div class="win">${reels}<div class="payline"></div></div>`;
+  if(small)return `<div class="slot small" role="img" aria-label="${label}">${SYMDEFS}${win}</div>`;
+  let disp;
+  if(!si)disp=`<p>Pull the lever for this round's multiplier</p>`;
+  else if(!si.done)disp=`<p>Rolling…</p>`;
+  else{const first=!S.seen.has("m"+r.k);S.seen.add("m"+r.k);disp=`<div class="bres${si.mult>=10?" jackpot":""}${first?" pop":""}"><b>${si.mult}×</b><span>${multLabel(si.mult)}</span></div>`}
+  const pts=SLOT.map(([,m],i)=>`<div class="pt${si&&si.done&&si.mult===m?" on":""}">${symUse(i)}<b>${m}×</b></div>`).join("");
+  return `<div class="slot" role="img" aria-label="${label}">${SYMDEFS}
+    <div class="marq"><div class="bulbrow">${"<i></i>".repeat(15)}</div><b>Bonus slots</b></div>
+    ${win}
+    <div class="paytable">${pts}</div>
+    <p class="ptcap">Three in a row pays · no match = 1×</p>
+    <div class="disp">${disp}</div>
+    <div class="lever" aria-hidden="true"><i></i></div>
+  </div>`;
+}
+/* --- roulette --- */
+const DOLLY=`<svg class="dolly" viewBox="0 0 30 44" aria-hidden="true"><ellipse cx="15" cy="40" rx="13" ry="4" fill="#000" opacity=".35"/><path d="M15 2C9 2 6 6 6 10C6 15 11 16 11 20L5 36H25L19 20C19 16 24 15 24 10C24 6 21 2 15 2Z" fill="#ffffff" stroke="#8a8a8a" stroke-width="1.5"/></svg>`;
+function rouletteHTML(r,size){
+  const si=spinInfo(r),n=RWHEEL.length,step=360/n,small=size==="small",done=!!(si&&si.done);
+  const P=(rad,a)=>{const t=(a-90)*Math.PI/180;return (rad*Math.cos(t)).toFixed(2)+" "+(rad*Math.sin(t)).toFixed(2)};
+  const wedge=(i,ro,ri)=>`M${P(ro,i*step)}A${ro} ${ro} 0 0 1 ${P(ro,(i+1)*step)}L${P(ri,(i+1)*step)}A${ri} ${ri} 0 0 0 ${P(ri,i*step)}Z`;
+  const num=si?rnum(r.spin):0,win=Math.max(0,RWHEEL.indexOf(num));
+  let segs="";
+  RWHEEL.forEach((v,i)=>{
+    segs+=`<path d="${wedge(i,100,58)}" fill="${RC[rcol(v)].bg}" stroke="#e7c36a" stroke-width=".9"/>`;
+    if(!small)segs+=`<text transform="rotate(${((i+.5)*step).toFixed(2)}) translate(0 -89)" text-anchor="middle" dominant-baseline="central" font-family="Bungee,Impact,sans-serif" font-size="8.4" fill="#ffffff">${v}</text>`;
+  });
+  segs+=`<circle r="78" fill="none" stroke="#e7c36a" stroke-width=".9"/>`;
+  if(done)segs+=`<path d="${wedge(win,100,58)}" fill="none" stroke="#ffffff" stroke-width="3.2" stroke-linejoin="round"/>`;
+  let cone=`<circle r="58" fill="url(#rl-cone)" stroke="#e7c36a" stroke-width="2"/>`;
+  for(let k=0;k<4;k++){const [kx,ky]=P(48,k*90+20).split(" ");cone+=`<rect x="-3" y="-50" width="6" height="50" rx="3" fill="#e7c36a" transform="rotate(${k*90+20})"/><circle cx="${kx}" cy="${ky}" r="5.5" fill="#fff3c4" stroke="#8a6410" stroke-width="1.5"/>`}
+  cone+=`<circle r="15" fill="#f7dc8a" stroke="#8a6410" stroke-width="2.5"/><circle r="6" fill="#8a6410"/>`;
+  const dur=DEV_MS.roul,el=si?si.elapsed:0;
+  /* the wheel turns clockwise, the ball runs the other way and ends in the winning pocket */
+  const Wf=540+(si?h32(r.spin.id)%360:0),A=Wf+(win+.5)*step,armTo=((A%360)+360)%360-1440;
+  const rot=to=>` data-rot="${to.toFixed(2)}" data-dur="${dur}" data-el="${el}" style="transform:rotate(${done?to.toFixed(2):0}deg)"`;
+  const label=`Roulette wheel${done?`, the ball landed on ${num}, ${RC[rcol(num)].name.split(" ")[0].toLowerCase()}`:""}`;
+  return `<div class="rwheel${small?" small":""}" role="img" aria-label="${label}">
+    <svg viewBox="-125 -125 250 250" aria-hidden="true"><defs><radialGradient id="rl-wood" r="1"><stop offset=".55" stop-color="#7a3f14"/><stop offset=".8" stop-color="#4a230a"/><stop offset="1" stop-color="#2a1305"/></radialGradient><radialGradient id="rl-cone"><stop offset="0" stop-color="#f7dc8a"/><stop offset=".45" stop-color="#b8862a"/><stop offset="1" stop-color="#5e3e0c"/></radialGradient></defs><circle r="123" fill="url(#rl-wood)" stroke="#e7c36a" stroke-width="3"/><circle r="116" fill="#6b3712" stroke="#e7c36a" stroke-width="1.2"/></svg>
+    <div class="rdisc"${si?rot(Wf):""}><svg viewBox="-125 -125 250 250" aria-hidden="true">${segs}${cone}</svg></div>
+    <div class="rarm"${si?rot(armTo):` style="transform:rotate(38deg)"`}><div class="rdrop"${si?` data-drop="16.4" data-dur="${dur}" data-el="${el}" style="transform:translateY(${done?16.4:0}%)"`:""}><svg viewBox="-125 -125 250 250" aria-hidden="true"><circle cx="0" cy="-107.6" r="5.8" fill="#000" opacity=".35"/><circle cx="0" cy="-109" r="5.8" fill="#ffffff" stroke="#9a9a9a" stroke-width=".8"/><circle cx="-1.7" cy="-110.7" r="1.9" fill="#fff"/></svg></div></div>
+  </div>`;
+}
+function rtableHTML(g,r){
+  const si=spinInfo(r),done=!!(si&&si.done),side=sideLive(g),num=si?rnum(r.spin):null,wc=done?rcol(num):null;
+  const tot={r:[0,0],b:[0,0],g:[0,0]};
+  for(const b of Object.values(side)){if(tot[b.c]){tot[b.c][0]+=b.a;tot[b.c][1]++}}
+  const boxes=["r","b","g"].map(c=>`<div class="rbox ${c}${wc===c?" win":""}"><b>${RC[c].name}</b><span>Pays ${RC[c].pay}× · house ×${RC[c].mult}</span><em>${fmt(tot[c][0])} · ${tot[c][1]} ${tot[c][1]===1?"bet":"bets"}</em>${wc===c?DOLLY:""}</div>`).join("");
+  const nb=Object.keys(side).length;
+  let disp;
+  if(!si)disp=`<p><b>Bet on the colour on your phone!</b></p><p>${nb} colour ${nb===1?"bet":"bets"} in</p>`;
+  else if(!done)disp=`<p><b>No more bets!</b></p><p>The ball is rolling…</p>`;
+  else{
+    const first=!S.seen.has("m"+r.k);S.seen.add("m"+r.k);
+    const won=Object.values(sideNets(r)).filter(x=>x>0).length;
+    disp=`<div class="bres${si.mult>=10?" jackpot":""}${first?" pop":""}"><b>${num} ${RC[wc].name.split(" ")[0]}</b><span>${multLabel(si.mult)}</span></div>${nb?`<p>${won} of ${nb} colour ${nb===1?"bet":"bets"} won</p>`:""}`;
+  }
+  return `<div class="rtable"><div class="rw">${rouletteHTML(r,"big")}</div><div class="rside"><h3>Roulette</h3><div class="rboxes">${boxes}</div><div class="rdisp">${disp}</div></div></div>`;
+}
 function animateWheels(){
   document.querySelectorAll(".wheel-disc[data-spin]").forEach(el=>{
     const to=Number(el.dataset.to),elapsed=Number(el.dataset.el);
     if(elapsed>=SPIN_MS||!el.animate){el.style.transform=`rotate(${to}deg)`;return}
     const anim=el.animate([{transform:"rotate(0deg)"},{transform:`rotate(${to}deg)`}],{duration:SPIN_MS,delay:-elapsed,easing:"cubic-bezier(.05,.8,.25,1)",fill:"forwards"});
     if(S.mode==="host"&&SND.on)tickLoop(el,anim);
+  });
+  /* slot reels: each strip rolls down and stops on its symbol, left to right */
+  document.querySelectorAll(".strip[data-reel]").forEach(el=>{
+    const d=Number(el.dataset.dur),e=Number(el.dataset.el),from=el.dataset.from,to=el.dataset.to;
+    if(e>=d||!el.animate){el.style.transform=`translateY(${to}%)`;return}
+    el.animate([{transform:`translateY(${from}%)`},{transform:`translateY(${to}%)`}],{duration:d,delay:-e,easing:"cubic-bezier(.3,.7,.3,1)",fill:"forwards"});
+  });
+  /* roulette: wheel and ball turn in opposite directions, then the ball drops into its pocket */
+  document.querySelectorAll("[data-rot]").forEach(el=>{
+    const to=Number(el.dataset.rot),d=Number(el.dataset.dur),e=Number(el.dataset.el);
+    if(e>=d||!el.animate){el.style.transform=`rotate(${to}deg)`;return}
+    el.animate([{transform:"rotate(0deg)"},{transform:`rotate(${to}deg)`}],{duration:d,delay:-e,easing:"cubic-bezier(.12,.6,.2,1)",fill:"forwards"});
+  });
+  document.querySelectorAll("[data-drop]").forEach(el=>{
+    const p=Number(el.dataset.drop),d=Number(el.dataset.dur),e=Number(el.dataset.el),T=(x,o)=>({transform:`translateY(${x.toFixed(2)}%)`,offset:o});
+    if(e>=d||!el.animate){el.style.transform=`translateY(${p}%)`;return}
+    el.animate([T(0,0),T(0,.6),T(p*1.12,.78),T(p*.9,.85),T(p,.92),T(p,1)],{duration:d,delay:-e,easing:"linear",fill:"forwards"});
   });
 }
 /* Click as each segment passes the pointer */
@@ -1090,6 +1347,7 @@ async function startGame(){
   S.host=Object.assign({},S.host,{run:{gid,statements}});
   await FB.remove(gpath("bets")).catch(()=>{});
   await FB.remove(gpath("votes")).catch(()=>{});
+  await FB.remove(gpath("side")).catch(()=>{});
   await withTimeout(FB.set(gpath("photos"),photosOf(sd)),20000).catch(()=>{});
   await setGame({title:sd.title,cur:sd.cur,start:sd.start,seed:sd.seed,wheel:sd.wheel,payer:sd.payer,theme:sd.theme,
     timer:sd.timer,comeback:sd.comeback,live:sd.live,storyMax:sd.storyMax,
@@ -1102,7 +1360,7 @@ function photosOf(sd){const o={};(sd.trainees||[]).forEach(t=>{if(okPhoto(t.phot
 function withTimer(g){const dur=Math.max(0,Math.floor(Number(g.timer)||0));delete g.round.endsAt;delete g.round.dur;if(dur>0){g.round.dur=dur;g.round.endsAt=now()+dur*1000+800}}
 async function openRace(i){
   if(!runOk())throw {code:"norun"};
-  const g=clone(S.game);g.idx=i;g.phase="betting";g.round={k:g.gid+"-"+i,n:i,text:runStatements()[i].text};withTimer(g);
+  const g=clone(S.game);g.idx=i;g.phase="betting";g.round={k:g.gid+"-"+i,n:i,text:runStatements()[i].text};if(g.wheel)g.round.dev=DEVS[i%DEVS.length];withTimer(g);
   await setGame(g);
 }
 async function addTime(){
@@ -1115,12 +1373,19 @@ async function closeBetting(){
   g.round.bets=cleanBets(raw,S.game);g.phase="locked";delete g.round.endsAt;
   await setGame(g);
 }
+/* Start this round's bonus game. The result is drawn here, once, and every screen plays the same animation. */
 async function spinWheel(){
   const g=clone(S.game);if(g.phase!=="locked"||g.round.spin)return;
-  const seg=randInt(WHEEL.length);g.round.spin={seg,id:rid()};g.round.mult=WHEEL[seg];
+  const r=g.round,dev=devOf(r),id=rid();
+  if(dev==="slot"){const m=WHEEL[randInt(WHEEL.length)];r.spin={id,r:slotReels(m)};r.mult=m}
+  else if(dev==="roul"){
+    const raw=await withTimeout(FB.get(gpath("side/"+r.k)),12000);
+    const side=cleanSide(raw,S.game);if(Object.keys(side).length)r.side=side;else delete r.side;
+    const n=randInt(37);r.spin={id,n};r.mult=RC[rcol(n)].mult;
+  }else{const seg=randInt(WHEEL.length);r.spin={seg,id};r.mult=WHEEL[seg]}
   await setGame(g);
 }
-async function reopen(){const g=clone(S.game);delete g.round.bets;delete g.round.spin;delete g.round.mult;g.phase="betting";withTimer(g);S.autoClosed=null;await setGame(g)}
+async function reopen(){const g=clone(S.game);delete g.round.bets;delete g.round.spin;delete g.round.mult;delete g.round.side;g.phase="betting";withTimer(g);S.autoClosed=null;await setGame(g)}
 async function reveal(){
   if(!runOk())throw {code:"norun"};
   const g=clone(S.game),st=runStatements()[g.idx];g.round.answer=st.answer;
@@ -1152,6 +1417,15 @@ async function withdrawBet(){
   const r=S.game&&S.game.round;if(!r)return;
   try{await withTimeout(FB.remove(gpath(`bets/${r.k}/${S.me.pid}`)),12000);toast("Bet withdrawn")}catch(e){toast(errMsg(e))}
 }
+async function placeSide(){
+  const g=S.game,r=g&&g.round;if(!r||g.phase!=="locked"||!g.wheel||devOf(r)!=="roul"||r.spin||!RC[S.sideC]||S.sideStake<=0)return;
+  try{await withTimeout(FB.set(gpath(`side/${r.k}/${S.me.pid}`),{c:S.sideC,a:S.sideStake,at:Date.now()}),12000);buzz([20,30,40]);toast("Colour bet placed! You can change it until the host spins.")}
+  catch(e){toast(errMsg(e))}
+}
+async function withdrawSide(){
+  const r=S.game&&S.game.round;if(!r||r.spin)return;
+  try{await withTimeout(FB.remove(gpath(`side/${r.k}/${S.me.pid}`)),12000);S.sideC=null;toast("Colour bet withdrawn")}catch(e){toast(errMsg(e))}
+}
 
 /* ---------- subscriptions ---------- */
 function onDbError(e){S.problem=isPerm(e)?"rules":"unreachable";render()}
@@ -1181,6 +1455,11 @@ function subscribeGame(){
     if(vk!==S.votesKey){
       if(S.unsub.votes)S.unsub.votes();S.unsub.votes=null;S.votes={};S.votesKey=vk;
       if(vk)S.unsub.votes=FB.on(gpath("votes/"+vk),v=>{if(S.votesKey!==vk)return;S.votes=v||{};render();checkStory()},onDbError);
+    }
+    const sg=S.game,sk=sg&&sg.phase==="locked"&&sg.wheel&&sg.round&&devOf(sg.round)==="roul"&&!sg.round.spin?sg.round.k:null;
+    if(sk!==S.sideKey){
+      if(S.unsub.side)S.unsub.side();S.unsub.side=null;S.side={};S.sideKey=sk;
+      if(sk)S.unsub.side=FB.on(gpath("side/"+sk),v=>{if(S.sideKey!==sk)return;S.side=v||{};render()},onDbError);
     }
     if(S.view===null)S.view=S.mode==="host"?(S.game?"board":"setup"):"play";
     render();
@@ -1329,7 +1608,7 @@ function boardLobby(g){
     `Each round shows <b>a statement about one trainee</b>.`,
     `<b>Bet play money</b> on who it's about${g.timer>0?", before the timer runs out":""}. Everyone starts with <b>${fmt(g.start)}</b>.`,
     `Guessed right? <b>Share the pot</b> with the other winners. The fewer winners, the bigger your share.`,
-    g.wheel?`The <b>bonus wheel</b> multiplies the house money in the pot, up to <b>20×</b>. Most money at the end wins!`:`<b>Most money</b> at the end wins!`,
+    g.wheel?`A <b>wheel, slot machine or roulette</b> multiplies the house money in the pot, up to <b>20×</b>. Most money wins!`:`<b>Most money</b> at the end wins!`,
     ...(storyMax(g)>0?[`After each answer, <b>vote for the backstory</b>. If more than half of you vote, the trainee tells the story (max ${storyMax(g)}).`]:[])
   ];
   return `<section class="lobby"><div class="min0">
@@ -1367,7 +1646,11 @@ function boardRace(g){
   const tl=String(r.text||"").length,long=tl>62?" long":tl>40?" mid":"";
   const di=ans?drumInfo(g):{done:true};
   const pill=g.phase==="betting"?'<span class="pill open">Betting open</span>':g.phase==="locked"?'<span class="pill shut">Betting closed</span>':di.done?'<span class="pill res">Result</span>':'<span class="pill shut">Revealing…</span>';
-  const head=`<div class="racehead"><span class="raceno">Round ${r.n+1} <small>of ${g.total}</small></span>${pill}${ans&&m>1&&di.done?`<span class="pill mult">${m}× round</span>`:""}${g.phase==="betting"?timerHTML(g):""}</div>`;
+  const head=`<div class="racehead"><span class="raceno">Round ${r.n+1} <small>of ${g.total}</small></span>${pill}${ans&&m>1&&di.done?`<span class="pill mult">${m}× round</span>`:""}${g.phase==="betting"&&g.wheel?`<span class="pill bonus">Bonus: ${DEV_NAME[devOf(r)]}</span>`:""}${g.phase==="betting"?timerHTML(g):""}</div>`;
+  if(g.phase==="locked"&&g.wheel&&devOf(r)!=="wheel"){
+    return `<section>${head}<h2 class="statement sm${long}">${esc(r.text)}</h2>
+      <div class="lockgrid"><div class="wheelbox">${devOf(r)==="slot"?slotHTML(r,"big"):rtableHTML(g,r)}</div><div class="min0">${toteHTML(g,bets,null)}</div></div></section>`;
+  }
   if(g.phase==="locked"&&g.wheel){
     const si=spinInfo(r);let over="";
     if(!si)over=`<p class="wheelcap">Spin for this round's multiplier</p>`;
@@ -1406,9 +1689,12 @@ function ladderGrid(st,showD,avail,maxRows){
 function boardStandings(g,final){
   const st=standings(),n=rounds(g).length;
   if(final&&st.length){
-    const ch=champions(st);fxOnce("final-board-"+g.gid);
-    const bill=g.payer?`<div class="bill"><b>${fmt(ch[0].bal)}</b><span>${ch.length>1?"Send your Tikkies":"Send your Tikkie"} to ${esc(g.payer)}</span></div>`:"";
-    return `<section><p class="eyebrow">Final result · ${n} ${n===1?"round":"rounds"}</p><div class="champ"><div class="trophy" aria-hidden="true">1</div><div class="min0"><h1 class="mega" style="margin:0;font-size:clamp(32px,min(5.4vw,7.5vh),92px)">${namesList(ch)}</h1><p class="lede">${ch.length>1?"share the win":"wins"} with <b>${fmt(ch[0].bal)}</b></p></div>${bill}</div>${ladderGrid(st,false,"calc(100vh - 390px)",12)}</section>`;
+    const ch=champions(st),many=ch.length>1,amt=fmt(ch[0].bal);fxOnce("final-board-"+g.gid);
+    const tik=g.payer?`<aside class="tikkie"><div class="tkhead"><b>Tikkie for ${esc(g.payer)}</b><span>Payment request</span></div>
+      <div class="tkbody"><p class="tklab">${esc(g.payer)} pays</p><p class="tkamt" style="--n:${amt.length}">${amt}</p>
+      <p class="tkwho">to <b>${namesList(ch)}</b>${many?" (each)":""}</p><p class="tkfor">Prize money for winning ${esc(g.title)}</p>
+      <div class="tkbtn">${many?"Winners: send your Tikkies":`${esc(ch[0].nick)}: send your Tikkie`} to ${esc(g.payer)}!</div></div></aside>`:"";
+    return `<section class="finalgrid${tik?" tik":""}"><div class="min0"><p class="eyebrow">Final result · ${n} ${n===1?"round":"rounds"}</p><div class="champ"><div class="trophy" aria-hidden="true">1</div><div class="min0"><h1 class="mega" style="margin:0;font-size:clamp(32px,min(5.4vw,7.5vh),92px)">${namesList(ch)}</h1><p class="lede">${many?"share the win":"wins"} with <b>${amt}</b></p></div></div>${ladderGrid(st,false,"calc(100vh - 390px)",12)}</div>${tik}</section>`;
   }
   return `<section><p class="eyebrow">${final?"Final result":`Standings after round ${n} of ${g.total}`}</p><h1 class="mega sm">${final?"No bets placed":"The leaderboard"}</h1>${st.length?ladderGrid(st,n>0&&!final,"calc(100vh - 320px)",12):""}</section>`;
 }
@@ -1427,8 +1713,10 @@ function dockHTML(){
       case "locked":{
         status=`Round ${g.idx+1} of ${g.total} · betting closed`;
         const si=spinInfo(g.round);
-        if(g.wheel&&!si){btns=btn("reopen","Reopen betting","ghost")+btn("spin","Spin the wheel!","spin");S.primary="spin"}
-        else if(g.wheel&&!si.done){btns=`<button class="btn primary" disabled>Spinning…</button>`}
+        const dev=devOf(g.round);
+        if(g.wheel&&!si&&dev==="roul"){const nb=Object.keys(sideLive(g)).length;status=`Round ${g.idx+1} of ${g.total} · roulette · <b>${nb}</b> colour ${nb===1?"bet":"bets"} in`}
+        if(g.wheel&&!si){btns=btn("reopen","Reopen betting","ghost")+btn("spin",dev==="slot"?"Pull the lever!":dev==="roul"?"No more bets: spin!":"Spin the wheel!","spin");S.primary="spin"}
+        else if(g.wheel&&!si.done){btns=`<button class="btn primary" disabled>${dev==="slot"?"Rolling…":"Spinning…"}</button>`}
         else{btns=(g.wheel?"":btn("reopen","Reopen betting","ghost"))+btn("reveal","Reveal the answer","primary");S.primary="reveal"}
         break;
       }
@@ -1508,11 +1796,11 @@ function setupHTML(){
     </div>
     <p class="hint" style="margin:12px 0 0">Betting closes by itself when the timer hits 0 (0 = no timer, you close it yourself). Anyone at ${esc(d.cur||"€")}0 gets the comeback money at the start of the next round. After each answer players can vote for the backstory; if more than half of the connected phones vote, the board switches to Story time (0 = no voting).</p>
     <label class="check" style="margin:12px 0 0"><input type="checkbox" id="f-live" data-f="live"${d.live?" checked":""}> Show live bets on the big screen while betting (off = bets stay hidden until betting closes, so people don't copy each other)</label></section>
-    <section class="card"><h2>Bonus wheel and the bill</h2><p class="hint">After betting closes you spin the wheel. It lands on 1×, 2×, 3×, 5×, 10× or the rare 20×, and multiplies that round's house money, so the pot jumps for everyone who picked right. Needs house money above 0.</p>
-      <label class="check"><input type="checkbox" id="f-wheel" data-f="wheel"${d.wheel?" checked":""}> Spin the bonus wheel every round</label>
+    <section class="card"><h2>Bonus games and the bill</h2><p class="hint">After betting closes a bonus game multiplies that round's house money, so the pot jumps for everyone who picked right. Three games take turns: round 1 the <b>wheel</b>, round 2 the <b>slot machine</b>, round 3 the <b>roulette</b>, then the wheel again. Wheel and slot machine give 1×, 2×, 3×, 5×, 10× or the rare 20×. The roulette gives 2× on red or black and 20× on the green 0, and before you spin it players can bet their own play money on the colour: red or black doubles their stake, green 0 pays 20×, a wrong call loses it. Needs house money above 0.</p>
+      <label class="check"><input type="checkbox" id="f-wheel" data-f="wheel"${d.wheel?" checked":""}> Play a bonus game every round (wheel, slot machine and roulette take turns)</label>
       <div class="grid4"><label class="f">Who pays the winner<input class="inp" id="f-payer" data-f="payer" value="${esc(d.payer)}" maxlength="24" placeholder="Leave empty to skip the joke"></label></div>
       <p class="hint" style="margin:12px 0 0">At the end the board tells the winner to send a Tikkie for everything they collected to this person.</p></section>
-    <section class="card"><h2>The contestants</h2><p class="hint">Your trainees, 2 to 12. Each gets a number, a colour and an optional photo; without a photo their initial is shown. Use a clear photo of at least 600 × 600 pixels. It is cropped to a square around the face.</p>
+    <section class="card"><h2>The contestants</h2><p class="hint">Your trainees, 2 to 12. Each gets a number, a colour and an optional photo; without a photo their initial is shown. Use a clear, well-lit photo of at least 800 × 800 pixels; a normal phone photo is perfect. It is cropped to a square around the face.</p>
       <div class="tlist">${d.trainees.map((t,i)=>`<div class="trow">${faceHTML({no:i+1,name:t.name||String(i+1)},t.photoL||t.photo,"sm")}<input class="inp" id="tr-${t.id}" data-tr="${t.id}" value="${esc(t.name)}" placeholder="Trainee ${i+1}'s name" maxlength="24" aria-label="Trainee ${i+1}"><label class="btn ghost sm">${okPhoto(t.photo)?"Change photo":"Add photo"}<input type="file" accept="image/*" data-photo="${t.id}" hidden></label>${okPhoto(t.photo)?`<button class="x" data-act="rm-photo" data-id="${t.id}" aria-label="Remove photo of trainee ${i+1}">⌫</button>`:""}<button class="x" data-act="rm-tr" data-id="${t.id}" aria-label="Remove trainee ${i+1}"${d.trainees.length<=2?" disabled":""}>✕</button></div>`).join("")}</div>
       <div class="row-actions"><button class="btn ghost" data-act="add-tr"${d.trainees.length>=12?" disabled":""}>Add trainee</button></div></section>
     <section class="card"><h2>The rounds</h2><p class="hint">One statement per round, then pick who it's about. Add a one-line story to tell the room more when the answer is revealed.${hasEx?' <span class="exnote">The filled-in statements are examples. Replace them with real facts about your trainees.</span>':""}</p>
@@ -1547,26 +1835,43 @@ async function saveSetup(){
   if(S.code&&S.game)await withTimeout(FB.set(gpath("photos"),photosOf(v.ok)),20000).catch(()=>{});
   return v.ok;
 }
-/* Photo upload: crop a square around the face, then shrink in halves for a sharp result.
-   Two copies: 1000 px for the big screen (host only) and 540 px for the phones. */
-function squareJPEG(src,size,q){
+/* Photo upload. Crop a square around the face, shrink in halves (sharpest way a browser can resize),
+   then a light "sharpen for screen" pass, like photo apps do when exporting.
+   Two copies: 1400 px for the big screen (host only) and 720 px for the phones. */
+function shrink(src,size){
   let cur=src,w=src.width;
   while(w/2>=size){const h=Math.round(w/2),c=document.createElement("canvas");c.width=c.height=h;const x=c.getContext("2d");x.imageSmoothingEnabled=true;x.imageSmoothingQuality="high";x.drawImage(cur,0,0,w,w,0,0,h,h);cur=c;w=h}
-  const out=document.createElement("canvas");out.width=out.height=size;const o=out.getContext("2d");o.imageSmoothingEnabled=true;o.imageSmoothingQuality="high";o.drawImage(cur,0,0,w,w,0,0,size,size);
-  return out.toDataURL("image/jpeg",q);
+  const out=document.createElement("canvas");out.width=out.height=size;const o=out.getContext("2d",{willReadFrequently:true});o.imageSmoothingEnabled=true;o.imageSmoothingQuality="high";o.drawImage(cur,0,0,w,w,0,0,size,size);
+  return out;
 }
+/* Unsharp mask: sharpened = original + amount × (original − blurred). Threshold keeps flat skin and noise smooth.
+   radius 2 is used for the big copy, because the screen shows it a bit smaller than it is stored. */
+function sharpen(cv,amount,threshold,radius){
+  const w=cv.width,h=cv.height,ctx=cv.getContext("2d",{willReadFrequently:true}),id=ctx.getImageData(0,0,w,h),d=id.data,n=w*h;
+  const K=radius===2?[1/16,4/16,6/16,4/16,1/16]:[.25,.5,.25],R=K.length>>1,tmp=new Float32Array(n*3),blur=new Float32Array(n*3);
+  for(let y=0;y<h;y++)for(let x=0;x<w;x++){const i=y*w+x;for(let c=0;c<3;c++){let v=0;for(let k=-R;k<=R;k++){const xx=x+k<0?0:x+k>=w?w-1:x+k;v+=K[k+R]*d[(y*w+xx)*4+c]}tmp[i*3+c]=v}}
+  for(let y=0;y<h;y++)for(let x=0;x<w;x++){const i=y*w+x;for(let c=0;c<3;c++){let v=0;for(let k=-R;k<=R;k++){const yy=y+k<0?0:y+k>=h?h-1:y+k;v+=K[k+R]*tmp[(yy*w+x)*3+c]}blur[i*3+c]=v}}
+  for(let i=0;i<n;i++)for(let c=0;c<3;c++){const o=d[i*4+c],diff=o-blur[i*3+c];if(Math.abs(diff)>threshold){const v=o+amount*diff;d[i*4+c]=v<0?0:v>255?255:v}}
+  ctx.putImageData(id,0,0);return cv;
+}
+let WEBP=null;
+function canWebP(){if(WEBP===null){try{const c=document.createElement("canvas");c.width=c.height=2;WEBP=c.toDataURL("image/webp",.9).startsWith("data:image/webp")}catch(e){WEBP=false}}return WEBP}
+function encode(cv,q){return canWebP()?cv.toDataURL("image/webp",q):cv.toDataURL("image/jpeg",Math.min(.95,q+.02))}
 async function loadPhoto(id,file){
   try{
+    toast("Preparing the photo…");
     const url=URL.createObjectURL(file),img=new Image();
     await new Promise((res,rej)=>{img.onload=res;img.onerror=rej;img.src=url});
     const W=img.naturalWidth,H=img.naturalHeight,n=Math.min(W,H),sx=(W-n)/2,sy=H>W?(H-n)*.3:(H-n)/2;
-    const m=Math.min(n,2048),base=document.createElement("canvas");base.width=base.height=m;
+    const m=Math.min(n,2800),base=document.createElement("canvas");base.width=base.height=m;
     const bx=base.getContext("2d");bx.imageSmoothingEnabled=true;bx.imageSmoothingQuality="high";bx.drawImage(img,sx,sy,n,n,0,0,m,m);
     URL.revokeObjectURL(url);
     const t=S.draft.trainees.find(x=>x.id===id);if(!t)return;
-    t.photoL=squareJPEG(base,Math.min(1000,m),.88);t.photo=squareJPEG(base,Math.min(540,m),.85);
+    await new Promise(r=>setTimeout(r,30));
+    t.photoL=encode(sharpen(shrink(base,Math.min(1400,m)),1,3,2),.92);
+    t.photo=encode(sharpen(shrink(base,Math.min(720,m)),.6,3,1),.9);
     rebuildSetup();
-    toast(n<600?`Photo added, but it's only ${n} px wide, so it may look soft on the big screen. Save the setup to keep it.`:"Photo added. Save the setup to keep it.");
+    toast(n<800?`Photo added, but it's only ${n} px wide, so it can look soft on the big screen. A bigger photo works better. Save the setup to keep it.`:"Photo added. Save the setup to keep it.");
   }catch(e){toast("Couldn't read that image. Try a JPG or PNG.")}
 }
 function rebuildSetup(focusId){S.lastKey=null;render();if(focusId){const el=document.getElementById(focusId);if(el)el.focus()}}
@@ -1606,13 +1911,15 @@ function slipHTML(){
   if(!g)return slipBox(`<div class="sliphead"><div><div class="sliptitle">${esc(S.me.nick)}</div><div class="serial">Room ${esc(S.code)} · waiting</div></div></div><p class="q">The show hasn't started yet.</p><p class="note">This ticket updates by itself when the host starts the game. <button class="linkbtn" data-act="rename">Change nickname</button></p>`);
   const head=slipHead(g),r=g.round,k=myKey();
   switch(g.phase){
-    case "lobby":return slipBox(`${head}<p class="label">You're in</p><p class="q">Wait for round 1.</p><p class="note">Each round shows a statement about one trainee. Bet on who you think it is. Winners split the pot by stake, so the less popular the right answer, the more it pays.${g.wheel?" Then the bonus wheel can multiply the house money in the pot, up to 20×.":""}${g.comeback>0?` Out of money? You get ${fmt(g.comeback)} comeback money at the next round.`:""}${storyMax(g)>0?" After each answer you can vote to hear the trainee's backstory.":""}</p><p class="note"><button class="linkbtn" data-act="rename">Change nickname</button></p>`);
+    case "lobby":return slipBox(`${head}<p class="label">You're in</p><p class="q">Wait for round 1.</p><p class="note">Each round shows a statement about one trainee. Bet on who you think it is. Winners split the pot by stake, so the less popular the right answer, the more it pays.${g.wheel?" Then a wheel, slot machine or roulette multiplies the house money in the pot, up to 20×. On roulette rounds you can also bet on red or black.":""}${g.comeback>0?` Out of money? You get ${fmt(g.comeback)} comeback money at the next round.`:""}${storyMax(g)>0?" After each answer you can vote to hear the trainee's backstory.":""}</p><p class="note"><button class="linkbtn" data-act="rename">Change nickname</button></p>`);
     case "betting":return slipBox(head+bettingSlip(g));
     case "locked":{
+      const dev=g.wheel?devOf(r):null;
+      if(dev==="roul")return slipBox(head+roulSlip(g));
       const lb=r.bets&&r.bets[k],si=g.wheel?spinInfo(r):null,m=si&&si.done?si.mult:1;let body;
       if(lb){const t=trainee(lb.t),bk=book(r.bets,m);body=`<div class="betbox">${face(t)}<div class="min0"><b>${fmt(lb.a)} on ${esc(t.name)}</b><span>Pays ${fmt(Math.floor(lb.a*bk.total/bk.by[lb.t]))} if right${m>1?` (house money ×${m})`:""}</span></div></div>`}
       else body=`<p class="note">You sat this round out.</p>`;
-      const wheel=g.wheel?`<p class="label">Bonus wheel</p><div class="wheelslot">${wheelHTML(r,"small")}${!si?`<p class="note" style="margin:0">Waiting for the host to spin.</p>`:!si.done?`<p class="note" style="margin:0"><b>Spinning…</b></p>`:`<p class="paysx${S.seen.has("pm"+r.k)?"":" pop"}">${si.mult>1?`House money ×${si.mult}!`:"No bonus this round"}</p>`}</div>`:`<p class="label">How the room bet</p>${distMini(g,r.bets||{})}`;
+      const wheel=g.wheel?`<p class="label">${dev==="slot"?"Slot machine":"Bonus wheel"}</p><div class="wheelslot">${dev==="slot"?slotHTML(r,"small"):wheelHTML(r,"small")}${!si?`<p class="note" style="margin:0">Waiting for the host to ${dev==="slot"?"pull the lever":"spin"}.</p>`:!si.done?`<p class="note" style="margin:0"><b>${dev==="slot"?"Rolling…":"Spinning…"}</b></p>`:`<p class="paysx${S.seen.has("pm"+r.k)?"":" pop"}">${si.mult>1?`House money ×${si.mult}!`:"No bonus this round"}</p>`}</div>`:`<p class="label">How the room bet</p>${distMini(g,r.bets||{})}`;
       if(si&&si.done)S.seen.add("pm"+r.k);
       return slipBox(`${head}<p class="label">Round ${r.n+1} · betting closed</p><p class="q">${esc(r.text)}</p>${body}${wheel}`);
     }
@@ -1625,10 +1932,10 @@ function slipHTML(){
       const t=trainee(r.answer),st=settle(r,g.seed),lb=r.bets&&r.bets[k],net=st.nets[k],si=storyInfo(g);
       if(lb&&lb.t===r.answer&&!S.seen.has("win-"+r.k)){fxOnce("win-"+r.k);buzz([60,40,60,40,180])}
       const mine=lb?trainee(lb.t):null;
-      const myres=lb?(lb.t===r.answer
+      const myres=(lb?(lb.t===r.answer
           ?`<div class="myres win">${face(t)}<div class="mr"><span>You won</span><b>${signed(net)}</b><em>You picked ${esc(t.name)}${st.m>1?` · house money ×${st.m}`:""}</em></div></div>`
           :`<div class="myres lose">${face(t)}<div class="mr"><span>You lost</span><b>${fmt(lb.a)}</b><em>You picked ${esc(mine?mine.name:"someone else")} · it was ${esc(t.name)}</em></div></div>`)
-        :`<div class="myres out">${face(t)}<div class="mr"><span>You sat out</span><b>It was ${esc(t.name)}</b><em>No money won or lost</em></div></div>`;
+        :`<div class="myres out">${face(t)}<div class="mr"><span>You sat out</span><b>It was ${esc(t.name)}</b><em>No money won or lost</em></div></div>`)+sideLine(r,k);
       if(si.active)return slipBox(`${head}${myres}<div class="tk listen"><h3>Story time!</h3>${face(t,"")}<p><b>${esc(t.name)}</b> is telling the story. Look up and listen!</p></div>`);
       if(si.open){
         const pct=Math.min(100,Math.round(si.votes/si.need*100));
@@ -1642,13 +1949,60 @@ function slipHTML(){
     case "final":{
       const sts=standings(),i=sts.findIndex(x=>x.k===k),rk=i>=0?rankAt(sts,i):null,ch=champions(sts),iWon=ch.some(p=>p.k===k);
       let bill="";
-      if(iWon){fxOnce("final-"+g.gid);if(g.payer)bill=`<div class="billcard"><p class="label">You collected</p><p class="big">${fmt(ch[0].bal)}</p><p>Send your Tikkie to ${esc(g.payer)}.</p></div>`}
-      else if(g.payer&&ch.length)bill=`<p class="note"><b>${namesList(ch)}</b> collected ${fmt(ch[0].bal)}. ${esc(g.payer)} is paying.</p>`;
+      if(iWon){fxOnce("final-"+g.gid);if(g.payer)bill=`<div class="billcard"><p class="label">Tikkie for ${esc(g.payer)}</p><p class="big">${fmt(ch[0].bal)}</p><p>You won! Send your Tikkie to ${esc(g.payer)}: ${esc(g.payer)} pays for everything you collected.</p></div>`}
+      else if(g.payer&&ch.length)bill=`<div class="billcard"><p class="label">Tikkie for ${esc(g.payer)}</p><p class="big">${fmt(ch[0].bal)}</p><p>${namesList(ch)} ${ch.length>1?"send":"sends"} the Tikkie. ${esc(g.payer)} pays!</p></div>`;
       const stamp=iWon?stampOnce("final"+g.gid,"win","Champion"):rk?stampOnce("final"+g.gid,"neutral",`Finished #${rk}`):"";
       return slipBox(`${head}<p class="label">Final result</p>${stamp}${bill}<p class="label">Top players</p>${topMini(5)}<p class="note">Thanks for playing ${esc(g.title)}.</p>`);
     }
   }
   return slipBox(head);
+}
+function sideLine(r,k){
+  const sn=sideNets(r);if(!(k in sn))return "";
+  return `<p class="sideline ${sn[k]>0?"win":"lose"}">Roulette colour bet: <b>${signed(sn[k])}</b></p>`;
+}
+function mainBetLine(r,k,m){
+  const lb=r.bets&&r.bets[k];if(!lb)return `<p class="mainbet">You sat out the trainee bet this round.</p>`;
+  const t=trainee(lb.t),bk=book(r.bets,m);
+  return `<p class="mainbet">Your trainee bet: <b>${fmt(lb.a)} on ${esc(t?t.name:"your pick")}</b> · pays ${fmt(Math.floor(lb.a*bk.total/bk.by[lb.t]))} if right</p>`;
+}
+/* Roulette round on the phone: bet on the colour, watch the ball, see what it paid */
+function roulSlip(g){
+  const r=g.round,k=myKey(),si=spinInfo(r),lb=r.bets&&r.bets[k];
+  const top=`<p class="rlabel">Round ${r.n+1} of ${g.total} · roulette</p>`;
+  if(!si){
+    const avail=sideAvail(),side=cleanSide(S.sideKey===r.k?S.side:{},g),mine=side[k]||null;
+    if(S.sideRound!==r.k){S.sideRound=r.k;S.sideC=mine?mine.c:null;S.sideStake=mine?mine.a:Math.min(100,avail)}
+    if(mine&&S.sideC===null){S.sideC=mine.c;S.sideStake=mine.a}
+    S.sideStake=Math.max(0,Math.min(S.sideStake,avail));
+    const title=`${top}<p class="rtitle">Roulette! Bet on the colour</p>`;
+    if(avail<=0)return `${title}${mainBetLine(r,k,1)}<p class="note">All your chips are on the trainee bet, so there is nothing left for the roulette. Watch the ball on the big screen!</p>`;
+    const cs=RC[S.sideC]?S.sideC:null,low=c=>RC[c].name.toLowerCase();
+    const picks=["r","b","g"].map(c=>`<button class="cpick ${c}" data-act="spick" data-c="${c}" aria-pressed="${cs===c}"><b>${cs===c?"✓ ":""}${RC[c].name}</b><span>pays ${RC[c].pay}×</span></button>`).join("");
+    const changed=!mine||mine.c!==cs||mine.a!==S.sideStake;
+    const label=!cs?"Pick a colour":S.sideStake<=0?"Add a stake":mine?(changed?`Update: ${fmt(S.sideStake)} on ${low(cs)}`:"Colour bet placed ✓"):`Bet ${fmt(S.sideStake)} on ${low(cs)}`;
+    const est=cs&&S.sideStake>0?`Pays ${fmt(S.sideStake*RC[cs].pay)} if it's ${low(cs)}`:`of ${fmt(avail)} left`;
+    const coins=[[10,"c10"],[50,"c50"],[100,"c100"],[500,"c500"]].map(([v,c])=>`<button class="coin ${c}" data-act="schip" data-v="${v}" aria-label="Add ${fmt(v)}"><span>+${v}</span></button>`).join("");
+    return `${title}<p class="rsub">Red or black doubles your chips, green 0 pays 20×. Wrong colour and they're gone.</p>
+      <div class="cpicks">${picks}</div>
+      <div class="stakerow"><b>${fmt(S.sideStake)}</b><span>${est}</span></div>
+      <div class="chips rack">${coins}<button class="allinchip" data-act="sallin" aria-label="All in: bet ${fmt(avail)}"><span>ALL<br>IN</span></button></div>
+      <button class="clearbar" data-act="szero"${S.sideStake<=0?" disabled":""}>✕ Clear stake</button>
+      <button class="place" data-act="splace"${(!cs||S.sideStake<=0||!changed)?" disabled":""}>${label}</button>
+      ${mine?`<p class="betstatus"><b>✓ ${fmt(mine.a)} on ${low(mine.c)}</b> · <button class="linkbtn" data-act="swithdraw">Withdraw</button></p>`:`<p class="betstatus">Optional. ${lb?`Your trainee bet of ${fmt(lb.a)} stays as it is.`:"You sat out the trainee bet."}</p>`}`;
+  }
+  const mineS=r.side&&r.side[k]&&RC[r.side[k].c]?r.side[k]:null,num=rnum(r.spin),col=rcol(num);
+  if(!si.done)return `${top}<div class="wheelslot">${rouletteHTML(r,"small")}<p class="note" style="margin:0"><b>No more bets!</b> The ball is rolling…</p></div><p class="mainbet">${mineS?`Your colour bet: <b>${fmt(mineS.a)} on ${RC[mineS.c].name.toLowerCase()}</b>`:"You have no colour bet this round."}</p>`;
+  const cname=`${RC[col].name.split(" ")[0]} ${num}`;
+  let res;
+  if(mineS){
+    const won=mineS.c===col;
+    if(won&&!S.seen.has("side-"+r.k)){fxOnce("side-"+r.k);buzz([60,40,60,40,180])}
+    res=won?`<div class="myres win"><span class="rnum ${col}">${num}</span><div class="mr"><span>${cname} · you won</span><b>${signed(mineS.a*(RC[col].pay-1))}</b><em>Your ${fmt(mineS.a)} on ${RC[col].name.toLowerCase()} paid ${RC[col].pay}×</em></div></div>`
+      :`<div class="myres lose"><span class="rnum ${col}">${num}</span><div class="mr"><span>${cname} · you lost</span><b>${fmt(mineS.a)}</b><em>You bet on ${RC[mineS.c].name.toLowerCase()}</em></div></div>`;
+  }else res=`<div class="myres out"><span class="rnum ${col}">${num}</span><div class="mr"><span>The ball landed on</span><b>${cname}</b><em>No colour bet, so no money won or lost</em></div></div>`;
+  const first=!S.seen.has("pm"+r.k);S.seen.add("pm"+r.k);
+  return `${top}${res}<p class="paysx${first?" pop":""}" style="text-align:center;margin:12px 0 0">House money ×${si.mult}!</p>${mainBetLine(r,k,si.mult)}<p class="note">Next: who is the statement about? Watch the big screen.</p>`;
 }
 function bettingSlip(g){
   const r=g.round,k=myKey(),mb=balOf(balances(g),k),ts=trainees(g);
@@ -1670,7 +2024,7 @@ function bettingSlip(g){
   let est="";
   if(pt&&S.stake>0){
     const tot=bk.total-(mine?mine.a:0)+S.stake,onT=(bk.by[pt.id]||0)-(mine&&mine.t===pt.id?mine.a:0)+S.stake;
-    est=hide?"Payout shown when betting closes":`Pays ~${fmt(Math.floor(S.stake*tot/onT))}${g.wheel?" + wheel bonus":" if right"}`;
+    est=hide?"Payout shown when betting closes":`Pays ~${fmt(Math.floor(S.stake*tot/onT))}${g.wheel?` + ${DEV_SHORT[devOf(r)]} bonus`:" if right"}`;
   }
   const bump=S.lastStake!==null&&S.lastStake!==S.stake;S.lastStake=S.stake;
   const changed=!mine||mine.t!==S.pickT||mine.a!==S.stake;
@@ -1682,7 +2036,7 @@ function bettingSlip(g){
     <div class="chips rack">${coins}<button class="allinchip" data-act="allin" aria-label="All in: bet ${fmt(mb)}"><span>ALL<br>IN</span></button></div>
     <button class="clearbar" data-act="zero"${S.stake<=0?" disabled":""}>✕ Clear stake</button>
     <button class="place" data-act="place"${(up||!pt||S.stake<=0||!changed)?" disabled":""}>${label}</button>
-    ${mine&&mt?`<p class="betstatus"><b>✓ ${fmt(mine.a)} on ${esc(mt.name)}</b> · <button class="linkbtn" data-act="withdraw">Withdraw</button></p>`:`<p class="betstatus">You can change your bet until betting closes.</p>`}`;
+    ${mine&&mt?`<p class="betstatus"><b>✓ ${fmt(mine.a)} on ${esc(mt.name)}</b> · <button class="linkbtn" data-act="withdraw">Withdraw</button></p>`:`<p class="betstatus">${g.wheel&&devOf(r)==="roul"?"Roulette round: keep some chips to bet on red or black.":"You can change your bet until betting closes."}</p>`}`;
 }
 
 /* ---------- events ---------- */
@@ -1719,6 +2073,12 @@ const H={
   place:()=>placeBet(),
   vote:()=>voteStory(),
   withdraw:()=>withdrawBet(),
+  spick:b=>{S.sideC=b.dataset.c;buzz(10);render()},
+  schip:b=>{S.sideStake=Math.min(sideAvail(),S.sideStake+Number(b.dataset.v));buzz(8);render()},
+  sallin:()=>{S.sideStake=sideAvail();buzz([15,20,15]);render()},
+  szero:()=>{S.sideStake=0;buzz(12);render()},
+  splace:()=>placeSide(),
+  swithdraw:()=>withdrawSide(),
   rename:()=>{S.lastKey=null;const n=S.me.nick;S.me.nick="";render();const el=$("#nick");if(el){el.value=n;el.select()}}
 };
 document.addEventListener("click",e=>{
