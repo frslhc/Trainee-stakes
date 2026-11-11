@@ -787,11 +787,15 @@ const DEV_MS={wheel:SPIN_MS,slot:3400,roul:8000};
 const DEV_NAME={wheel:"wheel",slot:"slot machine",roul:"roulette"};
 const DEV_SHORT={wheel:"wheel",slot:"slot",roul:"roulette"};
 const devOf=r=>r&&DEVS.includes(r.dev)?r.dev:"wheel";
-/* Slot machine: three in a row pays that symbol's multiplier, anything else is 1×. Same odds as the wheel. */
+/* Slot machine: three in a row pays that symbol's multiplier, anything else is a miss (no bonus, 1×).
+   SLOT_ODDS = chance in % of each outcome: 40% miss, 24% 2×, 15% 3×, 11% 5×, 7% 10×, 3% 20×. */
 const SLOT=[["cherry",2],["waffle",3],["bar",5],["gem",10],["seven",20]];
-/* A short spin, then reels 1 and 2 stop quickly. Two the same? Then the third one takes its time. Otherwise it stops quickly too. */
-function slotTimes(sp){const v=String((sp&&sp.r)||"");return v.length>1&&v[0]===v[1]?[1700,2300,5000]:[1700,2300,2900]}
-const devMs=r=>devOf(r)==="slot"?slotTimes(r.spin)[2]+500:DEV_MS[devOf(r)];
+const SLOT_ODDS=[[1,40],[2,24],[3,15],[5,11],[10,7],[20,3]];
+/* All reels spin, reel 1 stops at 3.5 s, reel 2 at 4 s. Two the same? Then the third reel slows down symbol by symbol
+   (TEASE = time per symbol, each slower than the last) before it stops. Otherwise it stops half a second after reel 2. */
+const TEASE=[250,350,500,750,1000,1300];
+function slotTimes(sp){const v=String((sp&&sp.r)||"");return v.length>1&&v[0]===v[1]?[3500,4000,4000+TEASE.reduce((a,b)=>a+b,0)]:[3500,4000,4500]}
+const devMs=r=>devOf(r)==="slot"?slotTimes(r.spin)[2]+400:DEV_MS[devOf(r)];
 /* Roulette: 18 red, 18 black and one green 0. The colour sets the house-money multiplier (mult)
    and players can bet their own play money on the colour (pay = what a winning stake is paid back as). */
 const RWHEEL=[0,32,15,19,4,21,2,25,17,34,6,27,13,36,11,30,8,23,10,5,24,16,33,1,20,14,31,9,22,18,29,7,28,12,35,3,26];
@@ -1038,8 +1042,8 @@ function noteSpin(prev,next){
   if(!live)return;
   if(S.mode==="host"){
     if(dev==="slot"){
-      const T=slotTimes(s);tickTrain(T[1],20,false);T.forEach(t=>setTimeout(()=>sfx.clunk(),t));
-      if(T[2]-T[1]>1000)tickTrain(T[2]-T[1]-150,9,true,T[1]);else tickTrain(T[2]-T[1]-80,4,false,T[1]);
+      const T=slotTimes(s);tickTrain(T[1],30,false);T.forEach(t=>setTimeout(()=>sfx.clunk(),t));
+      if(T[2]-T[1]>1500){let at=T[1];TEASE.slice(0,-1).forEach(d=>{at+=d;setTimeout(()=>sfx.tick(),at)})}else tickTrain(T[2]-T[1]-80,4,false,T[1]);
     }
     else if(dev==="roul")tickTrain(DEV_MS.roul*.86,40,true);
   }
@@ -1080,25 +1084,33 @@ const SYMDEFS=`<svg width="0" height="0" style="position:absolute" aria-hidden="
 <symbol id="sy-seven" viewBox="0 0 100 100"><text x="50" y="54" text-anchor="middle" dominant-baseline="central" font-family="Bungee,Impact,sans-serif" font-size="92" fill="#e8213f" stroke="#ffe014" stroke-width="5" paint-order="stroke">7</text></symbol>
 </defs></svg>`;
 const symUse=i=>`<svg viewBox="0 0 100 100" aria-hidden="true"><use href="#sy-${SLOT[i][0]}"/></svg>`;
-/* Three matching symbols for a real multiplier; for 1× any mix that is not three in a row */
+function slotMult(){let x=randInt(100);for(const [m,w] of SLOT_ODDS){if(x<w)return m;x-=w}return 1}
+/* Three matching symbols for a real multiplier. A miss is half the time a near miss (two the same, then a different one)
+   and half the time three different symbols. */
 function slotReels(m){
   const i=SLOT.findIndex(x=>x[1]===m),n=SLOT.length;
   if(i>=0)return `${i}${i}${i}`;
-  for(;;){const a=randInt(n),b=randInt(2)?a:randInt(n),c=randInt(n);if(!(a===b&&b===c))return `${a}${b}${c}`}
+  const a=randInt(n);
+  if(randInt(2))return `${a}${a}${(a+1+randInt(n-1))%n}`;
+  const b=(a+1+randInt(n-1))%n;let c=randInt(n);while(c===a||c===b)c=randInt(n);
+  return `${a}${b}${c}`;
 }
 function slotHTML(r,size){
   const si=spinInfo(r),small=size==="small",n=SLOT.length,rolling=!!(si&&!si.done);
   const seed=h32((r.spin&&r.spin.id)||r.k||"slot");
   const res=si?[0,1,2].map(i=>{const v=Number(String(r.spin.r||"")[i]);return v>=0&&v<n?v:0}):null;
-  const T=slotTimes(r.spin),slow=T[2]-T[1]>1000;
+  const T=slotTimes(r.spin),slow=T[2]-T[1]>1500;
   const reels=[0,1,2].map(i=>{
     const dur=T[i],el=si?si.elapsed:0;
     const t=res?res[i]:(seed+i*2)%n;
     const cells=[(t+1+h32(seed+"a"+i)%(n-1))%n,t,(t+1+h32(seed+"b"+i)%(n-1))%n];
     const tease=i===2&&slow;
-    if(rolling){const extra=tease?19:10+i*3;for(let j=0;j<extra;j++)cells.push((t+2+i+j*3)%n)}
+    if(i===2&&res&&res[0]===res[1]&&res[2]!==res[0])cells[0]=res[0];   /* near miss: the matching symbol stops just above the line */
+    if(rolling){const extra=tease?30:22+i*3;for(let j=0;j<extra;j++)cells.push((t+2+i+j*3)%n)}
     const K=cells.length,pos=x=>(-(x-.6)/K*100).toFixed(3),from=pos(K-2),to=pos(1);
-    return `<div class="reel"><div class="strip"${rolling?` data-reel="1" data-dur="${dur}" data-el="${el}" data-from="${from}" data-to="${to}"${tease?` data-mid="${pos(6)}" data-midoff="${(T[1]/T[2]).toFixed(4)}"`:""}`:""} style="transform:translateY(${rolling&&el<dur?from:to}%)">${cells.map(c=>`<div class="cell">${symUse(c)}</div>`).join("")}</div></div>`;
+    let kf="";
+    if(tease){let at=T[1];const pts=[[from,0],[pos(TEASE.length+1),(at/dur).toFixed(4)]];TEASE.forEach((d,j)=>{at+=d;pts.push([pos(TEASE.length-j),(at/dur).toFixed(4)])});kf=` data-kf="${pts.map(p=>p.join(":")).join(",")}"`}
+    return `<div class="reel"><div class="strip"${rolling?` data-reel="1" data-dur="${dur}" data-el="${el}" data-from="${from}" data-to="${to}"${kf}`:""} style="transform:translateY(${rolling&&el<dur?from:to}%)">${cells.map(c=>`<div class="cell">${symUse(c)}</div>`).join("")}</div></div>`;
   }).join("");
   const label=`Slot machine${si&&si.done?`, pays ${si.mult} times`:""}`;
   const win=`<div class="win">${reels}<div class="payline"></div></div>`;
@@ -1106,13 +1118,13 @@ function slotHTML(r,size){
   let disp;
   if(!si)disp=`<p>Pull the lever for this round's multiplier</p>`;
   else if(!si.done)disp=`<p>Rolling…</p>`;
-  else{const first=!S.seen.has("m"+r.k);S.seen.add("m"+r.k);disp=`<div class="bres${si.mult>=10?" jackpot":""}${first?" pop":""}"><b>${si.mult}×</b><span>${multLabel(si.mult)}</span></div>`}
+  else{const first=!S.seen.has("m"+r.k);S.seen.add("m"+r.k);disp=`<div class="bres${si.mult>=10?" jackpot":""}${first?" pop":""}"><b>${si.mult>1?si.mult+"×":"No match"}</b><span>${multLabel(si.mult)}</span></div>`}
   const pts=SLOT.map(([,m],i)=>`<div class="pt${si&&si.done&&si.mult===m?" on":""}">${symUse(i)}<b>${m}×</b></div>`).join("");
   return `<div class="slot" role="img" aria-label="${label}">${SYMDEFS}
     <div class="marq"><div class="bulbrow">${"<i></i>".repeat(15)}</div><b>Bonus slots</b></div>
     ${win}
     <div class="paytable">${pts}</div>
-    <p class="ptcap">Three in a row pays · no match = 1×</p>
+    <p class="ptcap">Three in a row pays · anything else = no bonus</p>
     <div class="disp">${disp}</div>
     <div class="lever" aria-hidden="true"><i></i></div>
   </div>`;
@@ -1170,10 +1182,11 @@ function animateWheels(){
   });
   /* slot reels: each strip rolls down and stops on its symbol, left to right */
   document.querySelectorAll(".strip[data-reel]").forEach(el=>{
-    const d=Number(el.dataset.dur),e=Number(el.dataset.el),from=el.dataset.from,to=el.dataset.to,mid=el.dataset.mid,Y=v=>`translateY(${v}%)`;
+    const d=Number(el.dataset.dur),e=Number(el.dataset.el),from=el.dataset.from,to=el.dataset.to,kf=el.dataset.kf,Y=v=>`translateY(${v}%)`;
     if(e>=d||!el.animate){el.style.transform=Y(to);return}
-    /* the teasing third reel keeps rolling at full speed until reel 2 stops, then slows down over its last five symbols */
-    if(mid)el.animate([{transform:Y(from),easing:"linear"},{transform:Y(mid),offset:Number(el.dataset.midoff),easing:"cubic-bezier(.2,.6,.4,1)"},{transform:Y(to)}],{duration:d,delay:-e,fill:"forwards"});
+    /* the teasing third reel rolls at full speed until reel 2 stops, then passes its last symbols one by one, slower each time */
+    if(kf){const pts=kf.split(",").map(p=>p.split(":"));
+      el.animate(pts.map((p,j)=>({transform:Y(p[0]),offset:Number(p[1]),easing:j===pts.length-2?"cubic-bezier(.4,.52,.5,1)":"linear"})),{duration:d,delay:-e,fill:"forwards"})}
     else el.animate([{transform:Y(from)},{transform:Y(to)}],{duration:d,delay:-e,easing:"cubic-bezier(.3,.7,.3,1)",fill:"forwards"});
   });
   /* roulette: wheel and ball turn in opposite directions, then the ball drops into its pocket */
@@ -1397,7 +1410,7 @@ async function closeBetting(){
 async function spinWheel(){
   const g=clone(S.game);if(g.phase!=="locked"||g.round.spin)return;
   const r=g.round,dev=devOf(r),id=rid();
-  if(dev==="slot"){const m=WHEEL[randInt(WHEEL.length)];r.spin={id,r:slotReels(m)};r.mult=m}
+  if(dev==="slot"){const m=slotMult();r.spin={id,r:slotReels(m)};r.mult=m}
   else if(dev==="roul"){
     const raw=await withTimeout(FB.get(gpath("side/"+r.k)),12000);
     const side=cleanSide(raw,S.game);if(Object.keys(side).length)r.side=side;else delete r.side;
@@ -1819,7 +1832,7 @@ function setupHTML(){
     </div>
     <p class="hint" style="margin:12px 0 0">Betting closes by itself when the timer hits 0 (0 = no timer, you close it yourself). Anyone at ${esc(d.cur||"€")}0 gets the comeback money at the start of the next round. After each answer players can vote for the backstory; if more than half of the connected phones vote, the board switches to Story time (0 = no voting).</p>
     <label class="check" style="margin:12px 0 0"><input type="checkbox" id="f-live" data-f="live"${d.live?" checked":""}> Show live bets on the big screen while betting (off = bets stay hidden until betting closes, so people don't copy each other)</label></section>
-    <section class="card"><h2>Bonus games and the bill</h2><p class="hint">After betting closes a bonus game multiplies that round's house money, so the pot jumps for everyone who picked right. Three games take turns: round 1 the <b>wheel</b>, round 2 the <b>slot machine</b>, round 3 the <b>roulette</b>, then the wheel again. Wheel and slot machine give 1×, 2×, 3×, 5×, 10× or the rare 20×. The roulette gives 2× on red or black and 20× on the green 0, and before you spin it players can bet their own play money on the colour: red or black doubles their stake, green 0 pays 20×, a wrong call loses it. Needs house money above 0.</p>
+    <section class="card"><h2>Bonus games and the bill</h2><p class="hint">After betting closes a bonus game multiplies that round's house money, so the pot jumps for everyone who picked right. Three games take turns: round 1 the <b>wheel</b>, round 2 the <b>slot machine</b>, round 3 the <b>roulette</b>, then the wheel again. The wheel gives 1×, 2×, 3×, 5×, 10× or the rare 20×. The slot machine pays 2×, 3×, 5×, 10× or 20× for three in a row, but about 4 pulls in 10 miss and give no bonus. The roulette gives 2× on red or black and 20× on the green 0, and before you spin it players can bet their own play money on the colour: red or black doubles their stake, green 0 pays 20×, a wrong call loses it. Needs house money above 0.</p>
       <label class="check"><input type="checkbox" id="f-wheel" data-f="wheel"${d.wheel?" checked":""}> Play a bonus game every round (wheel, slot machine and roulette take turns)</label>
       <div class="grid4"><label class="f">Who pays the winner<input class="inp" id="f-payer" data-f="payer" value="${esc(d.payer)}" maxlength="24" placeholder="Leave empty to skip the joke"></label></div>
       <p class="hint" style="margin:12px 0 0">At the end the board shows this person's phone: the winner sends them a payment request for everything they collected.</p></section>
